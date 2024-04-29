@@ -1,0 +1,22 @@
+# Node.js
+node_modules/
+
+# Dependency directories
+/node_modules
+/jspm_packages
+
+# Compiled output
+/dist
+/out
+/build
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Environment variables
+.env
+
+# OS generated files
+.DS_Store
