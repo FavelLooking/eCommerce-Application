@@ -1,2 +1,2 @@
-import "./componets/view/img/test.svg";
-import "./style.scss";
+import './componets/view/img/test.svg'
+import './style.scss'
