@@ -31,6 +31,10 @@ module.exports = {
           "sass-loader",
         ],
       },
+      {
+        test: /\.ts$/i,
+        use: "ts-loader",
+      },
     ],
    },
   devServer: {
