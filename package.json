@@ -26,9 +26,11 @@
         "build": "webpack --mode=production --node-env=production",
         "start": "webpack serve --open --mode=development",
         "format": "npx prettier --write .",
-        "ci:format": "npx prettier --check ."
+        "ci:format": "npx prettier --check .",
+        "lint": "npx eslint src/**/*.ts"
     },
     "dependencies": {
-        "eslint-config-airbnb": "^19.0.4"
+        "eslint-config-airbnb": "^19.0.4",
+        "react": "^18.3.1"
     }
 }
