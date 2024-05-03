@@ -1,1 +1,1 @@
-import "./componets/view/img/test.svg"
+import "./componets/view/img/test.svg";
