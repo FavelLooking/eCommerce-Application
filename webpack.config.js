@@ -1,6 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -17,6 +17,14 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.(jpg|png|svg|jpeg|gif)$/,
+        type: 'asset/resource',
+      },
+    ],
+   },
   devServer: {
     open: true,
     host: "localhost",
