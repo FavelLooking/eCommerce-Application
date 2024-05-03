@@ -15,4 +15,8 @@ module.exports = {
         favicon: path.join(__dirname, 'src', 'favicon.ico'),
     }),
   ],
+  devServer: {
+    open: true,
+    host: "localhost",
+  },
 };
