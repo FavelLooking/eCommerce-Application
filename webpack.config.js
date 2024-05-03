@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const EslintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -9,6 +10,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
   },
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
   plugins: [
     new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "src/index.html"),
@@ -16,6 +20,7 @@ module.exports = {
         favicon: path.join(__dirname, 'src', 'favicon.ico'),
     }),
     new CleanWebpackPlugin(),
+    new EslintPlugin({ extensions: ['ts'] }),
   ],
   module: {
     rules: [
