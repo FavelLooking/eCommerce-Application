@@ -23,6 +23,14 @@ module.exports = {
         test: /\.(jpg|png|svg|jpeg|gif)$/,
         type: 'asset/resource',
       },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          "style-loader",
+          "css-loader",
+          "sass-loader",
+        ],
+      },
     ],
    },
   devServer: {
