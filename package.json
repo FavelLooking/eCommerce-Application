@@ -37,7 +37,8 @@
     "format": "prettier --write .",
     "ci:format": "prettier --check .",
     "lint": "eslint src/**/*.tsx",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "jest"
   },
   "dependencies": {
     "eslint-config-airbnb": "^19.0.4",
