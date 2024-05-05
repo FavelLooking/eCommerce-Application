@@ -32,9 +32,9 @@
   "scripts": {
     "build": "webpack --mode=production --node-env=production",
     "start": "webpack serve --open --mode=development",
-    "format": "npx prettier --write .",
-    "ci:format": "npx prettier --check .",
-    "lint": "npx eslint src/**/*.tsx",
+    "format": "prettier --write .",
+    "ci:format": "prettier --check .",
+    "lint": "eslint src/**/*.tsx",
     "prepare": "husky"
   },
   "dependencies": {
