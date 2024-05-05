@@ -1,1 +1,1 @@
-npx validate-branch-name -r '^(feat|fix|refactor|chore|docs)\/RSS-ECOMM-\d{2}_d{2} [\w-]+$ | ^project-setup$ | ^develop$'
+npx validate-branch-name -r '^(feat|fix|refactor|chore|docs)\/RSS-ECOMM-\d{2}_d{2} [\w-]+$|^project-setup$|^develop$'
