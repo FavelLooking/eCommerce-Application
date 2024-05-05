@@ -1,5 +1,5 @@
-const { merge } = require('webpack-merge');
-const commonConfig = require('./webpack.common.config');
+const { merge } = require('webpack-merge')
+const commonConfig = require('./webpack.common.config')
 
 module.exports = merge(commonConfig, {
     mode: 'development',
@@ -8,4 +8,4 @@ module.exports = merge(commonConfig, {
         open: true,
         host: 'localhost',
     },
-});
+})

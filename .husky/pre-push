@@ -1,0 +1,1 @@
+npx validate-branch-name -r '^(feat|fix|refactor|chore|docs)\/RSS-ECOMM-\d{2}_[\w-]+$'
