@@ -1,8 +1,8 @@
 {
-    "compilerOptions": {
-        "target": "ES2021",
-        "strict": true,
-        "noImplicitAny": true
-    },
-    "include": ["src/**/*", ".eslintrc.js"]
+  "compilerOptions": {
+    "target": "ES2021",
+    "strict": true,
+    "noImplicitAny": true
+  },
+  "include": ["src/**/*", ".eslintrc.js"]
 }
