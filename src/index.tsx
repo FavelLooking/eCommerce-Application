@@ -4,4 +4,4 @@ import { createRoot } from 'react-dom/client';
 
 const container = document.body;
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
-root.render(<div>Hello, React!</div>);
+root.render(<div>Hello, React!!</div>);
