@@ -23,7 +23,7 @@ module.exports = {
       favicon: path.join(__dirname, 'src', 'favicon.ico'),
     }),
     new CleanWebpackPlugin(),
-    new EslintPlugin({ extensions: ['ts'] }),
+    new EslintPlugin({ extensions: ['tsx'] }),
   ],
   module: {
     rules: [
@@ -36,7 +36,7 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.ts$/i,
+        test: /\.tsx$/i,
         use: 'ts-loader',
       },
     ],
