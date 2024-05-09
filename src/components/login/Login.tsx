@@ -47,7 +47,10 @@ export default function Login() {
           onChange: setPassword,
         }}
       />
-      <input type="checkbox" onClick={changePasswordVisability} />
+      <div id="login-checkbox">
+        <span>Hide password</span>
+        <input type="checkbox" onClick={changePasswordVisability} />
+      </div>
       <input type="submit" value="Login" onClick={onSubmit} />
     </div>
   );
