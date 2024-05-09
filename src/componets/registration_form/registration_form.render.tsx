@@ -1,8 +1,10 @@
 import React from 'react';
-import EmailInput from './email_input';
-import PasswordInput from './password_input';
-import FirsNameInput from './first_name_input';
-import SecondNameInput from './second_name_input';
+import EmailInput from './registration_form_inputs/email_input';
+import PasswordInput from './registration_form_inputs/password_input';
+import FirsNameInput from './registration_form_inputs/first_name_input';
+import SecondNameInput from './registration_form_inputs/second_name_input';
+import BirthDateInput from './registration_form_inputs/birth_date_input';
+import AdressField from './registration_form_inputs/adress_field';
 
 function RegisterPage() {
   return (
@@ -11,6 +13,8 @@ function RegisterPage() {
       <PasswordInput />
       <FirsNameInput />
       <SecondNameInput />
+      <BirthDateInput />
+      <AdressField />
     </>
   );
 }
