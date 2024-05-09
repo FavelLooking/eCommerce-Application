@@ -6,17 +6,17 @@ export default function Input(props: InputProps) {
 
   return (
     <label htmlFor={id}>
-        Email
-        <input
-          name={name}
-          id={id}
-          type="text"
-          placeholder={placeholder}
-          onChange={() => {
-            const target =  document.getElementById(id) as HTMLInputElement;
-            onChange(target.value);
-          }}
-        />
-      </label>
+      {name.charAt(0).toUpperCase() + name.slice(1)}
+      <input
+        name={name}
+        id={id}
+        type="text"
+        placeholder={placeholder}
+        onChange={() => {
+          const target = document.getElementById(id) as HTMLInputElement;
+          onChange(target.value);
+        }}
+      />
+    </label>
   );
 }
