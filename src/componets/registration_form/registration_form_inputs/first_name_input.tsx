@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
-function FirsNameInput() {
-  const [inputValue, setInputValue] = useState('');
+function FirsNameInput(): JSX.Element {
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setInputValue(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const firstName: string = event.target.value;
+    setInputValue(firstName);
+
+    const firstNameRegex: RegExp = /^[a-zA-Z]+$/;
+    setIsValid(firstNameRegex.test(firstName));
   };
 
   return (
@@ -19,8 +22,15 @@ function FirsNameInput() {
           placeholder="First name"
           value={inputValue}
           onChange={handleChange}
+          style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
+      {!isValid && (
+        <div style={{ color: 'red' }}>
+          Must contain at least one character and no special characters or
+          numbers
+        </div>
+      )}
     </div>
   );
 }
