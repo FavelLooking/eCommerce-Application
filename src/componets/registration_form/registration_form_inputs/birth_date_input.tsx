@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
-function BirthDateInput() {
-  const [inputValue, setInputValue] = useState('');
+function BirthDateInput(): JSX.Element {
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setInputValue(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const currentBirthDate: string = event.target.value;
+    setInputValue(currentBirthDate);
+
+    const currentDate = new Date();
+    const birthDate = new Date(currentBirthDate);
+    const minAge = 13;
+    const diffYears = currentDate.getFullYear() - birthDate.getFullYear();
+    const isOldEnough =
+      diffYears > minAge ||
+      (diffYears === minAge &&
+        currentDate.getMonth() >= birthDate.getMonth() &&
+        currentDate.getDate() >= birthDate.getDate());
+
+    setIsValid(isOldEnough);
   };
 
   return (
@@ -21,8 +33,12 @@ function BirthDateInput() {
           placeholder="date of birthday"
           value={inputValue}
           onChange={handleChange}
+          style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
+      {!isValid && (
+        <div style={{ color: 'red' }}>You must be at least 13 years old</div>
+      )}
     </div>
   );
 }
