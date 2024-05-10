@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 function LastNameInput() {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setInputValue(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const lastName: string = event.target.value;
+    setInputValue(lastName);
+
+    const lastNameRegex: RegExp = /^[a-zA-Z]+$/;
+    setIsValid(lastNameRegex.test(lastName));
   };
 
   return (
@@ -19,8 +22,15 @@ function LastNameInput() {
           placeholder="Last name"
           value={inputValue}
           onChange={handleChange}
+          style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
+      {!isValid && (
+        <div style={{ color: 'red' }}>
+          Must contain at least one character and no special characters or
+          numbers
+        </div>
+      )}
     </div>
   );
 }
