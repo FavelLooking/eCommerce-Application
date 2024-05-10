@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function SecondNameInput() {
+function LastNameInput() {
   const [inputValue, setInputValue] = useState('');
 
   const handleChange = (event: {
@@ -10,15 +10,13 @@ function SecondNameInput() {
   };
 
   return (
-    <div className="registration-input second-name-input">
-      <label htmlFor="second-name-input">
-        <div className="registration-input__second-name-lable">
-          Second name:
-        </div>
+    <div className="registration-input last-name-input">
+      <label htmlFor="last-name-input">
+        <div className="registration-input__last-name-lable">Second name:</div>
         <input
-          id="second-name-input"
+          id="last-name-input"
           type="text"
-          placeholder="Second name"
+          placeholder="Last name"
           value={inputValue}
           onChange={handleChange}
         />
@@ -27,4 +25,4 @@ function SecondNameInput() {
   );
 }
 
-export default SecondNameInput;
+export default LastNameInput;
