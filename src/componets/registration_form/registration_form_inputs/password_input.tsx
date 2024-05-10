@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
-function PasswordInput() {
-  const [inputValue, setInputValue] = useState('');
+function PasswordInput(): JSX.Element {
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setInputValue(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const password: string = event.target.value;
+    setInputValue(password);
+
+    const passwordRegex: RegExp =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    setIsValid(passwordRegex.test(password));
   };
 
   return (
@@ -19,8 +23,15 @@ function PasswordInput() {
           placeholder="password"
           value={inputValue}
           onChange={handleChange}
+          style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
+      {!isValid && (
+        <div style={{ color: 'red' }}>
+          Your password must contain minimum 8 characters, at least 1 uppercase
+          letter, 1 lowercase letter, and 1 number
+        </div>
+      )}
     </div>
   );
 }
