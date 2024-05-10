@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 
-function EmailInput() {
-  const [inputValue, setInputValue] = useState('');
+function EmailInput(): JSX.Element {
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setInputValue(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const email: string = event.target.value;
+    setInputValue(email);
+
+    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsValid(emailRegex.test(email));
   };
 
   return (
@@ -19,8 +22,12 @@ function EmailInput() {
           placeholder="email"
           value={inputValue}
           onChange={handleChange}
+          style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
+      {!isValid && (
+        <div style={{ color: 'red' }}>Please enter a valid email address</div>
+      )}
     </div>
   );
 }

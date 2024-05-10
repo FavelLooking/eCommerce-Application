@@ -7,9 +7,7 @@ import BirthDateInput from './registration_form_inputs/birth_date_input';
 import AdressField from './registration_form_inputs/adress_field';
 
 function RegisterPage() {
-  const handleRegister = () => {
-    console.log('Registration logic');
-  };
+  const handleRegister = () => {};
 
   return (
     <>
