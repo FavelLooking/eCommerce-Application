@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
+import InputStatus from '../../registration_form_interfaces';
 
-function CityInput() {
+function CityInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -9,7 +10,9 @@ function CityInput() {
     setInputValue(city);
 
     const cityRegex: RegExp = /^[a-zA-Z]+$/;
-    setIsValid(cityRegex.test(city));
+    const isValidCity = cityRegex.test(city);
+    setIsValid(isValidCity);
+    onValidationChange(isValidCity);
   };
 
   return (
