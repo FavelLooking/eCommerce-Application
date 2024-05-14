@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
+import country from './postal_code_input_constant';
 
 function PostalCodeInput() {
   const [inputValue, setInputValue] = useState('');
@@ -14,8 +15,6 @@ function PostalCodeInput() {
       RU: /^\d{6}$/,
       GE: /^\d{4}$/,
     };
-
-    const country = 'GE';
 
     setIsValid(postalCodeFormats[country].test(postalCode));
   };
