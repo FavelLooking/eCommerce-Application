@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
+import { minAge } from '../inputs_constants';
 
 function BirthDateInput(): JSX.Element {
   const [inputValue, setInputValue] = useState('');
@@ -10,7 +11,6 @@ function BirthDateInput(): JSX.Element {
 
     const currentDate = new Date();
     const birthDate = new Date(currentBirthDate);
-    const minAge = 13;
     const diffYears = currentDate.getFullYear() - birthDate.getFullYear();
     const isOldEnough =
       diffYears > minAge ||

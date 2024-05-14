@@ -4,7 +4,7 @@ import CityInput from './adress_field_inputs/city_input';
 import PostalCodeInput from './adress_field_inputs/postal_code_input';
 import CountryInput from './adress_field_inputs/country_input';
 
-function AdressField() {
+function AddressField() {
   return (
     <div className="registration-input adress-field">
       <p className="registration-input__adress-field-title">Adress field:</p>
@@ -18,4 +18,4 @@ function AdressField() {
   );
 }
 
-export default AdressField;
+export default AddressField;

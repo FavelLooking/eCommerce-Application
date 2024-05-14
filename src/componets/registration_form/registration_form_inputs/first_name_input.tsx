@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 
-function FirsNameInput(): JSX.Element {
+function FirstNameInput(): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -30,4 +30,4 @@ function FirsNameInput(): JSX.Element {
   );
 }
 
-export default FirsNameInput;
+export default FirstNameInput;
