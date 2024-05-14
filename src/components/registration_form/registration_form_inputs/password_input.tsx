@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
+import InputStatus from '../registration_form_interfaces';
 
-function PasswordInput(): JSX.Element {
+function PasswordInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -10,7 +11,9 @@ function PasswordInput(): JSX.Element {
 
     const passwordRegex: RegExp =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    setIsValid(passwordRegex.test(password));
+    const isValidPassword = passwordRegex.test(password);
+    setIsValid(isValidPassword);
+    onValidationChange(isValidPassword);
   };
 
   return (
