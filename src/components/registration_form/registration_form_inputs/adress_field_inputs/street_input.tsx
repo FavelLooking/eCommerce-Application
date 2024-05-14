@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
+import InputStatus from '../../registration_form_interfaces';
 
-function StreetInput() {
+function StreetInput({ onValidationChange }: InputStatus) {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -9,7 +10,9 @@ function StreetInput() {
     setInputValue(street);
 
     const streetRegex: RegExp = /\S/;
-    setIsValid(streetRegex.test(street));
+    const isValidStreet = streetRegex.test(street);
+    setIsValid(isValidStreet);
+    onValidationChange(isValidStreet);
   };
 
   return (
