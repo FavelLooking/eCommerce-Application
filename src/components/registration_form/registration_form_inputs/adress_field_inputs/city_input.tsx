@@ -23,6 +23,12 @@ function CityInput() {
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
+      {!isValid && (
+        <div style={{ color: 'red' }}>
+          must contain at least one character and no special characters or
+          numbers
+        </div>
+      )}
     </label>
   );
 }

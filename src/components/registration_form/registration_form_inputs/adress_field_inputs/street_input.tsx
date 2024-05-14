@@ -23,6 +23,9 @@ function StreetInput() {
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
+      {!isValid && (
+        <div style={{ color: 'red' }}>must contain at least one character</div>
+      )}
     </label>
   );
 }

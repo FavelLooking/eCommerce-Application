@@ -33,6 +33,11 @@ function PostalCodeInput() {
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
+      {!isValid && (
+        <div style={{ color: 'red' }}>
+          must follow the format for the Georgia postal code
+        </div>
+      )}
     </label>
   );
 }

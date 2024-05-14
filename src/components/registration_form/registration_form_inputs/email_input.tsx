@@ -23,6 +23,7 @@ function EmailInput(): JSX.Element {
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
+      {!isValid && <div style={{ color: 'red' }}>Enter correct email</div>}
     </label>
   );
 }
