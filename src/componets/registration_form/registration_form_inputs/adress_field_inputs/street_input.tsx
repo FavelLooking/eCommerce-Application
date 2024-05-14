@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 function StreetInput() {
   const [inputValue, setInputValue] = useState('');
+  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setInputValue(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const street = event.target.value;
+    setInputValue(street);
+
+    const streetRegex: RegExp = /\S/;
+    setIsValid(streetRegex.test(street));
   };
 
   return (
@@ -19,6 +22,7 @@ function StreetInput() {
           placeholder="street"
           value={inputValue}
           onChange={handleChange}
+          style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
     </div>
