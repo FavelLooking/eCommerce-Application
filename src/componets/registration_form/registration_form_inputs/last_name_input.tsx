@@ -13,19 +13,20 @@ function LastNameInput() {
   };
 
   return (
-    <div className="registration-input last-name-input">
-      <label htmlFor="last-name-input">
-        <div className="registration-input__last-name-lable">Second name:</div>
-        <input
-          id="last-name-input"
-          type="text"
-          placeholder="Last name"
-          value={inputValue}
-          onChange={handleChange}
-          style={{ borderColor: isValid ? 'initial' : 'red' }}
-        />
-      </label>
-    </div>
+    <label
+      className="registration-input last-name-input"
+      htmlFor="last-name-input"
+    >
+      <div className="registration-input__last-name-lable">Second name:</div>
+      <input
+        id="last-name-input"
+        type="text"
+        placeholder="Last name"
+        value={inputValue}
+        onChange={handleChange}
+        style={{ borderColor: isValid ? 'initial' : 'red' }}
+      />
+    </label>
   );
 }
 

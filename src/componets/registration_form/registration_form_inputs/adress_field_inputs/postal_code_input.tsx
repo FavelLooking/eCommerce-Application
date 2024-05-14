@@ -21,21 +21,20 @@ function PostalCodeInput() {
   };
 
   return (
-    <div className="registration-input postal-code-input">
-      <label htmlFor="postal-code-input">
-        <div className="registration-input__postal-code-lable">
-          postal code:
-        </div>
-        <input
-          id="postal-code-inpur"
-          type="text"
-          placeholder="postal-code"
-          value={inputValue}
-          onChange={handleChange}
-          style={{ borderColor: isValid ? 'initial' : 'red' }}
-        />
-      </label>
-    </div>
+    <label
+      className="registration-input postal-code-input"
+      htmlFor="postal-code-input"
+    >
+      <div className="registration-input__postal-code-lable">postal code:</div>
+      <input
+        id="postal-code-inpur"
+        type="text"
+        placeholder="postal-code"
+        value={inputValue}
+        onChange={handleChange}
+        style={{ borderColor: isValid ? 'initial' : 'red' }}
+      />
+    </label>
   );
 }
 

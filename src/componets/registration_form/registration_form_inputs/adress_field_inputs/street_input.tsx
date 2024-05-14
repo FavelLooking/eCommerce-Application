@@ -13,19 +13,17 @@ function StreetInput() {
   };
 
   return (
-    <div className="registration-input street-input">
-      <label htmlFor="street-input">
-        <div className="registration-input__street-lable">street:</div>
-        <input
-          id="street-input"
-          type="text"
-          placeholder="street"
-          value={inputValue}
-          onChange={handleChange}
-          style={{ borderColor: isValid ? 'initial' : 'red' }}
-        />
-      </label>
-    </div>
+    <label className="registration-input street-input" htmlFor="street-input">
+      <div className="registration-input__street-lable">street:</div>
+      <input
+        id="street-input"
+        type="text"
+        placeholder="street"
+        value={inputValue}
+        onChange={handleChange}
+        style={{ borderColor: isValid ? 'initial' : 'red' }}
+      />
+    </label>
   );
 }
 

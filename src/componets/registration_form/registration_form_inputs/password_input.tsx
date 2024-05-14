@@ -14,19 +14,20 @@ function PasswordInput(): JSX.Element {
   };
 
   return (
-    <div className="registration-input password-input">
-      <label htmlFor="password-input">
-        <div className="registration-input__password-lable">password:</div>
-        <input
-          id="password-input"
-          type="text"
-          placeholder="password"
-          value={inputValue}
-          onChange={handleChange}
-          style={{ borderColor: isValid ? 'initial' : 'red' }}
-        />
-      </label>
-    </div>
+    <label
+      className="registration-input password-input"
+      htmlFor="password-input"
+    >
+      <div className="registration-input__password-lable">password:</div>
+      <input
+        id="password-input"
+        type="text"
+        placeholder="password"
+        value={inputValue}
+        onChange={handleChange}
+        style={{ borderColor: isValid ? 'initial' : 'red' }}
+      />
+    </label>
   );
 }
 

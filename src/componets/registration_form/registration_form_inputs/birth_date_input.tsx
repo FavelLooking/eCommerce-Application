@@ -22,21 +22,22 @@ function BirthDateInput(): JSX.Element {
   };
 
   return (
-    <div className="registration-input birth-date-input">
-      <label htmlFor="birth-date-input">
-        <div className="registration-input__birth-date-lable">
-          Date of birthday:
-        </div>
-        <input
-          id="first-name-input"
-          type="date"
-          placeholder="date of birthday"
-          value={inputValue}
-          onChange={handleChange}
-          style={{ borderColor: isValid ? 'initial' : 'red' }}
-        />
-      </label>
-    </div>
+    <label
+      className="registration-input birth-date-input"
+      htmlFor="birth-date-input"
+    >
+      <div className="registration-input__birth-date-lable">
+        Date of birthday:
+      </div>
+      <input
+        id="first-name-input"
+        type="date"
+        placeholder="date of birthday"
+        value={inputValue}
+        onChange={handleChange}
+        style={{ borderColor: isValid ? 'initial' : 'red' }}
+      />
+    </label>
   );
 }
 
