@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 
 function PostalCodeInput() {
   const [inputValue, setInputValue] = useState('');
-  const [isValid, setIsValid] = useState<boolean>(true);
+  const [isValid, setIsValid] = useState(true);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const postalCode = event.target.value;

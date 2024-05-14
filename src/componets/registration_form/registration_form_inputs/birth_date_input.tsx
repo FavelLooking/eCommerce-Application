@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 
 function BirthDateInput(): JSX.Element {
-  const [inputValue, setInputValue] = useState<string>('');
-  const [isValid, setIsValid] = useState<boolean>(true);
+  const [inputValue, setInputValue] = useState('');
+  const [isValid, setIsValid] = useState(true);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const currentBirthDate: string = event.target.value;
