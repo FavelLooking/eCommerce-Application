@@ -49,7 +49,7 @@ export default function Login() {
         value={password}
       />
       <div id="login-checkbox">
-        <span>Hide password</span>
+        Hide password
         <input type="checkbox" onClick={changePasswordVisability} />
       </div>
       <input type="submit" value="Login" />

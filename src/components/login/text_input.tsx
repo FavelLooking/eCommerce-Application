@@ -13,7 +13,6 @@ export default function TextInput(props: InputProps) {
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
-    target.setCustomValidity('');
     onChange(target.value);
   };
 
