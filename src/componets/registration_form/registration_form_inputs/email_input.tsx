@@ -14,7 +14,7 @@ function EmailInput(): JSX.Element {
 
   return (
     <label className="registration-input email-input" htmlFor="email-input">
-      <div className="registration-input__email-lable">email:</div>
+      <p className="registration-input__email-lable">email:</p>
       <input
         id="email-input"
         type="email"

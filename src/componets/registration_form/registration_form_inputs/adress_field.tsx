@@ -7,9 +7,7 @@ import CountryInput from './adress_field_inputs/country_input';
 function AdressField() {
   return (
     <div className="registration-input adress-field">
-      <div className="registration-input__adress-field-title">
-        Adress field:
-      </div>
+      <p className="registration-input__adress-field-title">Adress field:</p>
       <div className="registration-input__adress-field">
         <StreetInput />
         <CityInput />

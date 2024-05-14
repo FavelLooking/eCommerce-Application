@@ -9,7 +9,7 @@ function CountryInput() {
 
   return (
     <div className="registration-input country-select">
-      <div className="registration-input__country-lable">country:</div>
+      <p className="registration-input__country-lable">country:</p>
       <select
         id="country-input"
         value={selectedCountry}

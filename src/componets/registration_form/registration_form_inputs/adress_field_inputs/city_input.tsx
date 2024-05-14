@@ -14,7 +14,7 @@ function CityInput() {
 
   return (
     <label className="registration-input city-input" htmlFor="city-input">
-      <div className="registration-input__city-lable">city:</div>
+      <p className="registration-input__city-lable">city:</p>
       <input
         id="city-input"
         type="text"

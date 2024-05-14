@@ -17,7 +17,7 @@ function FirsNameInput(): JSX.Element {
       className="registration-input first-name-input"
       htmlFor="first-name-input"
     >
-      <div className="registration-input__first-name-lable">First name:</div>
+      <p className="registration-input__first-name-lable">First name:</p>
       <input
         id="first-name-input"
         type="text"

@@ -26,9 +26,7 @@ function BirthDateInput(): JSX.Element {
       className="registration-input birth-date-input"
       htmlFor="birth-date-input"
     >
-      <div className="registration-input__birth-date-lable">
-        Date of birthday:
-      </div>
+      <p className="registration-input__birth-date-lable">Date of birthday:</p>
       <input
         id="first-name-input"
         type="date"

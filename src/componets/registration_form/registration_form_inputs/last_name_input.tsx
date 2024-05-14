@@ -17,7 +17,7 @@ function LastNameInput() {
       className="registration-input last-name-input"
       htmlFor="last-name-input"
     >
-      <div className="registration-input__last-name-lable">Second name:</div>
+      <p className="registration-input__last-name-lable">Second name:</p>
       <input
         id="last-name-input"
         type="text"

@@ -25,7 +25,7 @@ function PostalCodeInput() {
       className="registration-input postal-code-input"
       htmlFor="postal-code-input"
     >
-      <div className="registration-input__postal-code-lable">postal code:</div>
+      <p className="registration-input__postal-code-lable">postal code:</p>
       <input
         id="postal-code-inpur"
         type="text"

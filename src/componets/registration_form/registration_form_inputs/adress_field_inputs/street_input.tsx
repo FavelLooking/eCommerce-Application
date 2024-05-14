@@ -14,7 +14,7 @@ function StreetInput() {
 
   return (
     <label className="registration-input street-input" htmlFor="street-input">
-      <div className="registration-input__street-lable">street:</div>
+      <p className="registration-input__street-lable">street:</p>
       <input
         id="street-input"
         type="text"

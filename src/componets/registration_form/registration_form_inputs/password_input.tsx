@@ -18,7 +18,7 @@ function PasswordInput(): JSX.Element {
       className="registration-input password-input"
       htmlFor="password-input"
     >
-      <div className="registration-input__password-lable">password:</div>
+      <p className="registration-input__password-lable">password:</p>
       <input
         id="password-input"
         type="text"
