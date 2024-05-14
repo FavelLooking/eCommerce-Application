@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import Input from './Input';
-import './login.scss'
+import './login.scss';
+import TextInput from './text_input';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -26,26 +26,27 @@ export default function Login() {
   const changePasswordVisability = () => {
     setHidden(!hidden);
     if (formRef) {
-      const input = (formRef.current as unknown as HTMLFormElement).children[1].children[0] as HTMLInputElement;
+      const input = (formRef.current as unknown as HTMLFormElement).children[1]
+        .children[0] as HTMLInputElement;
       input.type = hidden ? 'text' : 'password';
     }
   };
 
   return (
-    <form id="login-container" onSubmit={onSubmit} ref={formRef} >     
-      <Input
-        name = 'email'
-        id = 'login-email'
-        placeholder = 'type your email...'
-        onChange = {setEmail}
-        value = {email}
+    <form id="login-container" onSubmit={onSubmit} ref={formRef}>
+      <TextInput
+        name="email"
+        id="login-email"
+        placeholder="type your email..."
+        onChange={setEmail}
+        value={email}
       />
-      <Input
-        name = 'password'
-        id = 'login-password'
-        placeholder = 'type your password...'
-        onChange = {setPassword}
-        value = {password}
+      <TextInput
+        name="password"
+        id="login-password"
+        placeholder="type your password..."
+        onChange={setPassword}
+        value={password}
       />
       <div id="login-checkbox">
         <span>Hide password</span>
