@@ -9,7 +9,7 @@ function CityInput() {
     setInputValue(city);
 
     const cityRegex: RegExp = /^[a-zA-Z]+$/;
-    setIsValid(cityRegex.test(city));
+    setIsValid(cityRegex.test(city.trim()));
   };
 
   return (
