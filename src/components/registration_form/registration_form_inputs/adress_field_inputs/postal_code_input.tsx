@@ -1,10 +1,14 @@
 import React, { ChangeEvent, useState } from 'react';
-import country from './postal_code_input_country';
+import { getCountry } from './postal_code_input_country';
 import InputStatus from '../../registration_form_interfaces';
+import CountryList from '../../registration_form_enums';
 
 function PostalCodeInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
+
+  const currentCountry = getCountry();
+  const nameCurrentCountry = CountryList[currentCountry];
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const postalCode = event.target.value;
@@ -16,7 +20,8 @@ function PostalCodeInput({ onValidationChange }: InputStatus): JSX.Element {
       RU: /^\d{6}$/,
       GE: /^\d{4}$/,
     };
-    const isValidCountry = postalCodeFormats[country].test(postalCode);
+
+    const isValidCountry = postalCodeFormats[currentCountry].test(postalCode);
     setIsValid(isValidCountry);
     onValidationChange(isValidCountry);
   };
@@ -37,7 +42,7 @@ function PostalCodeInput({ onValidationChange }: InputStatus): JSX.Element {
       />
       {!isValid && (
         <div style={{ color: 'red' }}>
-          must follow the format for the Georgia postal code
+          must follow the format for the {nameCurrentCountry} postal code
         </div>
       )}
     </label>

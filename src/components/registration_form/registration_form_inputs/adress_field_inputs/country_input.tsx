@@ -22,7 +22,7 @@ function CountryInput() {
         <option value="US">USA</option>
         <option value="GE">Georgia</option>
         <option value="RU">Russia</option>
-        <option value="BE">Belarus</option>
+        <option value="CA">Canada</option>
       </select>
       {!isValid && <div style={{ color: 'red' }}>Please select a country</div>}
     </div>
