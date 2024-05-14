@@ -13,7 +13,7 @@
     "react/jsx-props-no-spreading": [
       "error",
       {
-        "exceptions": ["input"]
+        "exceptions": ["input", "TextInput"]
       }
     ]
   }
