@@ -1,0 +1,8 @@
+#login-container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    &>*, &>label>* {
+        margin: 5px 0 0 5px;
+    }
+}
