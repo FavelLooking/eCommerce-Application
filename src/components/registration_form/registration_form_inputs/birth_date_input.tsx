@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import minAge from './birth_date_input_min_age';
+import InputStatus from '../registration_form_interfaces';
 
-function BirthDateInput(): JSX.Element {
+function BirthDateInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -19,6 +20,7 @@ function BirthDateInput(): JSX.Element {
         currentDate.getDate() >= birthDate.getDate());
 
     setIsValid(isOldEnough);
+    onValidationChange(isOldEnough);
   };
 
   return (

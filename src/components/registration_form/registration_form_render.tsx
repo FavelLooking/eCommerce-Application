@@ -10,17 +10,19 @@ function RegisterPage() {
   const [passwordValid, setPasswordValid] = useState(false);
   const [firstNameValid, setFirstNameValid] = useState(false);
   const [lastNameValid, setLastNameValid] = useState(false);
+  const [birthDateValid, setBirthDateValid] = useState(false);
 
   const handleRegister = () => {};
 
-  const isFormValid = () => passwordValid && firstNameValid && lastNameValid;
+  const isFormValid = () =>
+    passwordValid && firstNameValid && lastNameValid && birthDateValid;
   return (
     <form className="registration-form" onSubmit={handleRegister}>
       <EmailInput />
       <PasswordInput onValidationChange={setPasswordValid} />
       <FirstNameInput onValidationChange={setFirstNameValid} />
       <LastNameInput onValidationChange={setLastNameValid} />
-      <BirthDateInput />
+      <BirthDateInput onValidationChange={setBirthDateValid} />
       <AddressField />
       <button type="submit" disabled={!isFormValid()}>
         Register
