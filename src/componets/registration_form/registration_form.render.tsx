@@ -10,17 +10,15 @@ function RegisterPage() {
   const handleRegister = () => {};
 
   return (
-    <>
+    <form className="registration-form" onSubmit={handleRegister}>
       <EmailInput />
       <PasswordInput />
       <FirsNameInput />
       <LastNameInput />
       <BirthDateInput />
       <AdressField />
-      <button type="button" onClick={handleRegister}>
-        Register
-      </button>
-    </>
+      <button type="submit">Register</button>
+    </form>
   );
 }
 
