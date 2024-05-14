@@ -1,3 +1,3 @@
-type Country = 'GE' | 'CA' | 'RU';
+type CountryType = 'GE' | 'CA' | 'RU' | 'US';
 
-export default Country;
+export default CountryType;

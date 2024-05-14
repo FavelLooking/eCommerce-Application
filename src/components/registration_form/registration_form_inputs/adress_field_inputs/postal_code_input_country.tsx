@@ -1,11 +1,11 @@
-import Country from '../../registration_form_types';
+import CountryType from '../../registration_form_types';
 
-let country: Country = 'GE';
+let country: CountryType = 'GE';
 
-export function getCountry(): Country {
+export function getCountry(): CountryType {
   return country;
 }
 
-export function setCountry(newCountry: Country) {
+export function setCountry(newCountry: CountryType) {
   country = newCountry;
 }
