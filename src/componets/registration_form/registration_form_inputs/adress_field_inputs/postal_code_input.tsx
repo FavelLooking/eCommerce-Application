@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 function PostalCodeInput() {
   const [inputValue, setInputValue] = useState('');
+  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setInputValue(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const postalCode = event.target.value;
+    setInputValue(postalCode);
+
+    const postalCodeFormats = {
+      US: /^\d{5}$/,
+      CA: /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/,
+      RU: /^\d{6}$/,
+      GE: /^\d{4}$/,
+    };
+
+    const country = 'GE';
+
+    setIsValid(postalCodeFormats[country].test(postalCode));
   };
 
   return (
@@ -21,6 +32,7 @@ function PostalCodeInput() {
           placeholder="postal-code"
           value={inputValue}
           onChange={handleChange}
+          style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
     </div>
