@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import minAge from './birth_date_input_constant';
+import minAge from './birth_date_input_min_age';
 
 function BirthDateInput(): JSX.Element {
   const [inputValue, setInputValue] = useState('');

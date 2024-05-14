@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import country from './postal_code_input_constant';
+import country from './postal_code_input_country';
 
 function PostalCodeInput() {
   const [inputValue, setInputValue] = useState('');
