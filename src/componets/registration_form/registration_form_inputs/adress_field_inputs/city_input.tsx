@@ -8,7 +8,7 @@ function CityInput() {
     const city = event.target.value;
     setInputValue(city);
 
-    const cityRegex: RegExp = /\S/;
+    const cityRegex: RegExp = /^[a-zA-Z]+$/;
     setIsValid(cityRegex.test(city));
   };
 
