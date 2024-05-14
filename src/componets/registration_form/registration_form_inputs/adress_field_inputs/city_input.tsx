@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 function CityInput() {
   const [inputValue, setInputValue] = useState('');
+  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setInputValue(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const city = event.target.value;
+    setInputValue(city);
+
+    const cityRegex: RegExp = /\S/;
+    setIsValid(cityRegex.test(city));
   };
 
   return (
@@ -19,6 +22,7 @@ function CityInput() {
           placeholder="city"
           value={inputValue}
           onChange={handleChange}
+          style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
     </div>
