@@ -8,16 +8,16 @@ import LastNameInput from './registration_form_inputs/last_name_input';
 
 function RegisterPage() {
   const [passwordValid, setPasswordValid] = useState(false);
+  const [firstNameValid, setFirstNameValid] = useState(false);
 
   const handleRegister = () => {};
 
-  const isFormValid = () => passwordValid;
-
+  const isFormValid = () => passwordValid && firstNameValid;
   return (
     <form className="registration-form" onSubmit={handleRegister}>
       <EmailInput />
       <PasswordInput onValidationChange={setPasswordValid} />
-      <FirstNameInput />
+      <FirstNameInput onValidationChange={setFirstNameValid} />
       <LastNameInput />
       <BirthDateInput />
       <AddressField />
