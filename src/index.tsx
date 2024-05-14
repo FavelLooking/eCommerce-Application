@@ -1,8 +1,8 @@
 import './style.scss';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import RegisterPage from './components/registration_form/registration_form_render';
+import App from './App';
 
-const container = document.body;
-const root = createRoot(container!); // createRoot(container!) if you use TypeScript
-root.render(<RegisterPage />);
+document.body.innerHTML = '<div id="root"></div>';
+const root = createRoot(document.getElementById('root')!);
+root.render(<App />);
