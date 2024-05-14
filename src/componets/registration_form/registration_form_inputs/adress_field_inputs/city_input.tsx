@@ -4,7 +4,7 @@ function CityInput() {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const city = event.target.value;
     setInputValue(city);
 

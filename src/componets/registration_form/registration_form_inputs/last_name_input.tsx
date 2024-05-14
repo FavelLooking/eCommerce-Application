@@ -4,7 +4,7 @@ function LastNameInput() {
   const [inputValue, setInputValue] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const lastName: string = event.target.value;
     setInputValue(lastName);
 

@@ -4,7 +4,7 @@ function EmailInput(): JSX.Element {
   const [inputValue, setInputValue] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const email: string = event.target.value;
     setInputValue(email);
 
