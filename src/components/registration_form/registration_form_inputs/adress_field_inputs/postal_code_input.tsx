@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import country from './postal_code_input_country';
+import InputStatus from '../../registration_form_interfaces';
 
-function PostalCodeInput() {
+function PostalCodeInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -15,8 +16,9 @@ function PostalCodeInput() {
       RU: /^\d{6}$/,
       GE: /^\d{4}$/,
     };
-
-    setIsValid(postalCodeFormats[country].test(postalCode));
+    const isValidCountry = postalCodeFormats[country].test(postalCode);
+    setIsValid(isValidCountry);
+    onValidationChange(isValidCountry);
   };
 
   return (

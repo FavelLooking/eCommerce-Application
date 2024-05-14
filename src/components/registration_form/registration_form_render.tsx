@@ -16,6 +16,7 @@ function RegisterPage() {
   const [birthDateValid, setBirthDateValid] = useState(false);
   const [streetValid, setStreetValid] = useState(false);
   const [cityValid, setCityValid] = useState(false);
+  const [postalCodeValid, setPostalCodeValid] = useState(false);
 
   const handleRegister = () => {};
 
@@ -25,7 +26,8 @@ function RegisterPage() {
     lastNameValid &&
     birthDateValid &&
     streetValid &&
-    cityValid;
+    cityValid &&
+    postalCodeValid;
   return (
     <form className="registration-form" onSubmit={handleRegister}>
       <EmailInput />
@@ -38,7 +40,7 @@ function RegisterPage() {
         <div className="registration-input__adress-field">
           <StreetInput onValidationChange={setStreetValid} />
           <CityInput onValidationChange={setCityValid} />
-          <PostalCodeInput />
+          <PostalCodeInput onValidationChange={setPostalCodeValid} />
           <CountryInput />
         </div>
       </div>
