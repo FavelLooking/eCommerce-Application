@@ -2,9 +2,12 @@ import React, { ChangeEvent, useState } from 'react';
 
 function CountryInput() {
   const [selectedCountry, setSelectedCountry] = useState('');
+  const [isValid, setIsValid] = useState(true);
 
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCountry(event.target.value);
+    const selectedValue = event.target.value;
+    setSelectedCountry(selectedValue);
+    setIsValid(selectedValue !== '');
   };
 
   return (
@@ -16,11 +19,12 @@ function CountryInput() {
         onChange={handleCountryChange}
       >
         <option value="">Select Country</option>
-        <option value="USA">USA</option>
-        <option value="Georgia">Georgia</option>
-        <option value="Russia">Russia</option>
-        <option value="Belarus">Belarus</option>
+        <option value="US">USA</option>
+        <option value="GE">Georgia</option>
+        <option value="RU">Russia</option>
+        <option value="BE">Belarus</option>
       </select>
+      {!isValid && <div style={{ color: 'red' }}>Please select a country</div>}
     </div>
   );
 }
