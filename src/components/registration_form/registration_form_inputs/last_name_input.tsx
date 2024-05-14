@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
+import InputStatus from '../registration_form_interfaces';
 
-function LastNameInput() {
+function LastNameInput({ onValidationChange }: InputStatus) {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -9,7 +10,9 @@ function LastNameInput() {
     setInputValue(lastName);
 
     const lastNameRegex: RegExp = /^[a-zA-Z]+$/;
-    setIsValid(lastNameRegex.test(lastName));
+    const isValidLastName = lastNameRegex.test(lastName);
+    setIsValid(isValidLastName);
+    onValidationChange(isValidLastName);
   };
 
   return (
