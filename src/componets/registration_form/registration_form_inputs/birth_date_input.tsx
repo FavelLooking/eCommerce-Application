@@ -36,9 +36,6 @@ function BirthDateInput(): JSX.Element {
           style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
-      {!isValid && (
-        <div style={{ color: 'red' }}>You must be at least 13 years old</div>
-      )}
     </div>
   );
 }

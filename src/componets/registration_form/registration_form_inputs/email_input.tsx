@@ -25,9 +25,6 @@ function EmailInput(): JSX.Element {
           style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
-      {!isValid && (
-        <div style={{ color: 'red' }}>Please enter a valid email address</div>
-      )}
     </div>
   );
 }

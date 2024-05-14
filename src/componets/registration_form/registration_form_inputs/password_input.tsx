@@ -26,12 +26,6 @@ function PasswordInput(): JSX.Element {
           style={{ borderColor: isValid ? 'initial' : 'red' }}
         />
       </label>
-      {!isValid && (
-        <div style={{ color: 'red' }}>
-          Your password must contain minimum 8 characters, at least 1 uppercase
-          letter, 1 lowercase letter, and 1 number
-        </div>
-      )}
     </div>
   );
 }
