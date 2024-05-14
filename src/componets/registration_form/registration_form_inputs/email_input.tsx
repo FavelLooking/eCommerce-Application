@@ -9,7 +9,7 @@ function EmailInput(): JSX.Element {
     setInputValue(email);
 
     const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsValid(emailRegex.test(email.trim()));
+    setIsValid(emailRegex.test(email));
   };
 
   return (

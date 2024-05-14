@@ -9,7 +9,7 @@ function LastNameInput() {
     setInputValue(lastName);
 
     const lastNameRegex: RegExp = /^[a-zA-Z]+$/;
-    setIsValid(lastNameRegex.test(lastName.trim()));
+    setIsValid(lastNameRegex.test(lastName));
   };
 
   return (

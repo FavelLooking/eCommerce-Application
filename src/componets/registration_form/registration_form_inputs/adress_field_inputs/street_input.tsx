@@ -9,7 +9,7 @@ function StreetInput() {
     setInputValue(street);
 
     const streetRegex: RegExp = /\S/;
-    setIsValid(streetRegex.test(street.trim()));
+    setIsValid(streetRegex.test(street));
   };
 
   return (

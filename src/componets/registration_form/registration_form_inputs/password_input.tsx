@@ -10,7 +10,7 @@ function PasswordInput(): JSX.Element {
 
     const passwordRegex: RegExp =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    setIsValid(passwordRegex.test(password.trim()));
+    setIsValid(passwordRegex.test(password));
   };
 
   return (

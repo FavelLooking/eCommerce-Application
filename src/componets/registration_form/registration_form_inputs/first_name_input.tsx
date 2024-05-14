@@ -9,7 +9,7 @@ function FirsNameInput(): JSX.Element {
     setInputValue(firstName);
 
     const firstNameRegex: RegExp = /^[a-zA-Z]+$/;
-    setIsValid(firstNameRegex.test(firstName.trim()));
+    setIsValid(firstNameRegex.test(firstName));
   };
 
   return (

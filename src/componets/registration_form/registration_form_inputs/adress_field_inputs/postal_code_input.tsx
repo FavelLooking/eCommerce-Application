@@ -17,7 +17,7 @@ function PostalCodeInput() {
 
     const country = 'GE';
 
-    setIsValid(postalCodeFormats[country].test(postalCode.trim()));
+    setIsValid(postalCodeFormats[country].test(postalCode));
   };
 
   return (
