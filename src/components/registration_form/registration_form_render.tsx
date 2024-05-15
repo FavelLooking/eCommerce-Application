@@ -10,6 +10,7 @@ import PostalCodeInput from './registration_form_inputs/adress_field_inputs/post
 import CountryInput from './registration_form_inputs/adress_field_inputs/country_input';
 
 function RegisterPage() {
+  const [selectedCountry, setSelectedCountry] = useState('');
   const [passwordValid, setPasswordValid] = useState(false);
   const [firstNameValid, setFirstNameValid] = useState(false);
   const [lastNameValid, setLastNameValid] = useState(false);
@@ -17,6 +18,10 @@ function RegisterPage() {
   const [streetValid, setStreetValid] = useState(false);
   const [cityValid, setCityValid] = useState(false);
   const [postalCodeValid, setPostalCodeValid] = useState(false);
+
+  const changeCountry = (country: string) => {
+    setSelectedCountry(country);
+  };
 
   const handleRegister = () => {};
 
@@ -40,8 +45,14 @@ function RegisterPage() {
         <div className="registration-input__adress-field">
           <StreetInput onValidationChange={setStreetValid} />
           <CityInput onValidationChange={setCityValid} />
-          <CountryInput />
-          <PostalCodeInput onValidationChange={setPostalCodeValid} />
+          <CountryInput
+            selectedCountry={selectedCountry}
+            changeCountry={changeCountry}
+          />
+          <PostalCodeInput
+            onValidationChange={setPostalCodeValid}
+            selectedCountry={selectedCountry}
+          />
         </div>
       </div>
       <button type="submit" disabled={!isFormValid()}>

@@ -1,14 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
-import { getCountry } from './postal_code_input_country';
 import InputStatus from '../../registration_form_interfaces';
-import CountryList from '../../registration_form_enums';
+import CountryType from '../../registration_form_types';
 
-function PostalCodeInput({ onValidationChange }: InputStatus): JSX.Element {
+function PostalCodeInput({
+  onValidationChange,
+  selectedCountry,
+}: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
-
-  const currentCountry = getCountry();
-  const nameCurrentCountry = CountryList[currentCountry];
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const postalCode = event.target.value;
@@ -21,7 +20,8 @@ function PostalCodeInput({ onValidationChange }: InputStatus): JSX.Element {
       GE: /^\d{4}$/,
     };
 
-    const isValidCountry = postalCodeFormats[currentCountry].test(postalCode);
+    const isValidCountry =
+      postalCodeFormats[selectedCountry as CountryType].test(postalCode);
     setIsValid(isValidCountry);
     onValidationChange(isValidCountry);
   };
@@ -42,7 +42,7 @@ function PostalCodeInput({ onValidationChange }: InputStatus): JSX.Element {
       />
       {!isValid && (
         <div style={{ color: 'red' }}>
-          must follow the format for the {nameCurrentCountry} postal code
+          must follow the format for the {selectedCountry} postal code
         </div>
       )}
     </label>
