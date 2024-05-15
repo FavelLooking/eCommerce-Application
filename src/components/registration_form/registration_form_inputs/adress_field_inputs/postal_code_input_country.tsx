@@ -1,4 +1,4 @@
-import CountryType from '../../registration_form_types';
+import { CountryType } from '../../registration_form_types';
 
 let country: CountryType = 'GE';
 

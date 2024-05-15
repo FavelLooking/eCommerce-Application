@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import InputStatus from '../../registration_form_interfaces';
-import CountryType from '../../registration_form_types';
+import { CountryType } from '../../registration_form_types';
 
 function PostalCodeInput({
   onValidationChange,
