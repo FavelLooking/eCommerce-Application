@@ -40,8 +40,8 @@ function RegisterPage() {
         <div className="registration-input__adress-field">
           <StreetInput onValidationChange={setStreetValid} />
           <CityInput onValidationChange={setCityValid} />
-          <PostalCodeInput onValidationChange={setPostalCodeValid} />
           <CountryInput />
+          <PostalCodeInput onValidationChange={setPostalCodeValid} />
         </div>
       </div>
       <button type="submit" disabled={!isFormValid()}>

@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { setCountry } from './postal_code_input_country';
 import CountryType from '../../registration_form_types';
+import PostalCodeInput from './postal_code_input';
 
 function CountryInput() {
   const [selectedCountry, setSelectedCountry] = useState('');
@@ -23,6 +24,7 @@ function CountryInput() {
         <option value="US">USA</option>
         <option value="RU">Russia</option>
         <option value="CA">Canada</option>
+        {/* <PostalCodeInput onValidationChange={onValidationChange}/> */}
       </select>
     </div>
   );
