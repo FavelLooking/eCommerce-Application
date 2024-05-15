@@ -23,26 +23,12 @@ export default function Login() {
     formState: { errors },
     reset,
   } = useForm<LoginFormFields>({
-    reValidateMode: "onChange",
-    mode: "onChange",
+    reValidateMode: 'onChange',
+    mode: 'onChange',
   });
 
   const changePasswordVisability = () => {
     setHidden(!hidden);
-    if (formRef) {
-      const formChilds = (formRef.current as unknown as HTMLFormElement)
-        .children;
-      for (let i = 0; i < formChilds.length; i += 1) {
-        if (
-          formChilds[i].childElementCount &&
-          formChilds[i].children[0].id === 'login-password'
-        ) {
-          (formChilds[i].children[0] as HTMLInputElement).type = hidden
-            ? 'text'
-            : 'password';
-        }
-      }
-    }
   };
 
   const onSubmit: SubmitHandler<LoginFormFields> = () => {
@@ -63,6 +49,7 @@ export default function Login() {
       )}
       <TextInput
         id="login-password"
+        type={hidden ? 'password' : 'text'}
         {...register('password', {
           required: 'password is required',
           validate: (value) =>
