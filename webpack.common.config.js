@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: {
@@ -24,6 +25,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new EslintPlugin({ extensions: ['tsx'] }),
+    new Dotenv(),
   ],
   module: {
     rules: [
