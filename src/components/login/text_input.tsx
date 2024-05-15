@@ -1,32 +1,22 @@
-import React from 'react';
+import React, { InputHTMLAttributes } from 'react';
 
-type InputProps = {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   id: string;
-  placeholder: string;
-  onChange: React.Dispatch<React.SetStateAction<string>>;
-  value: string;
-};
+}
 
-export default function TextInput(props: InputProps) {
-  const { name, id, placeholder, onChange, value } = props;
-
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement;
-    onChange(target.value);
-  };
-
-  return (
+export const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ name, id, ...rest }, ref) => (
     <label htmlFor={id}>
       {name}
       <input
-        name={name}
         id={id}
+        name={name}
         type="text"
-        value={value}
-        placeholder={placeholder}
-        onChange={handleChange}
+        placeholder={`type your ${name}...`}
+        ref={ref}
+        {...rest}
       />
     </label>
-  );
-}
+  )
+);
