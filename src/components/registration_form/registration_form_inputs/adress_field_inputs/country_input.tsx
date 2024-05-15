@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import { setCountry } from './postal_code_input_country';
 import CountryType from '../../registration_form_types';
 
@@ -12,6 +12,13 @@ function CountryInput({ selectedCountry, changeCountry }: PropsType) {
     setCountry(selectedValue);
     changeCountry(selectedValue);
   };
+
+  useEffect(() => {
+    if (!selectedCountry) {
+      setCountry('GE');
+      changeCountry('GE');
+    }
+  }, [changeCountry, selectedCountry]);
 
   return (
     <div className="registration-input country-select">
