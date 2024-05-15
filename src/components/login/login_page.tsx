@@ -22,7 +22,10 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<LoginFormFields>();
+  } = useForm<LoginFormFields>({
+    reValidateMode: "onChange",
+    mode: "onChange",
+  });
 
   const changePasswordVisability = () => {
     setHidden(!hidden);
