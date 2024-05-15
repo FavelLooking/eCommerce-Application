@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
+import InputStatus from '../registration_form_interfaces';
 
-function EmailInput(): JSX.Element {
+function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -9,7 +10,9 @@ function EmailInput(): JSX.Element {
     setInputValue(email);
 
     const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsValid(emailRegex.test(email));
+    const isValidEmail = emailRegex.test(email);
+    setIsValid(isValidEmail);
+    onValidationChange(isValidEmail);
   };
 
   return (

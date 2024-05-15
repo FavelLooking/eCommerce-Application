@@ -11,6 +11,7 @@ import CountryInput from './registration_form_inputs/adress_field_inputs/country
 
 function RegisterPage() {
   const [selectedCountry, setSelectedCountry] = useState('');
+  const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
   const [firstNameValid, setFirstNameValid] = useState(false);
   const [lastNameValid, setLastNameValid] = useState(false);
@@ -32,10 +33,11 @@ function RegisterPage() {
     birthDateValid &&
     streetValid &&
     cityValid &&
-    postalCodeValid;
+    postalCodeValid &&
+    emailValid;
   return (
     <form className="registration-form" onSubmit={handleRegister}>
-      <EmailInput />
+      <EmailInput onValidationChange={setEmailValid} />
       <PasswordInput onValidationChange={setPasswordValid} />
       <FirstNameInput onValidationChange={setFirstNameValid} />
       <LastNameInput onValidationChange={setLastNameValid} />
