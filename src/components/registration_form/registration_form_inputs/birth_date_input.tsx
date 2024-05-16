@@ -28,7 +28,11 @@ function BirthDateInput({ onValidationChange }: InputStatus): JSX.Element {
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
-      {!isValid && <div style={{ color: 'red' }}>13 years old or older</div>}
+      {!isValid && (
+        <div style={{ color: 'red' }}>
+          You should be at least 13 years old to register
+        </div>
+      )}
     </label>
   );
 }
