@@ -35,6 +35,7 @@ function RegisterPage() {
     cityValid &&
     postalCodeValid &&
     emailValid;
+
   return (
     <form className="registration-form" onSubmit={handleRegister}>
       <EmailInput onValidationChange={setEmailValid} />
