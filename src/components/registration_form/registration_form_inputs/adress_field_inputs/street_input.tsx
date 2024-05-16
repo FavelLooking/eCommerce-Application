@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import InputStatus from '../../registration_form_interfaces';
+import validationInput from '../../registration_form_validation_regex';
+import { streetPatternRegistration } from '../../registration_form_regex';
 
 function StreetInput({ onValidationChange }: InputStatus) {
   const [inputValue, setInputValue] = useState('');
@@ -9,10 +11,10 @@ function StreetInput({ onValidationChange }: InputStatus) {
     const street = event.target.value;
     setInputValue(street);
 
-    const streetRegex: RegExp = /\S/;
-    const isValidStreet = streetRegex.test(street);
-    setIsValid(isValidStreet);
-    onValidationChange(isValidStreet);
+    setIsValid(validationInput(streetPatternRegistration.regex, street));
+    onValidationChange(
+      validationInput(streetPatternRegistration.regex, street)
+    );
   };
 
   return (
@@ -27,7 +29,7 @@ function StreetInput({ onValidationChange }: InputStatus) {
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>must contain at least one character</div>
+        <div style={{ color: 'red' }}>{streetPatternRegistration.error}</div>
       )}
     </label>
   );

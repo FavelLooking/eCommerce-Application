@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import InputStatus from '../registration_form_interfaces';
+import validationInput from '../registration_form_validation_regex';
+import { lastNamePatternRegistration } from '../registration_form_regex';
 
 function LastNameInput({ onValidationChange }: InputStatus) {
   const [inputValue, setInputValue] = useState('');
@@ -9,10 +11,10 @@ function LastNameInput({ onValidationChange }: InputStatus) {
     const lastName: string = event.target.value;
     setInputValue(lastName);
 
-    const lastNameRegex: RegExp = /^[a-zA-Z]+$/;
-    const isValidLastName = lastNameRegex.test(lastName);
-    setIsValid(isValidLastName);
-    onValidationChange(isValidLastName);
+    setIsValid(validationInput(lastNamePatternRegistration.regex, lastName));
+    onValidationChange(
+      validationInput(lastNamePatternRegistration.regex, lastName)
+    );
   };
 
   return (
@@ -30,10 +32,7 @@ function LastNameInput({ onValidationChange }: InputStatus) {
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>
-          must contain at least one character and no special characters or
-          numbers
-        </div>
+        <div style={{ color: 'red' }}>{lastNamePatternRegistration.error}</div>
       )}
     </label>
   );
