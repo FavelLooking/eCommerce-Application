@@ -1,5 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import InputStatus from '../registration_form_interfaces';
+import validationInput from '../registration_form_validation_regex';
+import { emailPatternRegistration } from '../registration_form_regex';
 
 function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
@@ -9,10 +11,8 @@ function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
     const email: string = event.target.value;
     setInputValue(email);
 
-    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValidEmail = emailRegex.test(email);
-    setIsValid(isValidEmail);
-    onValidationChange(isValidEmail);
+    setIsValid(validationInput(emailPatternRegistration.regex, email));
+    onValidationChange(validationInput(emailPatternRegistration.regex, email));
   };
 
   return (
@@ -26,7 +26,9 @@ function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
-      {!isValid && <div style={{ color: 'red' }}>Enter correct email</div>}
+      {!isValid && (
+        <div style={{ color: 'red' }}>{emailPatternRegistration.error}</div>
+      )}
     </label>
   );
 }
