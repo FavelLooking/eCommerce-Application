@@ -9,7 +9,6 @@ function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const email: string = event.target.value;
-    console.log(email);
     setInputValue(email);
 
     setIsValid(validationInput(emailPatternRegistration.regex, email));
@@ -21,7 +20,7 @@ function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
       <p className="registration-input__email-lable">email:</p>
       <input
         id="email-input"
-        type="email"
+        type="text"
         placeholder="email"
         value={inputValue}
         onChange={handleChange}
