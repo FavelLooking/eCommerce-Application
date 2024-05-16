@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
-import InputStatus from '../registration_form_interfaces';
-import validationInput from '../registration_form_validation_regex';
-import { emailPatternRegistration } from '../registration_form_regex';
+import InputStatus from '../../../types/registration_form_types/registration_form_interfaces';
+import validationInput from '../../../utils/registration_form_utils/registration_form_validation_regex';
+import { emailPatternRegistration } from '../../../utils/registration_form_utils/registration_form_regex';
 
 function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');

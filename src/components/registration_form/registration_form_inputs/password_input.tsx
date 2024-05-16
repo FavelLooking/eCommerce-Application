@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
-import InputStatus from '../registration_form_interfaces';
-import validationInput from '../registration_form_validation_regex';
-import { passwordPatternRegistration } from '../registration_form_regex';
+import InputStatus from '../../../types/registration_form_types/registration_form_interfaces';
+import validationInput from '../../../utils/registration_form_utils/registration_form_validation_regex';
+import { passwordPatternRegistration } from '../../../utils/registration_form_utils/registration_form_regex';
 
 function PasswordInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');

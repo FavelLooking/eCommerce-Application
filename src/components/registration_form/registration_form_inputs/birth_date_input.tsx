@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
-import minAge from './birth_date_input_min_age';
-import InputStatus from '../registration_form_interfaces';
+import minAge from '../../../utils/registration_form_utils/birth_date_input_min_age';
+import InputStatus from '../../../types/registration_form_types/registration_form_interfaces';
 
 function BirthDateInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');

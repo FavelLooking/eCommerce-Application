@@ -1,5 +1,8 @@
 import React, { ChangeEvent, useEffect } from 'react';
-import { CountryType, CountryInputCheck } from '../../registration_form_types';
+import {
+  CountryType,
+  CountryInputCheck,
+} from '../../../../types/registration_form_types/registration_form_types';
 
 function CountryInput({ selectedCountry, changeCountry }: CountryInputCheck) {
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
-import InputStatus from '../../registration_form_interfaces';
-import validationInput from '../../registration_form_validation_regex';
-import { cityPatternRegistration } from '../../registration_form_regex';
+import InputStatus from '../../../../types/registration_form_types/registration_form_interfaces';
+import validationInput from '../../../../utils/registration_form_utils/registration_form_validation_regex';
+import { cityPatternRegistration } from '../../../../utils/registration_form_utils/registration_form_regex';
 
 function CityInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
