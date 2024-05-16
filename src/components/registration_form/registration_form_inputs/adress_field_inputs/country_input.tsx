@@ -1,17 +1,14 @@
 import React, { ChangeEvent, useEffect } from 'react';
-import { setCountry } from './postal_code_input_country';
 import { CountryType, CountryInputCheck } from '../../registration_form_types';
 
 function CountryInput({ selectedCountry, changeCountry }: CountryInputCheck) {
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value as CountryType;
-    setCountry(selectedValue);
     changeCountry(selectedValue);
   };
 
   useEffect(() => {
     if (!selectedCountry) {
-      setCountry('GE');
       changeCountry('GE');
     }
   }, [changeCountry, selectedCountry]);
