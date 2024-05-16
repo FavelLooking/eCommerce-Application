@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import InputStatus from '../../registration_form_interfaces';
+import validationInput from '../../registration_form_validation_regex';
+import { cityPatternRegistration } from '../../registration_form_regex';
 
 function CityInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
@@ -9,10 +11,8 @@ function CityInput({ onValidationChange }: InputStatus): JSX.Element {
     const city = event.target.value;
     setInputValue(city);
 
-    const cityRegex: RegExp = /^[a-zA-Z]+$/;
-    const isValidCity = cityRegex.test(city);
-    setIsValid(isValidCity);
-    onValidationChange(isValidCity);
+    setIsValid(validationInput(cityPatternRegistration.regex, city));
+    onValidationChange(validationInput(cityPatternRegistration.regex, city));
   };
 
   return (
@@ -27,10 +27,7 @@ function CityInput({ onValidationChange }: InputStatus): JSX.Element {
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>
-          must contain at least one character and no special characters or
-          numbers
-        </div>
+        <div style={{ color: 'red' }}>{cityPatternRegistration.error}</div>
       )}
     </label>
   );
