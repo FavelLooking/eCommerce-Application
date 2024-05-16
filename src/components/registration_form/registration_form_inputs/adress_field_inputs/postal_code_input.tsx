@@ -13,8 +13,6 @@ function PostalCodeInput({
 
   useEffect(() => {
     if (selectedCountry && inputValue !== '') {
-      // const isValidSelectedCountry =
-      //   postalCodeFormats[selectedCountry as CountryType].test(inputValue);
       setIsValid(
         validationInput(
           postalCodeFormatsRegistration[selectedCountry as CountryType],
@@ -33,9 +31,6 @@ function PostalCodeInput({
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const postalCode = event.target.value;
     setInputValue(postalCode);
-
-    // const isValidCountry =
-    //   postalCodeFormats[selectedCountry as CountryType].test(postalCode);
 
     setIsValid(
       validationInput(
