@@ -5,7 +5,8 @@ export const cityPatternRegistration = {
 };
 
 export const passwordPatternRegistration = {
-  regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}|:"<>?])[a-zA-Z\d!@#$%^&*()_+{}|:"<>?]{8,}$/,
+  regex:
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}|:"<>?])[a-zA-Z\d!@#$%^&*()_+{}|:"<>?]{8,}$/,
   error: `password must contains minimum 8 characters,
     at least 1 uppercase letter,
     1 lowercase letter,
@@ -26,7 +27,7 @@ export const firstNamePatternRegistration = {
 };
 
 export const emailPatternRegistration = {
-  regex: /^\s*[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/,
+  regex: /^\S+@\S+\.\S+$/,
   error: 'enter correct email',
 };
 
