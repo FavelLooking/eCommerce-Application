@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import InputStatus from '../registration_form_interfaces';
+import validationInput from '../registration_form_validation_regex';
+import { firstNamePatternRegistration } from '../registration_form_regex';
 
 function FirstNameInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
@@ -9,10 +11,10 @@ function FirstNameInput({ onValidationChange }: InputStatus): JSX.Element {
     const firstName: string = event.target.value;
     setInputValue(firstName);
 
-    const firstNameRegex: RegExp = /^[a-zA-Z]+$/;
-    const isValidFirstName = firstNameRegex.test(firstName);
-    setIsValid(isValidFirstName);
-    onValidationChange(isValidFirstName);
+    setIsValid(validationInput(firstNamePatternRegistration.regex, firstName));
+    onValidationChange(
+      validationInput(firstNamePatternRegistration.regex, firstName)
+    );
   };
 
   return (
