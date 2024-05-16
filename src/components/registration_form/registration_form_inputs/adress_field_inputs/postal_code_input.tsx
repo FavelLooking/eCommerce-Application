@@ -2,7 +2,10 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import InputStatus from '../../../../types/registration_form_types/registration_form_interfaces';
 import { CountryType } from '../../../../types/registration_form_types/registration_form_types';
 import validationInput from '../../../../utils/registration_form_utils/registration_form_validation_regex';
-import { postalCodeFormatsRegistration } from '../../../../utils/registration_form_utils/registration_form_regex';
+import {
+  examplePostalCode,
+  postalCodeFormatsRegistration,
+} from '../../../../utils/registration_form_utils/registration_form_regex';
 
 function PostalCodeInput({
   onValidationChange,
@@ -62,7 +65,9 @@ function PostalCodeInput({
       />
       {!isValid && (
         <div style={{ color: 'red' }}>
-          must follow the format for the {selectedCountry} postal code
+          must follow the format for the {selectedCountry} postal code for
+          example: &apos;{examplePostalCode[selectedCountry as CountryType]}
+          &apos;
         </div>
       )}
     </label>

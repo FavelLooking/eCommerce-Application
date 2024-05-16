@@ -36,8 +36,15 @@ export const streetPatternRegistration = {
 };
 
 export const postalCodeFormatsRegistration = {
-  US: /^\d{5}$/,
+  US: /^\d{5}(?:-\d{4})?$/,
   CA: /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/,
   RU: /^\d{6}$/,
   GE: /^\d{4}$/,
+};
+
+export const examplePostalCode = {
+  US: '45678 or 83703-83728',
+  CA: 'K1A 0B1',
+  RU: '435156',
+  GE: '5683',
 };
