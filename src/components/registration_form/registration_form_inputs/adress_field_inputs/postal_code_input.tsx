@@ -1,6 +1,8 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import InputStatus from '../../registration_form_interfaces';
 import { CountryType } from '../../registration_form_types';
+import validationInput from '../../registration_form_validation_regex';
+import { postalCodeFormatsRegistration } from '../../registration_form_regex';
 
 function PostalCodeInput({
   onValidationChange,
@@ -9,34 +11,44 @@ function PostalCodeInput({
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
-  const postalCodeFormats = useMemo(
-    () => ({
-      US: /^\d{5}$/,
-      CA: /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/,
-      RU: /^\d{6}$/,
-      GE: /^\d{4}$/,
-    }),
-    []
-  );
-
   useEffect(() => {
     if (selectedCountry && inputValue !== '') {
-      const isValidSelectedCountry =
-        postalCodeFormats[selectedCountry as CountryType].test(inputValue);
-      setIsValid(isValidSelectedCountry);
-      onValidationChange(isValidSelectedCountry);
+      // const isValidSelectedCountry =
+      //   postalCodeFormats[selectedCountry as CountryType].test(inputValue);
+      setIsValid(
+        validationInput(
+          postalCodeFormatsRegistration[selectedCountry as CountryType],
+          inputValue
+        )
+      );
+      onValidationChange(
+        validationInput(
+          postalCodeFormatsRegistration[selectedCountry as CountryType],
+          inputValue
+        )
+      );
     }
-  }, [selectedCountry, inputValue, onValidationChange, postalCodeFormats]);
+  }, [selectedCountry, inputValue, onValidationChange]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const postalCode = event.target.value;
     setInputValue(postalCode);
 
-    const isValidCountry =
-      postalCodeFormats[selectedCountry as CountryType].test(postalCode);
+    // const isValidCountry =
+    //   postalCodeFormats[selectedCountry as CountryType].test(postalCode);
 
-    setIsValid(isValidCountry);
-    onValidationChange(isValidCountry);
+    setIsValid(
+      validationInput(
+        postalCodeFormatsRegistration[selectedCountry as CountryType],
+        postalCode
+      )
+    );
+    onValidationChange(
+      validationInput(
+        postalCodeFormatsRegistration[selectedCountry as CountryType],
+        postalCode
+      )
+    );
   };
 
   return (
