@@ -8,6 +8,7 @@ import StreetInput from './registration_form_inputs/adress_field_inputs/street_i
 import CityInput from './registration_form_inputs/adress_field_inputs/city_input';
 import PostalCodeInput from './registration_form_inputs/adress_field_inputs/postal_code_input';
 import CountryInput from './registration_form_inputs/adress_field_inputs/country_input';
+import './registration_form.scss';
 
 function RegisterPage() {
   const [selectedCountry, setSelectedCountry] = useState('');
