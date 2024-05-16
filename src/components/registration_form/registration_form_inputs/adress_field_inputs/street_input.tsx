@@ -23,7 +23,7 @@ function StreetInput({ onValidationChange }: InputStatus) {
       <input
         id="street-input"
         type="text"
-        placeholder="street"
+        placeholder="enter your street"
         value={inputValue}
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}

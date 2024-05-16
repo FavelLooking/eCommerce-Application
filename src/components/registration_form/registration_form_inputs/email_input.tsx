@@ -21,7 +21,7 @@ function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
       <input
         id="email-input"
         type="text"
-        placeholder="email"
+        placeholder="enter your email"
         value={inputValue}
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}

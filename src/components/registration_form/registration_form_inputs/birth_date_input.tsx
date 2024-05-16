@@ -19,7 +19,7 @@ function BirthDateInput({ onValidationChange }: InputStatus): JSX.Element {
       className="registration-input birth-date-input"
       htmlFor="birth-date-input"
     >
-      <p className="registration-input__birth-date-lable">Date of birthday:</p>
+      <p className="registration-input__birth-date-lable">date of birthday:</p>
       <input
         id="first-name-input"
         type="date"
@@ -30,7 +30,7 @@ function BirthDateInput({ onValidationChange }: InputStatus): JSX.Element {
       />
       {!isValid && (
         <div style={{ color: 'red' }}>
-          You should be at least 13 years old to register
+          you should be at least 13 years old to register
         </div>
       )}
     </label>

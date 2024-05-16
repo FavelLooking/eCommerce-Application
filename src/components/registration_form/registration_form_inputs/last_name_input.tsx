@@ -22,11 +22,11 @@ function LastNameInput({ onValidationChange }: InputStatus) {
       className="registration-input last-name-input"
       htmlFor="last-name-input"
     >
-      <p className="registration-input__last-name-lable">Second name:</p>
+      <p className="registration-input__last-name-lable">last name:</p>
       <input
         id="last-name-input"
         type="text"
-        placeholder="Last name"
+        placeholder="enter your last name"
         value={inputValue}
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}

@@ -44,7 +44,7 @@ function RegisterPage() {
       <LastNameInput onValidationChange={setLastNameValid} />
       <BirthDateInput onValidationChange={setBirthDateValid} />
       <div className="registration-input adress-field">
-        <p className="registration-input__adress-field-title">Adress field:</p>
+        <p className="registration-input__adress-field-title">adress field:</p>
         <div className="registration-input__adress-field">
           <StreetInput onValidationChange={setStreetValid} />
           <CityInput onValidationChange={setCityValid} />
@@ -59,7 +59,7 @@ function RegisterPage() {
         </div>
       </div>
       <button type="submit" disabled={!isFormValid()}>
-        Register
+        register
       </button>
     </form>
   );

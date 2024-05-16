@@ -58,7 +58,7 @@ function PostalCodeInput({
       <input
         id="postal-code-input"
         type="text"
-        placeholder="postal-code"
+        placeholder="enter your postal-code"
         value={inputValue}
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}

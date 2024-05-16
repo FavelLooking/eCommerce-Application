@@ -18,7 +18,7 @@ function CountryInput({ selectedCountry, changeCountry }: CountryInputCheck) {
 
   return (
     <div className="registration-input country-select">
-      <p className="registration-input__country-lable">Select country:</p>
+      <p className="registration-input__country-lable">select country:</p>
       <select
         id="country-input"
         value={selectedCountry}

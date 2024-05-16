@@ -22,11 +22,11 @@ function FirstNameInput({ onValidationChange }: InputStatus): JSX.Element {
       className="registration-input first-name-input"
       htmlFor="first-name-input"
     >
-      <p className="registration-input__first-name-lable">First name:</p>
+      <p className="registration-input__first-name-lable">first name:</p>
       <input
         id="first-name-input"
         type="text"
-        placeholder="First name"
+        placeholder="enter your first name"
         value={inputValue}
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}

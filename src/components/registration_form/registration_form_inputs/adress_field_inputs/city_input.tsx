@@ -21,7 +21,7 @@ function CityInput({ onValidationChange }: InputStatus): JSX.Element {
       <input
         id="city-input"
         type="text"
-        placeholder="city"
+        placeholder="enter your city"
         value={inputValue}
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
