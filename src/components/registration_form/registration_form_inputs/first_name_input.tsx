@@ -32,10 +32,7 @@ function FirstNameInput({ onValidationChange }: InputStatus): JSX.Element {
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>
-          must contain at least one character and no special characters or
-          numbers
-        </div>
+        <div style={{ color: 'red' }}>{firstNamePatternRegistration.error}</div>
       )}
     </label>
   );
