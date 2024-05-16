@@ -9,6 +9,7 @@ function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const email: string = event.target.value;
+    console.log(email);
     setInputValue(email);
 
     setIsValid(validationInput(emailPatternRegistration.regex, email));
