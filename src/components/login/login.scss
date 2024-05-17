@@ -1,12 +1,24 @@
 #login-container {
   display: flex;
   flex-direction: column;
-  width: 300px;
-  & > *,
+
+  width: 500px;
   & > label {
     text-transform: capitalize;
-    & > * {
-      margin: 5px 0 0 5px;
-    }
+    display: flex;
+    flex-direction: column;
   }
+  & > * {
+    margin-top: 5px;
+  }
+  @media (max-width: 500px) {
+    width: 80%;
+  }
+}
+
+.input-error {
+  color: red;
+  margin: 0;
+  padding: 0;
+  text-transform: lowercase;
 }
