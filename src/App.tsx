@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ApiService from './services/apiService';
 import Login from './components/login/login_page';
 import RegisterPage from './components/registration_form/registration_form_render';
 
@@ -31,5 +32,16 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+  useEffect(() => {
+    const initializeClient = async () => {
+      try {
+        await ApiService.createAnonymousCart();
+      } catch (error) {
+        throw new Error();
+      }
+    };
+
+    initializeClient();
+  }, []);
   return <RouterProvider router={router} />;
 }
