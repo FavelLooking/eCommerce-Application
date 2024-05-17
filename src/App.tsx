@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
-    path: '404',
+    path: 'not-found',
     element: (
       <div>
         <h1>404 Page Not Found</h1>
