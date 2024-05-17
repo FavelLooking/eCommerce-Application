@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import EmailInput from './registration_form_inputs/email_input';
 import PasswordInput from './registration_form_inputs/password_input';
 import FirstNameInput from './registration_form_inputs/first_name_input';
@@ -62,6 +63,11 @@ function RegisterPage() {
       <button type="submit" disabled={!isFormValid()}>
         register
       </button>
+      <div className="registration-link-wrapper">
+        <Link to="/login" className="registration-link">
+          Already have an account? Login
+        </Link>
+      </div>
     </form>
   );
 }
