@@ -2,15 +2,12 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './components/login/login_page';
 import RegisterPage from './components/registration_form/registration_form_render';
+import Main from './components/main/main_page';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <div>
-        <h1>Main Page</h1>
-      </div>
-    ),
+    element: <Main />,
   },
   {
     path: 'login',
