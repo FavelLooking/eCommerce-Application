@@ -76,9 +76,8 @@ export default function Login() {
       </div>
       <input type="submit" value="Login" />
       <div>
-        New to Comics Shop?
+        <span>New to Comics Shop? </span>
         <Link to="/register" className="login-link">
-          {' '}
           Create an account.
         </Link>
       </div>
