@@ -1,7 +1,12 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from 'react-router-dom';
 import Login from './components/login/login_page';
 import RegisterPage from './components/registration_form/registration_form_render';
+import NotFound from './components/not_found/not_found_page';
 
 const router = createBrowserRouter([
   {
@@ -11,6 +16,7 @@ const router = createBrowserRouter([
         <h1>Main Page</h1>
       </div>
     ),
+    errorElement: <Navigate to="not-found" replace />,
   },
   {
     path: 'login',
@@ -22,11 +28,11 @@ const router = createBrowserRouter([
   },
   {
     path: 'not-found',
-    element: (
-      <div>
-        <h1>404 Page Not Found</h1>
-      </div>
-    ),
+    element: <NotFound />,
+  },
+  {
+    path: '*',
+    element: <Navigate to="not-found" replace />,
   },
 ]);
 
