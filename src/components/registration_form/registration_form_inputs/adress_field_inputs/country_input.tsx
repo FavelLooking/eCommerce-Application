@@ -1,25 +1,33 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
+import {
+  CountryType,
+  CountryInputCheck,
+} from '../../../../types/registration_form_types/registration_form_types';
 
-function CountryInput() {
-  const [selectedCountry, setSelectedCountry] = useState('');
-
+function CountryInput({ selectedCountry, changeCountry }: CountryInputCheck) {
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCountry(event.target.value);
+    const selectedValue = event.target.value as CountryType;
+    changeCountry(selectedValue);
   };
+
+  useEffect(() => {
+    if (!selectedCountry) {
+      changeCountry('GE');
+    }
+  }, [changeCountry, selectedCountry]);
 
   return (
     <div className="registration-input country-select">
-      <p className="registration-input__country-lable">country:</p>
+      <p className="registration-input__country-lable">select country:</p>
       <select
         id="country-input"
         value={selectedCountry}
         onChange={handleCountryChange}
       >
-        <option value="">Select Country</option>
-        <option value="USA">USA</option>
-        <option value="Georgia">Georgia</option>
-        <option value="Russia">Russia</option>
-        <option value="Belarus">Belarus</option>
+        <option value="GE">Georgia</option>
+        <option value="US">USA</option>
+        <option value="RU">Russia</option>
+        <option value="CA">Canada</option>
       </select>
     </div>
   );

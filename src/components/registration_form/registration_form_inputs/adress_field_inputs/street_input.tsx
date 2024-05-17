@@ -1,6 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
+import InputStatus from '../../../../types/registration_form_types/registration_form_interfaces';
+import validationInput from '../../../../utils/registration_form_utils/registration_form_validation_regex';
+import { streetPatternRegistration } from '../../../../utils/registration_form_utils/registration_form_regex';
 
-function StreetInput() {
+function StreetInput({ onValidationChange }: InputStatus) {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -8,8 +11,10 @@ function StreetInput() {
     const street = event.target.value;
     setInputValue(street);
 
-    const streetRegex: RegExp = /\S/;
-    setIsValid(streetRegex.test(street));
+    setIsValid(validationInput(streetPatternRegistration.regex, street));
+    onValidationChange(
+      validationInput(streetPatternRegistration.regex, street)
+    );
   };
 
   return (
@@ -18,11 +23,14 @@ function StreetInput() {
       <input
         id="street-input"
         type="text"
-        placeholder="street"
+        placeholder="enter your street"
         value={inputValue}
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
+      {!isValid && (
+        <div style={{ color: 'red' }}>{streetPatternRegistration.error}</div>
+      )}
     </label>
   );
 }

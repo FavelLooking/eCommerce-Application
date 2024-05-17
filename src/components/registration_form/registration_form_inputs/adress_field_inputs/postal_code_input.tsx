@@ -1,22 +1,52 @@
-import React, { ChangeEvent, useState } from 'react';
-import country from './postal_code_input_country';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import InputStatus from '../../../../types/registration_form_types/registration_form_interfaces';
+import { CountryType } from '../../../../types/registration_form_types/registration_form_types';
+import validationInput from '../../../../utils/registration_form_utils/registration_form_validation_regex';
+import {
+  examplePostalCode,
+  postalCodeFormatsRegistration,
+} from '../../../../utils/registration_form_utils/registration_form_regex';
 
-function PostalCodeInput() {
+function PostalCodeInput({
+  onValidationChange,
+  selectedCountry,
+}: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
+
+  useEffect(() => {
+    if (selectedCountry && inputValue !== '') {
+      setIsValid(
+        validationInput(
+          postalCodeFormatsRegistration[selectedCountry as CountryType],
+          inputValue
+        )
+      );
+      onValidationChange(
+        validationInput(
+          postalCodeFormatsRegistration[selectedCountry as CountryType],
+          inputValue
+        )
+      );
+    }
+  }, [selectedCountry, inputValue, onValidationChange]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const postalCode = event.target.value;
     setInputValue(postalCode);
 
-    const postalCodeFormats = {
-      US: /^\d{5}$/,
-      CA: /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/,
-      RU: /^\d{6}$/,
-      GE: /^\d{4}$/,
-    };
-
-    setIsValid(postalCodeFormats[country].test(postalCode));
+    setIsValid(
+      validationInput(
+        postalCodeFormatsRegistration[selectedCountry as CountryType],
+        postalCode
+      )
+    );
+    onValidationChange(
+      validationInput(
+        postalCodeFormatsRegistration[selectedCountry as CountryType],
+        postalCode
+      )
+    );
   };
 
   return (
@@ -26,13 +56,20 @@ function PostalCodeInput() {
     >
       <p className="registration-input__postal-code-lable">postal code:</p>
       <input
-        id="postal-code-inpur"
+        id="postal-code-input"
         type="text"
-        placeholder="postal-code"
+        placeholder="enter your postal-code"
         value={inputValue}
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
+      {!isValid && (
+        <div style={{ color: 'red' }}>
+          must follow the format for the {selectedCountry} postal code for
+          example: &apos;{examplePostalCode[selectedCountry as CountryType]}
+          &apos;
+        </div>
+      )}
     </label>
   );
 }

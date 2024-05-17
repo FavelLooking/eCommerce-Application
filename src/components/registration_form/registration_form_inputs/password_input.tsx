@@ -1,6 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
+import InputStatus from '../../../types/registration_form_types/registration_form_interfaces';
+import validationInput from '../../../utils/registration_form_utils/registration_form_validation_regex';
+import { passwordPatternRegistration } from '../../../utils/registration_form_utils/registration_form_regex';
 
-function PasswordInput(): JSX.Element {
+function PasswordInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -8,9 +11,10 @@ function PasswordInput(): JSX.Element {
     const password: string = event.target.value;
     setInputValue(password);
 
-    const passwordRegex: RegExp =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    setIsValid(passwordRegex.test(password));
+    setIsValid(validationInput(passwordPatternRegistration.regex, password));
+    onValidationChange(
+      validationInput(passwordPatternRegistration.regex, password)
+    );
   };
 
   return (
@@ -22,11 +26,14 @@ function PasswordInput(): JSX.Element {
       <input
         id="password-input"
         type="text"
-        placeholder="password"
+        placeholder="enter your password"
         value={inputValue}
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
+      {!isValid && (
+        <div style={{ color: 'red' }}>{passwordPatternRegistration.error}</div>
+      )}
     </label>
   );
 }

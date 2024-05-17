@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
-import minAge from './birth_date_input_min_age';
+import InputStatus from '../../../types/registration_form_types/registration_form_interfaces';
+import checkAge from '../../../utils/registration_form_utils/check_age';
 
-function BirthDateInput(): JSX.Element {
+function BirthDateInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -9,16 +10,8 @@ function BirthDateInput(): JSX.Element {
     const currentBirthDate: string = event.target.value;
     setInputValue(currentBirthDate);
 
-    const currentDate = new Date();
-    const birthDate = new Date(currentBirthDate);
-    const diffYears = currentDate.getFullYear() - birthDate.getFullYear();
-    const isOldEnough =
-      diffYears > minAge ||
-      (diffYears === minAge &&
-        currentDate.getMonth() >= birthDate.getMonth() &&
-        currentDate.getDate() >= birthDate.getDate());
-
-    setIsValid(isOldEnough);
+    setIsValid(checkAge(currentBirthDate));
+    onValidationChange(checkAge(currentBirthDate));
   };
 
   return (
@@ -26,7 +19,7 @@ function BirthDateInput(): JSX.Element {
       className="registration-input birth-date-input"
       htmlFor="birth-date-input"
     >
-      <p className="registration-input__birth-date-lable">Date of birthday:</p>
+      <p className="registration-input__birth-date-lable">date of birthday:</p>
       <input
         id="first-name-input"
         type="date"
@@ -35,6 +28,11 @@ function BirthDateInput(): JSX.Element {
         onChange={handleChange}
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
+      {!isValid && (
+        <div style={{ color: 'red' }}>
+          you should be at least 13 years old to register
+        </div>
+      )}
     </label>
   );
 }
