@@ -27,7 +27,7 @@ export const firstNamePatternRegistration = {
 };
 
 export const emailPatternRegistration = {
-  regex: /^\S+@\S+\.\S+$/,
+  regex: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
   error: 'enter correct email',
 };
 
