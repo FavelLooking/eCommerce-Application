@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import ApiService from '../../services/apiService';
+import AuthService from '../../services/authService';
 import './login.scss';
 import { LoginFormFields } from '../../types';
 import { TextInput } from './text_input';
@@ -34,7 +34,7 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<LoginFormFields> = async (data) => {
     const { email, password } = data;
-    await ApiService.loginUser(email, password);
+    await AuthService.loginUser(email, password);
     reset();
   };
 
