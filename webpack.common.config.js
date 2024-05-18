@@ -29,7 +29,10 @@ module.exports = {
     new EslintPlugin({ extensions: ['tsx'] }),
     new Dotenv(),
     new CopyWebpackPlugin({
-      patterns: [{ from: 'src/assets/', to: 'assets' }],
+      patterns: [
+        { from: 'src/assets/', to: 'assets' },
+        { from: '_redirects', to: './' },
+      ],
     }),
   ],
   module: {
