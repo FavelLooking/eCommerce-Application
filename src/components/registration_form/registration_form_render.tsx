@@ -12,7 +12,7 @@ import BillingCountryInput from './registration_form_inputs/billing_adress_field
 import './registration_form.scss';
 
 function RegisterPage() {
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const [billingSelectedCountry, billingSetSelectedCountry] = useState('');
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
   const [firstNameValid, setFirstNameValid] = useState(false);
@@ -22,8 +22,8 @@ function RegisterPage() {
   const [billingCityValid, billingSetCityValid] = useState(false);
   const [billingPostalCodeValid, billingSetPostalCodeValid] = useState(false);
 
-  const changeCountry = (country: string) => {
-    setSelectedCountry(country);
+  const billingChangeCountry = (country: string) => {
+    billingSetSelectedCountry(country);
   };
 
   const handleRegister = () => {};
@@ -53,21 +53,22 @@ function RegisterPage() {
           <BillingStreetInput onValidationChange={billingSetStreetValid} />
           <BillingCityInput onValidationChange={billingSetCityValid} />
           <BillingCountryInput
-            selectedCountry={selectedCountry}
-            changeCountry={changeCountry}
+            selectedCountry={billingSelectedCountry}
+            changeCountry={billingChangeCountry}
           />
           <BillingPostalCodeInput
             onValidationChange={billingSetPostalCodeValid}
-            selectedCountry={selectedCountry}
+            selectedCountry={billingSelectedCountry}
           />
         </div>
+        <div className="registration-input_shipping-address-field"> </div>
       </div>
       <button type="submit" disabled={!isFormValid()}>
         register
       </button>
       <div className="registration-link-wrapper">
         <Link to="/login" className="registration-link">
-          Already have an account? Login
+          already have an account? login
         </Link>
       </div>
     </form>
