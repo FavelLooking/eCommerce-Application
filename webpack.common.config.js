@@ -10,6 +10,7 @@ module.exports = {
     main: path.resolve(__dirname, './src/index.tsx'),
   },
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
   },

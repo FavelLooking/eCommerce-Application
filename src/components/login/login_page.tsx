@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import './login.scss';
 import { LoginFormFields } from '../../types';
 import { TextInput } from './text_input';
