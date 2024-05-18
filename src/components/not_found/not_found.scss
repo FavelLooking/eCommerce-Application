@@ -1,0 +1,32 @@
+.error-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-text {
+  margin: 5px 0 0 0;
+  &:hover {
+    cursor: default;
+  }
+}
+
+.error-big {
+  font-size: 1.5rem;
+}
+
+.error-small {
+  font-size: 1rem;
+}
+
+.error-link {
+  color: white;
+  padding: 10px 20px;
+  background: rgb(28, 206, 28);
+  margin-top: 20px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

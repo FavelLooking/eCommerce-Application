@@ -1,0 +1,22 @@
+.header {
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.header-logo {
+  height: 40px;
+}
+
+.header-links {
+  display: flex;
+  & > * {
+    margin: 5px;
+    text-decoration: none;
+    color: black;
+  }
+}

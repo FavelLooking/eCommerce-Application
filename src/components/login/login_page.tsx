@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import AuthService from '../../services/authService';
 import './login.scss';
 import { LoginFormFields } from '../../types';
@@ -15,7 +16,7 @@ import {
 } from '../../utils/constants';
 import validateInput from '../../utils/validation';
 
-export default function Login() {
+export default function LoginPage() {
   const [hidden, setHidden] = useState(false);
   const formRef = useRef(null);
   const {
@@ -39,44 +40,56 @@ export default function Login() {
   };
 
   return (
-    <form id="login-container" ref={formRef} onSubmit={handleSubmit(onSubmit)}>
-      <TextInput
-        id="login-email"
-        {...register('email', {
-          required: 'email is required',
-          validate: (value) => validateInput([emailPattern], value),
-        })}
-      />
-      {errors.email && (
-        <div className="input-error">{errors.email.message}</div>
-      )}
-      <TextInput
-        id="login-password"
-        type={hidden ? 'password' : 'text'}
-        {...register('password', {
-          required: 'password is required',
-          validate: (value) =>
-            validateInput(
-              [
-                textLengthPattern,
-                textLowerPattern,
-                textNumberPattern,
-                textSpacesPattern,
-                textSymbolPattern,
-                textUpperPattern,
-              ],
-              value
-            ),
-        })}
-      />
-      {errors.password && (
-        <div className="input-error">{errors.password.message}</div>
-      )}
-      <div id="login-checkbox">
-        Hide password
-        <input type="checkbox" onClick={changePasswordVisability} />
-      </div>
-      <input type="submit" value="Login" />
-    </form>
+    <div className="login-wrapper">
+      <form
+        id="login-container"
+        ref={formRef}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <TextInput
+          id="login-email"
+          {...register('email', {
+            required: 'email is required',
+            validate: (value) => validateInput([emailPattern], value),
+          })}
+        />
+        {errors.email && (
+          <div className="input-error">{errors.email.message}</div>
+        )}
+        <TextInput
+          id="login-password"
+          type={hidden ? 'password' : 'text'}
+          {...register('password', {
+            required: 'password is required',
+            validate: (value) =>
+              validateInput(
+                [
+                  textLengthPattern,
+                  textLowerPattern,
+                  textNumberPattern,
+                  textSpacesPattern,
+                  textSymbolPattern,
+                  textUpperPattern,
+                ],
+                value
+              ),
+          })}
+        />
+        {errors.password && (
+          <div className="input-error">{errors.password.message}</div>
+        )}
+        <div id="login-checkbox">
+          Hide password
+          <input type="checkbox" onClick={changePasswordVisability} />
+        </div>
+        <input type="submit" value="Login" />
+        <div>
+          <span>New to Comics Shop? </span>
+          <Link to="/register" className="login-link">
+            Create an account.
+          </Link>
+        </div>
+      </form>
+    </div>
   );
 }
