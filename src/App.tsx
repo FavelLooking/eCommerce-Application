@@ -7,16 +7,12 @@ import {
 import Login from './components/login/login_page';
 import RegisterPage from './components/registration_form/registration_form_render';
 import NotFound from './components/not_found/not_found_page';
+import Main from './components/main/main_page';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <div>
-        <h1>Main Page</h1>
-      </div>
-    ),
-    errorElement: <Navigate to="not-found" replace />,
+    element: <Main />,
   },
   {
     path: 'login',

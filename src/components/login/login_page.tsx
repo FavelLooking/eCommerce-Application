@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import './login.scss';
 import { LoginFormFields } from '../../types';
 import { TextInput } from './text_input';
@@ -74,6 +75,12 @@ export default function Login() {
         <input type="checkbox" onClick={changePasswordVisability} />
       </div>
       <input type="submit" value="Login" />
+      <div>
+        <span>New to Comics Shop? </span>
+        <Link to="/register" className="login-link">
+          Create an account.
+        </Link>
+      </div>
     </form>
   );
 }
