@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './main.scss';
 
-export default function Main() {
+export default function MainPage() {
   return (
     <div className="main-wrapper">
       <div className="main-link-wrapper">

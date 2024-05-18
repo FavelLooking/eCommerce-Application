@@ -8,11 +8,11 @@ export default function Header() {
       <Link to="/">
         <img src="assets/logo.png" className="header-logo" alt="Logo" />
       </Link>
-      <div className='header-links'>
+      <div className="header-links">
         <NavLink to="/">Home</NavLink>
         <NavLink to="login">Login</NavLink>
         <NavLink to="register">Register</NavLink>
-      </div>        
+      </div>
     </div>
   );
 }

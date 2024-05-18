@@ -1,10 +1,15 @@
 import React from 'react';
-import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router-dom';
-import Login from './components/login/login_page';
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouterProvider,
+} from 'react-router-dom';
+import LoginPage from './components/login/login_page';
 import RegisterPage from './components/registration_form/registration_form_render';
 import Header from './components/header';
-import Main from './components/main/main_page';
-import NotFound from './components/not_found/not_found_page';
+import MainPage from './components/main/main_page';
+import NotFoundPage from './components/not_found/not_found_page';
 
 function Root() {
   return (
@@ -19,15 +24,15 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
-    errorElement: <NotFound/>,
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: '/',
-        element: <Main />,
+        element: <MainPage />,
       },
       {
         path: 'login',
-        element: <Login />,
+        element: <LoginPage />,
       },
       {
         path: 'register',
@@ -37,7 +42,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'not-found',
-    element: <NotFound />,
+    element: <NotFoundPage />,
   },
   {
     path: '*',

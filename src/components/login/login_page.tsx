@@ -15,7 +15,7 @@ import {
 } from '../../utils/constants';
 import validateInput from '../../utils/validation';
 
-export default function Login() {
+export default function LoginPage() {
   const [hidden, setHidden] = useState(false);
   const formRef = useRef(null);
   const {
@@ -80,6 +80,12 @@ export default function Login() {
           <input type="checkbox" onClick={changePasswordVisability} />
         </div>
         <input type="submit" value="Login" />
+        <div>
+          <span>New to Comics Shop? </span>
+          <Link to="/register" className="login-link">
+            Create an account.
+          </Link>
+        </div>
       </form>
     </div>
   );

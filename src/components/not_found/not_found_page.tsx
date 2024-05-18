@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './not_found.scss';
 
-export default function NotFound() {
+export default function NotFoundPage() {
   return (
     <div className="error-wrapper">
       <p className="error-text error-big">Oops! Looks like you are lost</p>
