@@ -17,10 +17,12 @@ function CountryInput({ selectedCountry, changeCountry }: CountryInputCheck) {
   }, [changeCountry, selectedCountry]);
 
   return (
-    <div className="registration-input country-select">
-      <p className="registration-input__country-lable">select country:</p>
+    <div className="registration-input billing-country-select">
+      <p className="registration-input__billing-country-lable">
+        select country:
+      </p>
       <select
-        id="country-input"
+        id="billing-country-input"
         value={selectedCountry}
         onChange={handleCountryChange}
       >

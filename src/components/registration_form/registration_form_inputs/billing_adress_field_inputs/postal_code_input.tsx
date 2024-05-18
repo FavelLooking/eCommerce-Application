@@ -51,12 +51,12 @@ function PostalCodeInput({
 
   return (
     <label
-      className="registration-input postal-code-input"
-      htmlFor="postal-code-input"
+      className="registration-input billing-postal-code-input"
+      htmlFor="billing-postal-code-input"
     >
       <p className="registration-input__postal-code-lable">postal code:</p>
       <input
-        id="postal-code-input"
+        id="billing-postal-code-input"
         type="text"
         placeholder="enter your postal-code"
         value={inputValue}

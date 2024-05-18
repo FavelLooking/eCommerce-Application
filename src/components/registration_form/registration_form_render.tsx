@@ -5,10 +5,10 @@ import PasswordInput from './registration_form_inputs/password_input';
 import FirstNameInput from './registration_form_inputs/first_name_input';
 import BirthDateInput from './registration_form_inputs/birth_date_input';
 import LastNameInput from './registration_form_inputs/last_name_input';
-import StreetInput from './registration_form_inputs/adress_field_inputs/street_input';
-import CityInput from './registration_form_inputs/adress_field_inputs/city_input';
-import PostalCodeInput from './registration_form_inputs/adress_field_inputs/postal_code_input';
-import CountryInput from './registration_form_inputs/adress_field_inputs/country_input';
+import StreetInput from './registration_form_inputs/billing_adress_field_inputs/street_input';
+import CityInput from './registration_form_inputs/billing_adress_field_inputs/city_input';
+import PostalCodeInput from './registration_form_inputs/billing_adress_field_inputs/postal_code_input';
+import CountryInput from './registration_form_inputs/billing_adress_field_inputs/country_input';
 import './registration_form.scss';
 
 function RegisterPage() {
@@ -46,8 +46,10 @@ function RegisterPage() {
       <LastNameInput onValidationChange={setLastNameValid} />
       <BirthDateInput onValidationChange={setBirthDateValid} />
       <div className="registration-input adress-field">
-        <p className="registration-input__adress-field-title">adress field:</p>
-        <div className="registration-input__adress-field">
+        <p className="registration-input__billing-adress-field-title">
+          billing adress field:
+        </p>
+        <div className="registration-input__billing-adress-field">
           <StreetInput onValidationChange={setStreetValid} />
           <CityInput onValidationChange={setCityValid} />
           <CountryInput

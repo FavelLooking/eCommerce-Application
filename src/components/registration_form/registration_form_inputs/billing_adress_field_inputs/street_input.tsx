@@ -18,10 +18,13 @@ function StreetInput({ onValidationChange }: InputStatus) {
   };
 
   return (
-    <label className="registration-input street-input" htmlFor="street-input">
-      <p className="registration-input__street-lable">street:</p>
+    <label
+      className="registration-input billing-street-input"
+      htmlFor="billing-street-input"
+    >
+      <p className="registration-input__billing-street-lable">street:</p>
       <input
-        id="street-input"
+        id="billing-street-input"
         type="text"
         placeholder="enter your street"
         value={inputValue}

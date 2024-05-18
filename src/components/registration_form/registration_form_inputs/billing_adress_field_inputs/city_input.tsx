@@ -16,10 +16,13 @@ function CityInput({ onValidationChange }: InputStatus): JSX.Element {
   };
 
   return (
-    <label className="registration-input city-input" htmlFor="city-input">
-      <p className="registration-input__city-lable">city:</p>
+    <label
+      className="registration-input billing-city-input"
+      htmlFor="billing-city-input"
+    >
+      <p className="registration-input__billing-city-lable">city:</p>
       <input
-        id="city-input"
+        id="billing-city-input"
         type="text"
         placeholder="enter your city"
         value={inputValue}
