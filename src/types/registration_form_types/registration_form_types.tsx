@@ -1,6 +1,11 @@
 export type CountryType = 'GE' | 'CA' | 'RU' | 'US';
 
-export type CountryInputCheck = {
+export type CountryInputCheckBilling = {
   selectedCountry: string;
-  changeCountry: (str: string) => void;
+  billingChangeCountry: (str: string) => void;
+};
+
+export type CountryInputCheckShipping = {
+  selectedCountry: string;
+  shippingChangeCountry: (str: string) => void;
 };

@@ -1,31 +1,31 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import {
   CountryType,
-  CountryInputCheckBilling,
+  CountryInputCheckShipping,
 } from '../../../../types/registration_form_types/registration_form_types';
 
-function BillingCountryInput({
+function ShippingCountryInput({
   selectedCountry,
-  billingChangeCountry,
-}: CountryInputCheckBilling) {
+  shippingChangeCountry,
+}: CountryInputCheckShipping) {
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value as CountryType;
-    billingChangeCountry(selectedValue);
+    shippingChangeCountry(selectedValue);
   };
 
   useEffect(() => {
     if (!selectedCountry) {
-      billingChangeCountry('GE');
+      shippingChangeCountry('GE');
     }
-  }, [billingChangeCountry, selectedCountry]);
+  }, [shippingChangeCountry, selectedCountry]);
 
   return (
-    <div className="registration-input billing-country-select">
-      <p className="registration-input__billing-country-lable">
+    <div className="registration-input shipping-country-select">
+      <p className="registration-input__shipping-country-lable">
         select country:
       </p>
       <select
-        id="billing-country-input"
+        id="shipping-country-input"
         value={selectedCountry}
         onChange={handleCountryChange}
       >
@@ -38,4 +38,4 @@ function BillingCountryInput({
   );
 }
 
-export default BillingCountryInput;
+export default ShippingCountryInput;
