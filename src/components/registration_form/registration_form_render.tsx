@@ -18,8 +18,8 @@ function RegisterPage() {
   const [firstNameValid, setFirstNameValid] = useState(false);
   const [lastNameValid, setLastNameValid] = useState(false);
   const [birthDateValid, setBirthDateValid] = useState(false);
-  const [streetValid, setStreetValid] = useState(false);
-  const [cityValid, setCityValid] = useState(false);
+  const [billingStreetValid, billingSetStreetValid] = useState(false);
+  const [billingCityValid, billingSetCityValid] = useState(false);
   const [postalCodeValid, setPostalCodeValid] = useState(false);
 
   const changeCountry = (country: string) => {
@@ -33,8 +33,8 @@ function RegisterPage() {
     firstNameValid &&
     lastNameValid &&
     birthDateValid &&
-    streetValid &&
-    cityValid &&
+    billingStreetValid &&
+    billingCityValid &&
     postalCodeValid &&
     emailValid;
 
@@ -50,8 +50,8 @@ function RegisterPage() {
           billing adress field:
         </p>
         <div className="registration-input__billing-adress-field">
-          <StreetInput onValidationChange={setStreetValid} />
-          <CityInput onValidationChange={setCityValid} />
+          <StreetInput onValidationChange={billingSetStreetValid} />
+          <CityInput onValidationChange={billingSetCityValid} />
           <CountryInput
             selectedCountry={selectedCountry}
             changeCountry={changeCountry}
