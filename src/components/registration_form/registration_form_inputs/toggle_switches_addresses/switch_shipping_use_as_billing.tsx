@@ -9,16 +9,16 @@ function SwitchDefaultBilling() {
 
   return (
     <label
-      className="registration-input__default-billing-switcher"
-      htmlFor="defaultBilling"
+      className="registration-input__billing-as-shipping"
+      htmlFor="billingAsShipping"
     >
       <input
         type="checkbox"
-        id="defaultBilling"
+        id="billingAsShipping"
         checked={isOn}
         onChange={handleToggle}
       />
-      default billing
+      also use as billing address
     </label>
   );
 }
