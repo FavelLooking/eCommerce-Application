@@ -3,7 +3,7 @@ import InputStatus from '../../../../types/registration_form_types/registration_
 import validationInput from '../../../../utils/registration_form_utils/registration_form_validation_regex';
 import { streetPatternRegistration } from '../../../../utils/registration_form_utils/registration_form_regex';
 
-function StreetInput({ onValidationChange }: InputStatus) {
+function BillingStreetInput({ onValidationChange }: InputStatus) {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -38,4 +38,4 @@ function StreetInput({ onValidationChange }: InputStatus) {
   );
 }
 
-export default StreetInput;
+export default BillingStreetInput;

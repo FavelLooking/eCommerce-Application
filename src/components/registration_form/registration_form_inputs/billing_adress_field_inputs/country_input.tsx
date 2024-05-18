@@ -4,7 +4,10 @@ import {
   CountryInputCheck,
 } from '../../../../types/registration_form_types/registration_form_types';
 
-function CountryInput({ selectedCountry, changeCountry }: CountryInputCheck) {
+function BillingCountryInput({
+  selectedCountry,
+  changeCountry,
+}: CountryInputCheck) {
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value as CountryType;
     changeCountry(selectedValue);
@@ -35,4 +38,4 @@ function CountryInput({ selectedCountry, changeCountry }: CountryInputCheck) {
   );
 }
 
-export default CountryInput;
+export default BillingCountryInput;

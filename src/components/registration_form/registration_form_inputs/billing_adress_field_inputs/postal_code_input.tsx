@@ -7,7 +7,7 @@ import {
   postalCodeFormatsRegistration,
 } from '../../../../utils/registration_form_utils/registration_form_regex';
 
-function PostalCodeInput({
+function BillingPostalCodeInput({
   onValidationChange,
   selectedCountry,
 }: InputStatus): JSX.Element {
@@ -74,4 +74,4 @@ function PostalCodeInput({
   );
 }
 
-export default PostalCodeInput;
+export default BillingPostalCodeInput;
