@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 function SwitchDefaultBilling() {
-  const [isOn, setIsOn] = useState(false);
+  const [isOnBilling, setIsOnBilling] = useState(false);
 
   const handleToggle = () => {
-    setIsOn(!isOn);
+    setIsOnBilling(!isOnBilling);
   };
 
   return (
@@ -15,7 +15,7 @@ function SwitchDefaultBilling() {
       <input
         type="checkbox"
         id="defaultBilling"
-        checked={isOn}
+        checked={isOnBilling}
         onChange={handleToggle}
       />
       set as default address

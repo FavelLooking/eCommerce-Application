@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 
-function SwitchUseAsShipping() {
-  const [isOn, setIsOn] = useState(false);
+function SwitchDefaultShipping() {
+  const [isOnShipping, setIsOnShipping] = useState(false);
 
   const handleToggle = () => {
-    setIsOn(!isOn);
+    setIsOnShipping(!isOnShipping);
   };
 
   return (
     <label
-      className="registration-input__billing-as-shipping"
-      htmlFor="billingAsShipping"
+      className="registration-input__default-shipping-switcher"
+      htmlFor="defaultShipping"
     >
       <input
         type="checkbox"
-        id="billingAsShipping"
-        checked={isOn}
+        id="defaultShipping"
+        checked={isOnShipping}
         onChange={handleToggle}
       />
       set as default address
@@ -23,4 +23,4 @@ function SwitchUseAsShipping() {
   );
 }
 
-export default SwitchUseAsShipping;
+export default SwitchDefaultShipping;

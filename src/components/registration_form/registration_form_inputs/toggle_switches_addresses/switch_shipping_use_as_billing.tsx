@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-function SwitchDefaultBilling() {
-  const [isOn, setIsOn] = useState(false);
+function SwitchUseAsShipping() {
+  const [isOnAsShipping, setIsOnAsShipping] = useState(false);
 
   const handleToggle = () => {
-    setIsOn(!isOn);
+    setIsOnAsShipping(!isOnAsShipping);
   };
 
   return (
@@ -15,7 +15,7 @@ function SwitchDefaultBilling() {
       <input
         type="checkbox"
         id="billingAsShipping"
-        checked={isOn}
+        checked={isOnAsShipping}
         onChange={handleToggle}
       />
       also use as billing address
@@ -23,4 +23,4 @@ function SwitchDefaultBilling() {
   );
 }
 
-export default SwitchDefaultBilling;
+export default SwitchUseAsShipping;

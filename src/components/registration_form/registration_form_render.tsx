@@ -16,6 +16,7 @@ import ShippingStreetInput from './registration_form_inputs/shipping_adress_fiel
 import ShippingCountryInput from './registration_form_inputs/shipping_adress_field_inputs/shipping_country_input';
 import SwitchDefaultBilling from './registration_form_inputs/toggle_switches_addresses/switch_default_billing';
 import SwitchUseAsShipping from './registration_form_inputs/toggle_switches_addresses/switch_shipping_use_as_billing';
+import SwitchDefaultShipping from './registration_form_inputs/toggle_switches_addresses/switch_default_shipping';
 
 function RegisterPage() {
   const [billingSelectedCountry, billingSetSelectedCountry] = useState('');
@@ -84,7 +85,7 @@ function RegisterPage() {
             />
           </div>
           <div className="registration-input__switcher-wrapper">
-            <SwitchDefaultBilling />
+            <SwitchDefaultShipping />
             <SwitchUseAsShipping />
           </div>
         </div>
