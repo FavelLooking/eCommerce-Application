@@ -5,10 +5,10 @@ import PasswordInput from './registration_form_inputs/password_input';
 import FirstNameInput from './registration_form_inputs/first_name_input';
 import BirthDateInput from './registration_form_inputs/birth_date_input';
 import LastNameInput from './registration_form_inputs/last_name_input';
-import BillingStreetInput from './registration_form_inputs/billing_adress_field_inputs/street_input';
-import BillingCityInput from './registration_form_inputs/billing_adress_field_inputs/city_input';
-import BillingPostalCodeInput from './registration_form_inputs/billing_adress_field_inputs/postal_code_input';
-import BillingCountryInput from './registration_form_inputs/billing_adress_field_inputs/country_input';
+import BillingStreetInput from './registration_form_inputs/billing_adress_field_inputs/billing_street_input';
+import BillingCityInput from './registration_form_inputs/billing_adress_field_inputs/billing_city_input';
+import BillingPostalCodeInput from './registration_form_inputs/billing_adress_field_inputs/billing_postal_code_input';
+import BillingCountryInput from './registration_form_inputs/billing_adress_field_inputs/billing_country_input';
 import './registration_form.scss';
 
 function RegisterPage() {
