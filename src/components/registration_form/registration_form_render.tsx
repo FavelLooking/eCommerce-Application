@@ -32,6 +32,13 @@ function RegisterPage() {
   const [shippingCityValid, shippingSetCityValid] = useState(false);
   const [shippingPostalCodeValid, shippingSetPostalCodeValid] = useState(false);
   const [shippingStreetValid, shippingSetStreetValid] = useState(false);
+  const [switchStateDefaultShipping, setSwitchStateDefaultShipping] =
+    useState(false);
+
+  const shippingDefaultStatus = (newState: boolean) => {
+    console.log('shipping default status :', newState);
+    setSwitchStateDefaultShipping(newState);
+  };
 
   const billingChangeCountry = (country: string) => {
     billingSetSelectedCountry(country);
@@ -85,7 +92,10 @@ function RegisterPage() {
             />
           </div>
           <div className="registration-input__switcher-wrapper">
-            <SwitchDefaultShipping />
+            <SwitchDefaultShipping
+              shippingDefaultStatus={shippingDefaultStatus}
+              newState={switchStateDefaultShipping}
+            />
             <SwitchUseAsShipping />
           </div>
         </div>

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { ShippingDefaultCheck } from '../../../../types/registration_form_types/registration_form_types';
 
-function SwitchDefaultShipping() {
-  const [isOnShipping, setIsOnShipping] = useState(false);
-
+function SwitchDefaultShipping({
+  shippingDefaultStatus,
+  newState,
+}: ShippingDefaultCheck) {
   const handleToggle = () => {
-    setIsOnShipping(!isOnShipping);
+    shippingDefaultStatus(!newState);
   };
 
   return (
@@ -15,7 +17,7 @@ function SwitchDefaultShipping() {
       <input
         type="checkbox"
         id="defaultShipping"
-        checked={isOnShipping}
+        checked={newState}
         onChange={handleToggle}
       />
       set as default address

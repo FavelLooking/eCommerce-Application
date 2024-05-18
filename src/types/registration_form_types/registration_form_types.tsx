@@ -9,3 +9,8 @@ export type CountryInputCheckShipping = {
   selectedCountry: string;
   shippingChangeCountry: (str: string) => void;
 };
+
+export type ShippingDefaultCheck = {
+  shippingDefaultStatus: (newState: boolean) => void;
+  newState: boolean;
+};
