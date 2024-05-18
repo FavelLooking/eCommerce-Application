@@ -1,3 +1,11 @@
+.login-wrapper {
+  width: 100%;
+  height: calc(100% - 55px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #login-container {
   display: flex;
   flex-direction: column;

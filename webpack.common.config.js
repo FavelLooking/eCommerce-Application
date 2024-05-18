@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -11,6 +12,7 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -22,11 +24,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/index.html'),
       filename: 'index.html',
-      favicon: path.join(__dirname, 'src', 'favicon.ico'),
     }),
     new CleanWebpackPlugin(),
     new EslintPlugin({ extensions: ['tsx'] }),
     new Dotenv(),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'src/assets/', to: 'assets' }],
+    }),
   ],
   module: {
     rules: [
