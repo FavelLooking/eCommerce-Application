@@ -104,6 +104,7 @@ function RegisterPage() {
               selectedCountry={billingSelectedCountry}
             />
           </div>
+          <SwitchDefaultBilling />
         </div>
       </div>
       <button type="submit" disabled={!isFormValid()}>
