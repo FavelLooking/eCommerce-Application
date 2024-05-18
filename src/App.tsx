@@ -1,29 +1,37 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import Login from './components/login/login_page';
 import RegisterPage from './components/registration_form/registration_form_render';
+import Header from './components/header';
 import Main from './components/main/main_page';
+
+function Root() {
+  return (
+    <div className="app-container">
+      <Header />
+      <Outlet />
+    </div>
+  );
+}
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Main />,
-  },
-  {
-    path: 'login',
-    element: <Login />,
-  },
-  {
-    path: 'register',
-    element: <RegisterPage />,
-  },
-  {
-    path: 'not-found',
-    element: (
-      <div>
-        <h1>404 Page Not Found</h1>
-      </div>
-    ),
+    element: <Root />,
+    children: [
+      {
+        path: '/',
+        element: <Main />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'register',
+        element: <RegisterPage />,
+      },
+    ],
   },
 ]);
 
