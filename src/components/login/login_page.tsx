@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import AuthService from '../../services/authService';
 import './login.scss';
 import { LoginFormFields } from '../../types';
 import { TextInput } from './text_input';
@@ -32,7 +33,9 @@ export default function LoginPage() {
     setHidden(!hidden);
   };
 
-  const onSubmit: SubmitHandler<LoginFormFields> = () => {
+  const onSubmit: SubmitHandler<LoginFormFields> = async (data) => {
+    const { email, password } = data;
+    await AuthService.loginUser(email, password);
     reset();
   };
 

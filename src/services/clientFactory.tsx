@@ -48,6 +48,13 @@ class ClientFactory {
       projectKey: AuthManager.getProjectKey(),
     });
   }
+
+  static createApiRootForAnonymous() {
+    const clientAnonymous = this.getClient('anonymous');
+    return createApiBuilderFromCtpClient(clientAnonymous).withProjectKey({
+      projectKey: AuthManager.getProjectKey(),
+    });
+  }
 }
 
 export default ClientFactory;

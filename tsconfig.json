@@ -7,5 +7,9 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*", ".eslintrc.js"]
+  "include": [
+    "src/**/*",
+    ".eslintrc.js",
+    "../../commerce-tools-SDK/apiService.tsx"
+  ]
 }
