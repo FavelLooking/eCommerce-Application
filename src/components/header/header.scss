@@ -13,10 +13,10 @@
 }
 
 .header-links {
-    display: flex;
-    & > * {
-        margin: 5px;
-        text-decoration: none;
-        color:black;
-    }
+  display: flex;
+  & > * {
+    margin: 5px;
+    text-decoration: none;
+    color: black;
+  }
 }
