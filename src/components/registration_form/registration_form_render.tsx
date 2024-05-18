@@ -45,7 +45,7 @@ function RegisterPage() {
       <FirstNameInput onValidationChange={setFirstNameValid} />
       <LastNameInput onValidationChange={setLastNameValid} />
       <BirthDateInput onValidationChange={setBirthDateValid} />
-      <div className="registration-input adress-field">
+      <div className="registration-input billing-adress-field">
         <p className="registration-input__billing-adress-field-title">
           billing adress field:
         </p>
@@ -61,7 +61,11 @@ function RegisterPage() {
             selectedCountry={billingSelectedCountry}
           />
         </div>
-        <div className="registration-input_shipping-address-field"> </div>
+      </div>
+      <div className="registration-input shipping-address-field">
+        <p className="registration-input__shipping-adress-field-title">
+          shipping adress field:
+        </p>
       </div>
       <button type="submit" disabled={!isFormValid()}>
         register
