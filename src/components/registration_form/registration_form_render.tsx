@@ -14,6 +14,7 @@ import ShippingCityInput from './registration_form_inputs/shipping_adress_field_
 import ShippingPostalCodeInput from './registration_form_inputs/shipping_adress_field_inputs/shipping_postal_code_input';
 import ShippingStreetInput from './registration_form_inputs/shipping_adress_field_inputs/shipping_street_input';
 import ShippingCountryInput from './registration_form_inputs/shipping_adress_field_inputs/shipping_country_input';
+import SwitchDefaultBilling from './registration_form_inputs/toggle_switches_addresses/switch_default_billing';
 
 function RegisterPage() {
   const [billingSelectedCountry, billingSetSelectedCountry] = useState('');
@@ -65,23 +66,6 @@ function RegisterPage() {
       </div>
       <BirthDateInput onValidationChange={setBirthDateValid} />
       <div className="registration-input__wrapper">
-        <div className="registration-input billing-adress-field">
-          <p className="registration-input__billing-adress-field-title">
-            billing adress field:
-          </p>
-          <div className="registration-input__billing-adress-field">
-            <BillingStreetInput onValidationChange={billingSetStreetValid} />
-            <BillingCityInput onValidationChange={billingSetCityValid} />
-            <BillingCountryInput
-              selectedCountry={billingSelectedCountry}
-              billingChangeCountry={billingChangeCountry}
-            />
-            <BillingPostalCodeInput
-              onValidationChange={billingSetPostalCodeValid}
-              selectedCountry={billingSelectedCountry}
-            />
-          </div>
-        </div>
         <div className="registration-input shipping-address-field">
           <p className="registration-input__shipping-adress-field-title">
             shipping adress field:
@@ -98,6 +82,24 @@ function RegisterPage() {
               selectedCountry={shippingSelectedCountry}
             />
           </div>
+        </div>
+        <div className="registration-input billing-adress-field">
+          <p className="registration-input__billing-adress-field-title">
+            billing adress field:
+          </p>
+          <div className="registration-input__billing-adress-field">
+            <BillingStreetInput onValidationChange={billingSetStreetValid} />
+            <BillingCityInput onValidationChange={billingSetCityValid} />
+            <BillingCountryInput
+              selectedCountry={billingSelectedCountry}
+              billingChangeCountry={billingChangeCountry}
+            />
+            <BillingPostalCodeInput
+              onValidationChange={billingSetPostalCodeValid}
+              selectedCountry={billingSelectedCountry}
+            />
+          </div>
+          <SwitchDefaultBilling />
         </div>
       </div>
       <button type="submit" disabled={!isFormValid()}>
