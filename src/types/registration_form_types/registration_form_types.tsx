@@ -19,3 +19,8 @@ export type BillingDefaultCheck = {
   billingDefaultStatus: (newState: boolean) => void;
   newState: boolean;
 };
+
+export type UseAsShippingCheck = {
+  asShipingStatus: (newState: boolean) => void;
+  newState: boolean;
+};

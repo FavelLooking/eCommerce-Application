@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { UseAsShippingCheck } from '../../../../types/registration_form_types/registration_form_types';
 
-function SwitchUseAsShipping() {
-  const [isOnAsShipping, setIsOnAsShipping] = useState(false);
-
+function SwitchUseAsShipping({
+  asShipingStatus,
+  newState,
+}: UseAsShippingCheck) {
   const handleToggle = () => {
-    setIsOnAsShipping(!isOnAsShipping);
+    asShipingStatus(!newState);
   };
 
   return (
@@ -15,7 +17,7 @@ function SwitchUseAsShipping() {
       <input
         type="checkbox"
         id="billingAsShipping"
-        checked={isOnAsShipping}
+        checked={newState}
         onChange={handleToggle}
       />
       also use as billing address

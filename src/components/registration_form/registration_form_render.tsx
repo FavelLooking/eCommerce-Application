@@ -36,14 +36,25 @@ function RegisterPage() {
     useState(false);
   const [switchStateDefaultBilling, setSwitchStateDefaultBilling] =
     useState(false);
+  const [switchStateUseAsShipping, setSwitchStateUseAsShipping] =
+    useState(false);
+
+  const asShipingStatus = (newState: boolean) => {
+    console.log(
+      'shipping default status (switchStateDefaultBilling):',
+      switchStateUseAsShipping
+    );
+    console.log('shipping default status (newState):', newState);
+    setSwitchStateUseAsShipping(newState);
+  };
 
   const billingDefaultStatus = (newState: boolean) => {
-    setSwitchStateDefaultBilling(newState);
     console.log(
       'shipping default status (switchStateDefaultBilling):',
       switchStateDefaultBilling
     );
     console.log('shipping default status (newState):', newState);
+    setSwitchStateDefaultBilling(newState);
   };
 
   const shippingDefaultStatus = (newState: boolean) => {
@@ -111,7 +122,10 @@ function RegisterPage() {
               shippingDefaultStatus={shippingDefaultStatus}
               newState={switchStateDefaultShipping}
             />
-            <SwitchUseAsShipping />
+            <SwitchUseAsShipping
+              asShipingStatus={asShipingStatus}
+              newState={switchStateUseAsShipping}
+            />
           </div>
         </div>
         <div className="registration-input billing-adress-field">
