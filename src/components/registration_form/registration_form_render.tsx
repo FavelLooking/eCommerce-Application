@@ -106,7 +106,7 @@ function RegisterPage() {
       <div className="registration-input__wrapper">
         <div className="registration-input shipping-address-field">
           <p className="registration-input__shipping-adress-field-title">
-            shipping adress field:
+            shipping address field:
           </p>
           <div className="registration-input__billing-adress-field">
             <ShippingCityInput onValidationChange={shippingSetCityValid} />
@@ -131,27 +131,29 @@ function RegisterPage() {
             />
           </div>
         </div>
-        <div className="registration-input billing-adress-field">
-          <p className="registration-input__billing-adress-field-title">
-            billing adress field:
-          </p>
-          <div className="registration-input__billing-adress-field">
-            <BillingStreetInput onValidationChange={billingSetStreetValid} />
-            <BillingCityInput onValidationChange={billingSetCityValid} />
-            <BillingCountryInput
-              selectedCountry={billingSelectedCountry}
-              billingChangeCountry={billingChangeCountry}
-            />
-            <BillingPostalCodeInput
-              onValidationChange={billingSetPostalCodeValid}
-              selectedCountry={billingSelectedCountry}
+        {!switchStateUseAsShipping && (
+          <div className="registration-input billing-adress-field">
+            <p className="registration-input__billing-adress-field-title">
+              billing address field:
+            </p>
+            <div className="registration-input__billing-adress-field">
+              <BillingStreetInput onValidationChange={billingSetStreetValid} />
+              <BillingCityInput onValidationChange={billingSetCityValid} />
+              <BillingCountryInput
+                selectedCountry={billingSelectedCountry}
+                billingChangeCountry={billingChangeCountry}
+              />
+              <BillingPostalCodeInput
+                onValidationChange={billingSetPostalCodeValid}
+                selectedCountry={billingSelectedCountry}
+              />
+            </div>
+            <SwitchDefaultBilling
+              billingDefaultStatus={billingDefaultStatus}
+              newState={switchStateDefaultBilling}
             />
           </div>
-          <SwitchDefaultBilling
-            billingDefaultStatus={billingDefaultStatus}
-            newState={switchStateDefaultBilling}
-          />
-        </div>
+        )}
       </div>
       <button type="submit" disabled={!isFormValid()}>
         register
