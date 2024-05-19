@@ -15,7 +15,7 @@ import ShippingPostalCodeInput from './registration_form_inputs/shipping_adress_
 import ShippingStreetInput from './registration_form_inputs/shipping_adress_field_inputs/shipping_street_input';
 import ShippingCountryInput from './registration_form_inputs/shipping_adress_field_inputs/shipping_country_input';
 import SwitchDefaultBilling from './registration_form_inputs/toggle_switches_addresses/switch_default_billing';
-// import SwitchUseAsShipping from './registration_form_inputs/toggle_switches_addresses/switch_shipping_use_as_billing';
+import SwitchUseAsShipping from './registration_form_inputs/toggle_switches_addresses/switch_shipping_use_as_billing';
 import SwitchDefaultShipping from './registration_form_inputs/toggle_switches_addresses/switch_default_shipping';
 
 function RegisterPage() {
@@ -36,8 +36,8 @@ function RegisterPage() {
     useState(false);
   const [switchStateDefaultBilling, setSwitchStateDefaultBilling] =
     useState(false);
-  // const [switchStateUseAsShipping, setSwitchStateUseAsShipping] =
-  //   useState(false);
+  const [switchStateUseAsShipping, setSwitchStateUseAsShipping] =
+    useState(false);
 
   const isPersonalFormValid = () =>
     passwordValid &&
@@ -52,12 +52,12 @@ function RegisterPage() {
   const isShippingFormValid = () =>
     shippingCityValid && shippingPostalCodeValid && shippingStreetValid;
 
-  // const asShipingStatus = (newState: boolean) => {
-  //   setSwitchStateUseAsShipping(newState);
-  //   billingSetCityValid(false);
-  //   billingSetStreetValid(false);
-  //   billingSetPostalCodeValid(false);
-  // };
+  const asShipingStatus = (newState: boolean) => {
+    setSwitchStateUseAsShipping(newState);
+    billingSetCityValid(false);
+    billingSetStreetValid(false);
+    billingSetPostalCodeValid(false);
+  };
 
   const billingDefaultStatus = (newState: boolean) => {
     setSwitchStateDefaultBilling(newState);
@@ -110,33 +110,35 @@ function RegisterPage() {
               shippingDefaultStatus={shippingDefaultStatus}
               newState={switchStateDefaultShipping}
             />
-            {/* <SwitchUseAsShipping
+            <SwitchUseAsShipping
               asShipingStatus={asShipingStatus}
               newState={switchStateUseAsShipping}
-            /> */}
-          </div>
-        </div>
-        <div className="registration-input billing-adress-field">
-          <p className="registration-input__billing-adress-field-title">
-            billing address field:
-          </p>
-          <div className="registration-input__billing-adress-field">
-            <BillingCityInput onValidationChange={billingSetCityValid} />
-            <BillingStreetInput onValidationChange={billingSetStreetValid} />
-            <BillingCountryInput
-              selectedCountry={billingSelectedCountry}
-              billingChangeCountry={billingChangeCountry}
-            />
-            <BillingPostalCodeInput
-              onValidationChange={billingSetPostalCodeValid}
-              selectedCountry={billingSelectedCountry}
             />
           </div>
-          <SwitchDefaultBilling
-            billingDefaultStatus={billingDefaultStatus}
-            newState={switchStateDefaultBilling}
-          />
         </div>
+        {!switchStateUseAsShipping && (
+          <div className="registration-input billing-adress-field">
+            <p className="registration-input__billing-adress-field-title">
+              billing address field:
+            </p>
+            <div className="registration-input__billing-adress-field">
+              <BillingCityInput onValidationChange={billingSetCityValid} />
+              <BillingStreetInput onValidationChange={billingSetStreetValid} />
+              <BillingCountryInput
+                selectedCountry={billingSelectedCountry}
+                billingChangeCountry={billingChangeCountry}
+              />
+              <BillingPostalCodeInput
+                onValidationChange={billingSetPostalCodeValid}
+                selectedCountry={billingSelectedCountry}
+              />
+            </div>
+            <SwitchDefaultBilling
+              billingDefaultStatus={billingDefaultStatus}
+              newState={switchStateDefaultBilling}
+            />
+          </div>
+        )}
       </div>
       <button
         type="submit"
@@ -144,8 +146,14 @@ function RegisterPage() {
           !(
             isPersonalFormValid() &&
             isBillingFormValid() &&
-            isShippingFormValid()
-          ) && !(isPersonalFormValid() && isShippingFormValid())
+            isShippingFormValid() &&
+            !switchStateUseAsShipping
+          ) &&
+          !(
+            isPersonalFormValid() &&
+            isShippingFormValid() &&
+            switchStateUseAsShipping
+          )
         }
       >
         register
