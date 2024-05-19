@@ -1,15 +1,28 @@
 .registration-form {
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  width: 300px;
   border: 1px solid black;
+  width: 400px;
 }
 
-.adress-field {
-  border: 1px solid black;
-  padding: 5px;
+.registration-input__email-password-wrapper,
+.registration-input__wrapper,
+.registration-input__first-last-name-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.birth-date-input {
+  border-bottom: 1px solid black;
+  padding-bottom: 5px;
+}
+
+.registration-input__switcher-wrapper {
+  display: flex;
+  flex-direction: column;
 }
