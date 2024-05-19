@@ -1,8 +1,11 @@
+import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
 
 class AuthService {
   static async loginUser(username: string, password: string) {
     try {
+      AuthService.removeFromLocalStorage(storageLoginError);
+
       const apiRootWithPassword = ClientFactory.createApiRootWithPassword(
         username,
         password
@@ -25,7 +28,7 @@ class AuthService {
       );
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
-      AuthService.saveToLocalStorage('ErrorMessage', errorMessage);
+      AuthService.saveToLocalStorage(storageLoginError, errorMessage);
     }
   }
 
@@ -33,8 +36,12 @@ class AuthService {
     localStorage.setItem(key, value);
   }
 
-  private static getFromLocalStorage(key: string): string | null {
+  static getFromLocalStorage(key: string): string | null {
     return localStorage.getItem(key);
+  }
+
+  static removeFromLocalStorage(key: string) {
+    localStorage.removeItem(key);
   }
 }
 

@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
 import AuthService from '../../services/authService';
 import './login.scss';
 import { LoginFormFields } from '../../types';
@@ -13,6 +15,7 @@ import {
   textSpacesPattern,
   textSymbolPattern,
   textUpperPattern,
+  storageLoginError,
 } from '../../utils/constants';
 import validateInput from '../../utils/validation';
 
@@ -23,11 +26,20 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<LoginFormFields>({
     reValidateMode: 'onChange',
     mode: 'onChange',
   });
+
+  const showToast = (text: string) => {
+    Toastify({
+      text,
+      className: 'info',
+      style: {
+        background: 'linear-gradient(to right, #00b09b, #96c93d)',
+      },
+    }).showToast();
+  };
 
   const changePasswordVisability = () => {
     setHidden(!hidden);
@@ -35,8 +47,11 @@ export default function LoginPage() {
 
   const onSubmit: SubmitHandler<LoginFormFields> = async (data) => {
     const { email, password } = data;
-    await AuthService.loginUser(email, password);
-    reset();
+    await AuthService.loginUser(email, password).then(() => {
+      const errorMessage = AuthService.getFromLocalStorage(storageLoginError);
+      AuthService.removeFromLocalStorage(storageLoginError);
+      showToast(errorMessage ?? 'Succesfull Login');
+    });
   };
 
   return (

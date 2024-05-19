@@ -32,3 +32,5 @@ export const textSpacesPattern = {
   regex: /^\S*$/,
   error: 'this field must not contain any whitespaces',
 };
+
+export const storageLoginError = 'LoginErrorMessage';
