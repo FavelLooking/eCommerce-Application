@@ -39,31 +39,32 @@ function RegisterPage() {
   const [switchStateUseAsShipping, setSwitchStateUseAsShipping] =
     useState(false);
 
+  const isPersonalFormValid = () =>
+    passwordValid &&
+    firstNameValid &&
+    lastNameValid &&
+    birthDateValid &&
+    emailValid;
+
+  const isBillingFormValid = () =>
+    billingStreetValid && billingCityValid && billingPostalCodeValid;
+
+  const isShippingFormValid = () =>
+    shippingCityValid && shippingPostalCodeValid && shippingStreetValid;
+
   const asShipingStatus = (newState: boolean) => {
     setSwitchStateUseAsShipping(newState);
-    console.log(
-      'shipping default status (switchStateDefaultBilling):',
-      switchStateUseAsShipping
-    );
-    console.log('shipping default status (newState):', newState);
+    billingSetCityValid(false);
+    billingSetStreetValid(false);
+    billingSetPostalCodeValid(false);
   };
 
   const billingDefaultStatus = (newState: boolean) => {
     setSwitchStateDefaultBilling(newState);
-    console.log(
-      'shipping default status (switchStateDefaultBilling):',
-      switchStateDefaultBilling
-    );
-    console.log('shipping default status (newState):', newState);
   };
 
   const shippingDefaultStatus = (newState: boolean) => {
     setSwitchStateDefaultShipping(newState);
-    console.log(
-      'shipping default status (switchStateDefaultShipping):',
-      switchStateDefaultShipping
-    );
-    console.log('shipping default status (newState):', newState);
   };
 
   const billingChangeCountry = (country: string) => {
@@ -75,19 +76,6 @@ function RegisterPage() {
   };
 
   const handleRegister = () => {};
-
-  const isFormValid = () =>
-    passwordValid &&
-    firstNameValid &&
-    lastNameValid &&
-    birthDateValid &&
-    billingStreetValid &&
-    billingCityValid &&
-    billingPostalCodeValid &&
-    emailValid &&
-    shippingCityValid &&
-    shippingPostalCodeValid &&
-    shippingStreetValid;
 
   return (
     <form className="registration-form" onSubmit={handleRegister}>
@@ -152,7 +140,22 @@ function RegisterPage() {
           </div>
         )}
       </div>
-      <button type="submit" disabled={!isFormValid()}>
+      <button
+        type="submit"
+        disabled={
+          !(
+            isPersonalFormValid() &&
+            isBillingFormValid() &&
+            isShippingFormValid() &&
+            !switchStateUseAsShipping
+          ) &&
+          !(
+            isPersonalFormValid() &&
+            isShippingFormValid() &&
+            switchStateUseAsShipping
+          )
+        }
+      >
         register
       </button>
       <div className="registration-link-wrapper">
