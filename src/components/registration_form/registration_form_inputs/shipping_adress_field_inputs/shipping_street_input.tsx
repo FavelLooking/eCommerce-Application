@@ -3,7 +3,7 @@ import InputStatus from '../../../../types/registration_form_types/registration_
 import validationInput from '../../../../utils/registration_form_utils/registration_form_validation_regex';
 import { streetPatternRegistration } from '../../../../utils/registration_form_utils/registration_form_regex';
 
-function StreetInput({ onValidationChange }: InputStatus) {
+function ShippingStreetInput({ onValidationChange }: InputStatus) {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -18,10 +18,13 @@ function StreetInput({ onValidationChange }: InputStatus) {
   };
 
   return (
-    <label className="registration-input street-input" htmlFor="street-input">
-      <p className="registration-input__street-lable">street:</p>
+    <label
+      className="registration-input shipping-street-input"
+      htmlFor="shipping-street-input"
+    >
+      <p className="registration-input__shipping-street-lable">street:</p>
       <input
-        id="street-input"
+        id="shipping-street-input"
         type="text"
         placeholder="enter your street"
         value={inputValue}
@@ -35,4 +38,4 @@ function StreetInput({ onValidationChange }: InputStatus) {
   );
 }
 
-export default StreetInput;
+export default ShippingStreetInput;

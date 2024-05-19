@@ -3,7 +3,7 @@ import InputStatus from '../../../../types/registration_form_types/registration_
 import validationInput from '../../../../utils/registration_form_utils/registration_form_validation_regex';
 import { cityPatternRegistration } from '../../../../utils/registration_form_utils/registration_form_regex';
 
-function CityInput({ onValidationChange }: InputStatus): JSX.Element {
+function ShippingCityInput({ onValidationChange }: InputStatus): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -16,10 +16,13 @@ function CityInput({ onValidationChange }: InputStatus): JSX.Element {
   };
 
   return (
-    <label className="registration-input city-input" htmlFor="city-input">
-      <p className="registration-input__city-lable">city:</p>
+    <label
+      className="registration-input shipping-city-input"
+      htmlFor="billing-city-input"
+    >
+      <p className="registration-input__shipping-city-lable">city:</p>
       <input
-        id="city-input"
+        id="shipping-city-input"
         type="text"
         placeholder="enter your city"
         value={inputValue}
@@ -33,4 +36,4 @@ function CityInput({ onValidationChange }: InputStatus): JSX.Element {
   );
 }
 
-export default CityInput;
+export default ShippingCityInput;
