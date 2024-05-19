@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 import AuthService from '../../services/authService';
@@ -26,10 +26,12 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<LoginFormFields>({
     reValidateMode: 'onChange',
     mode: 'onChange',
   });
+  const [isLogined, setIsLogined] = useState(false);
 
   const showToast = (text: string) => {
     Toastify({
@@ -50,7 +52,12 @@ export default function LoginPage() {
     await AuthService.loginUser(email, password).then(() => {
       const errorMessage = AuthService.getFromLocalStorage(storageLoginError);
       AuthService.removeFromLocalStorage(storageLoginError);
-      showToast(errorMessage ?? 'Succesfull Login');
+      if (errorMessage) {
+        showToast(errorMessage);
+      } else {
+        reset();
+        setIsLogined(true);
+      }
     });
   };
 
@@ -105,6 +112,7 @@ export default function LoginPage() {
           </Link>
         </div>
       </form>
+      {isLogined && <Navigate to="/" state={isLogined} />}
     </div>
   );
 }
