@@ -32,7 +32,7 @@ class AuthService {
     }
   }
 
-  private static saveToLocalStorage(key: string, value: string) {
+  static saveToLocalStorage(key: string, value: string) {
     localStorage.setItem(key, value);
   }
 
