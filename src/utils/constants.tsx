@@ -29,6 +29,6 @@ export const textSymbolPattern = {
 };
 
 export const textSpacesPattern = {
-  regex: /^.\S*$/,
+  regex: /^\S*$/,
   error: 'this field must not contain any whitespaces',
 };

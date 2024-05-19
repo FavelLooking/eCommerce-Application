@@ -4,6 +4,7 @@ node_modules/
 # Dependency directories
 /node_modules
 /jspm_packages
+/coverage
 
 # Compiled output
 /dist
