@@ -40,21 +40,23 @@ function RegisterPage() {
     useState(false);
 
   const asShipingStatus = (newState: boolean) => {
+    setSwitchStateUseAsShipping(newState);
     console.log(
       'shipping default status (switchStateDefaultBilling):',
       switchStateUseAsShipping
     );
     console.log('shipping default status (newState):', newState);
-    setSwitchStateUseAsShipping(newState);
+    return newState;
   };
 
   const billingDefaultStatus = (newState: boolean) => {
+    setSwitchStateDefaultBilling(newState);
     console.log(
       'shipping default status (switchStateDefaultBilling):',
       switchStateDefaultBilling
     );
     console.log('shipping default status (newState):', newState);
-    setSwitchStateDefaultBilling(newState);
+    return newState;
   };
 
   const shippingDefaultStatus = (newState: boolean) => {
@@ -64,6 +66,7 @@ function RegisterPage() {
       switchStateDefaultShipping
     );
     console.log('shipping default status (newState):', newState);
+    return newState;
   };
 
   const billingChangeCountry = (country: string) => {
