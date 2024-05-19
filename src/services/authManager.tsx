@@ -3,8 +3,11 @@ import {
   type PasswordAuthMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 import ConfigManager from './configManager';
+import MyTokenCache from './tokenCache';
 
 class AuthManager {
+  private static tokenStore = new MyTokenCache();
+
   private static config = ConfigManager.createConfig();
 
   static getHttpMiddlewareOptions(): HttpMiddlewareOptions {
@@ -28,6 +31,7 @@ class AuthManager {
       },
       scopes: this.config.scopes,
       fetch,
+      tokenCache: AuthManager.tokenStore,
     };
   }
 
