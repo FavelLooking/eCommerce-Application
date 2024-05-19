@@ -46,7 +46,6 @@ function RegisterPage() {
       switchStateUseAsShipping
     );
     console.log('shipping default status (newState):', newState);
-    return newState;
   };
 
   const billingDefaultStatus = (newState: boolean) => {
@@ -56,7 +55,6 @@ function RegisterPage() {
       switchStateDefaultBilling
     );
     console.log('shipping default status (newState):', newState);
-    return newState;
   };
 
   const shippingDefaultStatus = (newState: boolean) => {
@@ -66,7 +64,6 @@ function RegisterPage() {
       switchStateDefaultShipping
     );
     console.log('shipping default status (newState):', newState);
-    return newState;
   };
 
   const billingChangeCountry = (country: string) => {

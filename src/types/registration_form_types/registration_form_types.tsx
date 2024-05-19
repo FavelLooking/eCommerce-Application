@@ -11,16 +11,16 @@ export type CountryInputCheckShipping = {
 };
 
 export type ShippingDefaultCheck = {
-  shippingDefaultStatus: (newState: boolean) => boolean;
+  shippingDefaultStatus: (newState: boolean) => void;
   newState: boolean;
 };
 
 export type BillingDefaultCheck = {
-  billingDefaultStatus: (newState: boolean) => boolean;
+  billingDefaultStatus: (newState: boolean) => void;
   newState: boolean;
 };
 
 export type UseAsShippingCheck = {
-  asShipingStatus: (newState: boolean) => boolean;
+  asShipingStatus: (newState: boolean) => void;
   newState: boolean;
 };
