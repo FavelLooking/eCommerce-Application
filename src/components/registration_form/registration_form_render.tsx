@@ -57,6 +57,7 @@ function RegisterPage() {
     billingSetCityValid(false);
     billingSetStreetValid(false);
     billingSetPostalCodeValid(false);
+    setSwitchStateDefaultBilling(false);
   };
 
   const billingDefaultStatus = (newState: boolean) => {
