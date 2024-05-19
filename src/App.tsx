@@ -10,6 +10,8 @@ import RegisterPage from './components/registration_form/registration_form_rende
 import Header from './components/header';
 import MainPage from './components/main/main_page';
 import NotFoundPage from './components/not_found/not_found_page';
+import AuthService from './services/authService';
+import { storageIsLogined } from './utils/constants';
 
 function Root() {
   return (
@@ -32,7 +34,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'login',
-        element: <LoginPage />,
+        element: AuthService.getFromLocalStorage(storageIsLogined) ? (
+          <Navigate to="/" />
+        ) : (
+          <LoginPage />
+        ),
       },
       {
         path: 'register',
