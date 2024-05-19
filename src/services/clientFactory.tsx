@@ -1,11 +1,9 @@
-import { ClientBuilder, Client } from '@commercetools/sdk-client-v2';
+import { ClientBuilder } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import AuthManager from './authManager';
 import { FlowType } from '../types/clientFactory';
 
 class ClientFactory {
-  private static clientAnonymous: Client;
-
   static getClient(flowType: FlowType, username?: string, password?: string) {
     const httpMiddlewareOptions = AuthManager.getHttpMiddlewareOptions();
     const clientBuilder = new ClientBuilder().withHttpMiddleware(
@@ -26,16 +24,6 @@ class ClientFactory {
           );
         }
         break;
-      case 'anonymous': {
-        if (!this.clientAnonymous) {
-          const optionsForAnonymousFlow =
-            AuthManager.getOptionsForAnonymousFlow();
-          this.clientAnonymous = clientBuilder
-            .withAnonymousSessionFlow(optionsForAnonymousFlow)
-            .build();
-        }
-        return this.clientAnonymous;
-      }
       default:
         throw new Error('Unsupported authentication flow type');
     }

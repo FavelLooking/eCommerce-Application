@@ -60,6 +60,7 @@ function RegisterPage() {
     setSwitchStateDefaultBilling(false);
   };
 
+
   const billingDefaultStatus = (newState: boolean) => {
     setSwitchStateDefaultBilling(newState);
   };
@@ -116,6 +117,27 @@ function RegisterPage() {
               newState={switchStateUseAsShipping}
             />
           </div>
+        </div>
+        <div className="registration-input billing-adress-field">
+          <p className="registration-input__billing-adress-field-title">
+            billing address field:
+          </p>
+          <div className="registration-input__billing-adress-field">
+            <BillingCityInput onValidationChange={billingSetCityValid} />
+            <BillingStreetInput onValidationChange={billingSetStreetValid} />
+            <BillingCountryInput
+              selectedCountry={billingSelectedCountry}
+              billingChangeCountry={billingChangeCountry}
+            />
+            <BillingPostalCodeInput
+              onValidationChange={billingSetPostalCodeValid}
+              selectedCountry={billingSelectedCountry}
+            />
+          </div>
+          <SwitchDefaultBilling
+            billingDefaultStatus={billingDefaultStatus}
+            newState={switchStateDefaultBilling}
+          />
         </div>
         {!switchStateUseAsShipping && (
           <div className="registration-input billing-adress-field">
