@@ -34,3 +34,4 @@ export const textSpacesPattern = {
 };
 
 export const storageLoginError = 'LoginErrorMessage';
+export const storageIsLogined = 'IsUserLogined';

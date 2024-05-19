@@ -56,6 +56,7 @@ export default function LoginPage() {
         showToast(errorMessage);
       } else {
         reset();
+        AuthService.saveToLocalStorage('IsUserLogined', 'true');
         setIsLogined(true);
       }
     });
@@ -112,7 +113,7 @@ export default function LoginPage() {
           </Link>
         </div>
       </form>
-      {isLogined && <Navigate to="/" state={isLogined} />}
+      {isLogined && <Navigate to="/" />}
     </div>
   );
 }
