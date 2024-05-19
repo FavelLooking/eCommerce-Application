@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
 import AuthService from '../../services/authService';
 import './login.scss';
 import { LoginFormFields } from '../../types';

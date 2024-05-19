@@ -42,7 +42,7 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.s[ac]ss|css$/i,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
