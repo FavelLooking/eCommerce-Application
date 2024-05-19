@@ -1,8 +1,7 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { Snackbar } from '@mui/material';
+import Toastify from 'toastify-js';
 import AuthService from '../../services/authService';
 import './login.scss';
 import { LoginFormFields } from '../../types';
@@ -30,10 +29,16 @@ export default function LoginPage() {
     reValidateMode: 'onChange',
     mode: 'onChange',
   });
-  const [snackbarOpts, setSnackbarOpts] = useState({
-    isOpen: false,
-    errorMessage: '',
-  });
+
+  const showToast = (text: string) => {
+    Toastify({
+      text,
+      className: 'info',
+      style: {
+        background: 'linear-gradient(to right, #00b09b, #96c93d)',
+      },
+    }).showToast();
+  };
 
   const changePasswordVisability = () => {
     setHidden(!hidden);
@@ -44,17 +49,7 @@ export default function LoginPage() {
     await AuthService.loginUser(email, password).then(() => {
       const errorMessage = AuthService.getFromLocalStorage(storageLoginError);
       AuthService.removeFromLocalStorage(storageLoginError);
-      if (errorMessage) {
-        setSnackbarOpts({
-          isOpen: true,
-          errorMessage,
-        });
-      } else {
-        setSnackbarOpts({
-          isOpen: true,
-          errorMessage: 'Succesfull Login',
-        });
-      }
+      showToast(errorMessage ?? 'Succesfull Login');
     });
   };
 
@@ -109,17 +104,6 @@ export default function LoginPage() {
           </Link>
         </div>
       </form>
-      <Snackbar
-        open={snackbarOpts.isOpen}
-        autoHideDuration={1000}
-        onClose={() =>
-          setSnackbarOpts({
-            isOpen: false,
-            errorMessage: '',
-          })
-        }
-        message={snackbarOpts.errorMessage}
-      />
     </div>
   );
 }
