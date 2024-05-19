@@ -122,8 +122,8 @@ function RegisterPage() {
               billing address field:
             </p>
             <div className="registration-input__billing-adress-field">
-              <BillingStreetInput onValidationChange={billingSetStreetValid} />
               <BillingCityInput onValidationChange={billingSetCityValid} />
+              <BillingStreetInput onValidationChange={billingSetStreetValid} />
               <BillingCountryInput
                 selectedCountry={billingSelectedCountry}
                 billingChangeCountry={billingChangeCountry}
