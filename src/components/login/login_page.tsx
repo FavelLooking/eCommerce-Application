@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { Snackbar } from '@mui/material';
 import AuthService from '../../services/authService';
 import './login.scss';
 import { LoginFormFields } from '../../types';
@@ -13,6 +15,7 @@ import {
   textSpacesPattern,
   textSymbolPattern,
   textUpperPattern,
+  storageLoginError,
 } from '../../utils/constants';
 import validateInput from '../../utils/validation';
 
@@ -23,10 +26,13 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<LoginFormFields>({
     reValidateMode: 'onChange',
     mode: 'onChange',
+  });
+  const [snackbarOpts, setSnackbarOpts] = useState({
+    isOpen: false,
+    errorMessage: '',
   });
 
   const changePasswordVisability = () => {
@@ -35,8 +41,21 @@ export default function LoginPage() {
 
   const onSubmit: SubmitHandler<LoginFormFields> = async (data) => {
     const { email, password } = data;
-    await AuthService.loginUser(email, password);
-    reset();
+    await AuthService.loginUser(email, password).then(() => {
+      const errorMessage = AuthService.getFromLocalStorage(storageLoginError);
+      AuthService.removeFromLocalStorage(storageLoginError);
+      if (errorMessage) {
+        setSnackbarOpts({
+          isOpen: true,
+          errorMessage,
+        });
+      } else {
+        setSnackbarOpts({
+          isOpen: true,
+          errorMessage: 'Succesfull Login',
+        });
+      }
+    });
   };
 
   return (
@@ -90,6 +109,17 @@ export default function LoginPage() {
           </Link>
         </div>
       </form>
+      <Snackbar
+        open={snackbarOpts.isOpen}
+        autoHideDuration={1000}
+        onClose={() =>
+          setSnackbarOpts({
+            isOpen: false,
+            errorMessage: '',
+          })
+        }
+        message={snackbarOpts.errorMessage}
+      />
     </div>
   );
 }
