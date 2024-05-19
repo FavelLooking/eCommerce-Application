@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BillingDefaultCheck } from '../../../../types/registration_form_types/registration_form_types';
 
-function SwitchDefaultBilling() {
-  const [isOnBilling, setIsOnBilling] = useState(false);
-
+function SwitchDefaultBilling({
+  billingDefaultStatus,
+  newState,
+}: BillingDefaultCheck) {
   const handleToggle = () => {
-    setIsOnBilling(!isOnBilling);
+    billingDefaultStatus(!newState);
   };
 
   return (
@@ -15,7 +17,7 @@ function SwitchDefaultBilling() {
       <input
         type="checkbox"
         id="defaultBilling"
-        checked={isOnBilling}
+        checked={newState}
         onChange={handleToggle}
       />
       set as default address

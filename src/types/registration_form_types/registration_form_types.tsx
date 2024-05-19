@@ -14,3 +14,8 @@ export type ShippingDefaultCheck = {
   shippingDefaultStatus: (newState: boolean) => void;
   newState: boolean;
 };
+
+export type BillingDefaultCheck = {
+  billingDefaultStatus: (newState: boolean) => void;
+  newState: boolean;
+};

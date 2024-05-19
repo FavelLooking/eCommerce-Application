@@ -34,10 +34,25 @@ function RegisterPage() {
   const [shippingStreetValid, shippingSetStreetValid] = useState(false);
   const [switchStateDefaultShipping, setSwitchStateDefaultShipping] =
     useState(false);
+  const [switchStateDefaultBilling, setSwitchStateDefaultBilling] =
+    useState(false);
+
+  const billingDefaultStatus = (newState: boolean) => {
+    setSwitchStateDefaultBilling(newState);
+    console.log(
+      'shipping default status (switchStateDefaultBilling):',
+      switchStateDefaultBilling
+    );
+    console.log('shipping default status (newState):', newState);
+  };
 
   const shippingDefaultStatus = (newState: boolean) => {
-    console.log('shipping default status :', newState);
     setSwitchStateDefaultShipping(newState);
+    console.log(
+      'shipping default status (switchStateDefaultShipping):',
+      switchStateDefaultShipping
+    );
+    console.log('shipping default status (newState):', newState);
   };
 
   const billingChangeCountry = (country: string) => {
@@ -115,7 +130,10 @@ function RegisterPage() {
               selectedCountry={billingSelectedCountry}
             />
           </div>
-          <SwitchDefaultBilling />
+          <SwitchDefaultBilling
+            billingDefaultStatus={billingDefaultStatus}
+            newState={switchStateDefaultBilling}
+          />
         </div>
       </div>
       <button type="submit" disabled={!isFormValid()}>
