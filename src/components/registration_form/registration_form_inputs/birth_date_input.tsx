@@ -22,6 +22,7 @@ function BirthDateInput({ onValidationChange }: InputStatus): JSX.Element {
       <p className="registration-input__birth-date-lable">date of birthday:</p>
       <input
         id="first-name-input"
+        name="dateOfBirth"
         type="date"
         placeholder="date of birthday"
         value={inputValue}

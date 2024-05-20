@@ -26,6 +26,7 @@ function PasswordInput({ onValidationChange }: InputStatus): JSX.Element {
       <input
         id="password-input"
         type="text"
+        name="password"
         placeholder="enter your password"
         value={inputValue}
         onChange={handleChange}

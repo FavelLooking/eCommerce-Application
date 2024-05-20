@@ -21,6 +21,7 @@ function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
       <input
         id="email-input"
         type="text"
+        name="username"
         placeholder="enter your email"
         value={inputValue}
         onChange={handleChange}

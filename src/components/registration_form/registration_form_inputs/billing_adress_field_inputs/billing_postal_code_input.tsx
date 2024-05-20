@@ -58,6 +58,7 @@ function BillingPostalCodeInput({
       <input
         id="billing-postal-code-input"
         type="text"
+        name="billingPostalCode"
         placeholder="enter your postal-code"
         value={inputValue}
         onChange={handleChange}

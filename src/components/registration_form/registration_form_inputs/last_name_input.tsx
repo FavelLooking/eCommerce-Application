@@ -26,6 +26,7 @@ function LastNameInput({ onValidationChange }: InputStatus) {
       <input
         id="last-name-input"
         type="text"
+        name="lastName"
         placeholder="enter your last name"
         value={inputValue}
         onChange={handleChange}

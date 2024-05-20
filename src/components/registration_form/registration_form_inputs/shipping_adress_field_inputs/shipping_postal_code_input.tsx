@@ -60,6 +60,7 @@ function ShippingPostalCodeInput({
       <input
         id="shipping-postal-code-input"
         type="text"
+        name="shippingPostalCode"
         placeholder="enter your postal-code"
         value={inputValue}
         onChange={handleChange}

@@ -23,6 +23,7 @@ function ShippingCityInput({ onValidationChange }: InputStatus): JSX.Element {
       <p className="registration-input__shipping-city-lable">city:</p>
       <input
         id="shipping-city-input"
+        name="shippingCity"
         type="text"
         placeholder="enter your city"
         value={inputValue}

@@ -17,7 +17,10 @@ import ShippingCountryInput from './registration_form_inputs/shipping_adress_fie
 import SwitchDefaultBilling from './registration_form_inputs/toggle_switches_addresses/switch_default_billing';
 import SwitchUseAsShipping from './registration_form_inputs/toggle_switches_addresses/switch_shipping_use_as_billing';
 import SwitchDefaultShipping from './registration_form_inputs/toggle_switches_addresses/switch_default_shipping';
+
+import AuthService from '../../services/authService';
 import { useAuth } from '../../hooks/useAuth';
+
 
 function RegisterPage() {
   const [billingSelectedCountry, billingSetSelectedCountry] = useState('');
@@ -79,8 +82,54 @@ function RegisterPage() {
     shippingSetSelectedCountry(country);
   };
 
-  const handleRegister = () => {
-    login();
+  const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target as HTMLFormElement);
+    const formValues: { [key: string]: string } = {};
+
+    formData.forEach((value, key) => {
+      formValues[key] = value as string;
+    });
+    const {
+      username,
+      password,
+      firstName,
+      lastName,
+      dateOfBirth,
+      shippingCity,
+      shippingStreet,
+      shippingCountry,
+      shippingPostalCode,
+    } = formValues;
+
+    let { billingCity, billingStreet, billingCountry, billingPostalCode } =
+      formValues;
+
+    if (switchStateUseAsShipping) {
+      billingCity = '';
+      billingStreet = '';
+      billingCountry = '';
+      billingPostalCode = '';
+    }
+
+    await AuthService.signUpCustomer(
+      username,
+      password,
+      firstName,
+      lastName,
+      dateOfBirth,
+      shippingCountry,
+      shippingCity,
+      shippingStreet,
+      shippingPostalCode,
+      billingCity,
+      billingStreet,
+      billingCountry,
+      billingPostalCode
+    );
+    await AuthService.loginUser(username, password);
+
   };
 
   return (

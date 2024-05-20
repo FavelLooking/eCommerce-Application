@@ -26,6 +26,7 @@ function FirstNameInput({ onValidationChange }: InputStatus): JSX.Element {
       <input
         id="first-name-input"
         type="text"
+        name="firstName"
         placeholder="enter your first name"
         value={inputValue}
         onChange={handleChange}
