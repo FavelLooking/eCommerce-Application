@@ -17,6 +17,7 @@ import ShippingCountryInput from './registration_form_inputs/shipping_adress_fie
 import SwitchDefaultBilling from './registration_form_inputs/toggle_switches_addresses/switch_default_billing';
 import SwitchUseAsShipping from './registration_form_inputs/toggle_switches_addresses/switch_shipping_use_as_billing';
 import SwitchDefaultShipping from './registration_form_inputs/toggle_switches_addresses/switch_default_shipping';
+import { useAuth } from '../../hooks/useAuth';
 
 function RegisterPage() {
   const [billingSelectedCountry, billingSetSelectedCountry] = useState('');
@@ -38,6 +39,8 @@ function RegisterPage() {
     useState(false);
   const [switchStateUseAsShipping, setSwitchStateUseAsShipping] =
     useState(false);
+
+  const { login } = useAuth();
 
   const isPersonalFormValid = () =>
     passwordValid &&
@@ -76,7 +79,9 @@ function RegisterPage() {
     shippingSetSelectedCountry(country);
   };
 
-  const handleRegister = () => {};
+  const handleRegister = () => {
+    login();
+  };
 
   return (
     <form className="registration-form" onSubmit={handleRegister}>
