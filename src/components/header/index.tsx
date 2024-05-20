@@ -2,11 +2,13 @@ import React from 'react';
 import './header.scss';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import AuthService from '../../services/authService';
 
 export default function Header() {
   const { user, logout } = useAuth();
 
   const logoutUser = () => {
+    AuthService.logoutUser();
     logout();
   };
 
