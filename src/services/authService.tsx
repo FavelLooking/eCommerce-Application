@@ -77,7 +77,6 @@ class AuthService {
         })
         .execute();
       AuthService.addressId = response.body.customer.addresses[0].id;
-      console.log(AuthService.addressId);
 
       return response;
     } catch (error: unknown) {
