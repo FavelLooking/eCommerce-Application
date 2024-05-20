@@ -34,7 +34,7 @@ class AuthService {
     }
   }
 
-  static shippingId: string;
+  static shippingId: string | undefined;
 
   static billingId: string | undefined;
 
@@ -101,8 +101,7 @@ class AuthService {
       if (billingAddress) {
         this.billingId = billingAddress.id;
       }
-
-      console.log(shippingId, this.billingId);
+      this.shippingId = shippingId;
 
       return response;
     } catch (error: unknown) {

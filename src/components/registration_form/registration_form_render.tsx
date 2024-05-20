@@ -108,19 +108,6 @@ function RegisterPage() {
       billingPostalCode = '';
     }
 
-    console.log(
-      username,
-      password,
-      firstName,
-      lastName,
-      dateOfBirth,
-      shippingCity,
-      shippingStreet,
-      shippingCountry,
-      shippingPostalCode
-    );
-    console.log(billingCity, billingStreet, billingCountry, billingPostalCode);
-
     await AuthService.signUpCustomer(
       username,
       password,
