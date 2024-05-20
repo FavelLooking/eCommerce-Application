@@ -5,18 +5,32 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
 }
 
 .header-logo {
-  height: 40px;
+  height: 50px;
+  margin-left: 5px;
 }
 
 .header-links {
   display: flex;
-  & > * {
-    margin: 5px;
+  height: 100%;
+  gap: 5px;
+  margin-right: 5px;
+
+  .header-link {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
     color: black;
+    padding: 0 5px;
   }
+}
+
+.header-links a.active {
+  background-color: rgb(243, 2, 104);
+  color: white;
 }

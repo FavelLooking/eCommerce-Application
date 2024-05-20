@@ -16,11 +16,25 @@ export default function Header() {
         <img src="assets/logo.png" className="header-logo" alt="Logo" />
       </Link>
       <div className="header-links">
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="login">Login</NavLink>
-        <NavLink to="register">Register</NavLink>
+        <NavLink to="/" className="header-link">
+          Home
+        </NavLink>
+        <NavLink to="login" className="header-link">
+          Login
+        </NavLink>
+        <NavLink to="register" className="header-link">
+          Register
+        </NavLink>
         {user && (
-          <NavLink to="/" onClick={logoutUser}>
+          <NavLink
+            to="/"
+            onClick={logoutUser}
+            className="header-link"
+            style={() => ({
+              color: 'black',
+              backgroundColor: 'white',
+            })}
+          >
             Logout
           </NavLink>
         )}
