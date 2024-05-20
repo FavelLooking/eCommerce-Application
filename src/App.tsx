@@ -10,16 +10,25 @@ import RegisterPage from './components/registration_form/registration_form_rende
 import Header from './components/header';
 import MainPage from './components/main/main_page';
 import NotFoundPage from './components/not_found/not_found_page';
-import AuthService from './services/authService';
-import { storageIsLogined } from './utils/constants';
+import { AuthProvider, useAuth } from './hooks/useAuth';
 
 function Root() {
   return (
-    <div className="app-container">
-      <Header />
-      <Outlet />
-    </div>
+    <AuthProvider>
+      <div className="app-container">
+        <Header />
+        <Outlet />
+      </div>
+    </AuthProvider>
   );
+}
+
+function ProtectedRoute({ children }: { children: JSX.Element }): JSX.Element {
+  const { user } = useAuth();
+  if (user) {
+    return <Navigate to="/" />;
+  }
+  return children;
 }
 
 const router = createBrowserRouter([
@@ -34,10 +43,10 @@ const router = createBrowserRouter([
       },
       {
         path: 'login',
-        element: AuthService.getFromLocalStorage(storageIsLogined) ? (
-          <Navigate to="/" />
-        ) : (
-          <LoginPage />
+        element: (
+          <ProtectedRoute>
+            <LoginPage />
+          </ProtectedRoute>
         ),
       },
       {

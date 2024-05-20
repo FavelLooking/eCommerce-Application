@@ -7,6 +7,7 @@
 
 .error-text {
   margin: 5px 0 0 0;
+  color: #48304d;
   &:hover {
     cursor: default;
   }
@@ -21,9 +22,10 @@
 }
 
 .error-link {
-  color: white;
+  border-radius: 30px;
+  color: #fbcaef;
   padding: 10px 20px;
-  background: rgb(28, 206, 28);
+  background: #f865b0;
   margin-top: 20px;
   text-decoration: none;
   &:hover {

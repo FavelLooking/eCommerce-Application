@@ -65,7 +65,7 @@ function BillingPostalCodeInput({
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>
+        <div className="registration-error">
           must follow the format for the {selectedCountry} postal code for
           example: &apos;{examplePostalCode[selectedCountry as CountryType]}
           &apos;

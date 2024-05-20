@@ -1,9 +1,13 @@
-import { ClientBuilder, Client } from '@commercetools/sdk-client-v2';
+
+import { Client, ClientBuilder } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import AuthManager from './authManager';
 import { FlowType } from '../types/clientFactory';
 
 class ClientFactory {
+
+  static client: Client | null = null;
+
   private static clientAnonymous: Client;
 
   static getClient(flowType: FlowType, username?: string, password?: string) {
@@ -39,7 +43,8 @@ class ClientFactory {
       default:
         throw new Error('Unsupported authentication flow type');
     }
-    return clientBuilder.build();
+    this.client = clientBuilder.build();
+    return this.client;
   }
 
   static createApiRootWithPassword(username: string, password: string) {

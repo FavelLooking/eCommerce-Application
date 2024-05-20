@@ -1,12 +1,14 @@
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
-import AuthManager from './authManager';
+import { tokenStore, AuthManager } from './authManager';
+
 
 const clientAnonymous = ClientFactory.getClient('anonymous');
 const apiRoot = createApiBuilderFromCtpClient(clientAnonymous).withProjectKey({
   projectKey: AuthManager.getProjectKey(),
 });
+
 
 class AuthService {
   static async loginUser(username: string, password: string) {
@@ -38,6 +40,7 @@ class AuthService {
       AuthService.saveToLocalStorage(storageLoginError, errorMessage);
     }
   }
+
 
   static shippingId: string | undefined;
 
@@ -108,6 +111,13 @@ class AuthService {
       throw error;
     }
   };
+
+  static async logoutUser() {
+    this.removeFromLocalStorage('customerId');
+    this.removeFromLocalStorage('IsUserLogined');
+    tokenStore.clear();
+  }
+
 
   static saveToLocalStorage(key: string, value: string) {
     localStorage.setItem(key, value);

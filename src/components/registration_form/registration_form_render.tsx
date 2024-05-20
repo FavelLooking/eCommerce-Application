@@ -17,7 +17,10 @@ import ShippingCountryInput from './registration_form_inputs/shipping_adress_fie
 import SwitchDefaultBilling from './registration_form_inputs/toggle_switches_addresses/switch_default_billing';
 import SwitchUseAsShipping from './registration_form_inputs/toggle_switches_addresses/switch_shipping_use_as_billing';
 import SwitchDefaultShipping from './registration_form_inputs/toggle_switches_addresses/switch_default_shipping';
+
 import AuthService from '../../services/authService';
+import { useAuth } from '../../hooks/useAuth';
+
 
 function RegisterPage() {
   const [billingSelectedCountry, billingSetSelectedCountry] = useState('');
@@ -39,6 +42,8 @@ function RegisterPage() {
     useState(false);
   const [switchStateUseAsShipping, setSwitchStateUseAsShipping] =
     useState(false);
+
+  const { login } = useAuth();
 
   const isPersonalFormValid = () =>
     passwordValid &&
@@ -124,6 +129,7 @@ function RegisterPage() {
       billingPostalCode
     );
     await AuthService.loginUser(username, password);
+
   };
 
   return (
@@ -190,6 +196,7 @@ function RegisterPage() {
         )}
       </div>
       <button
+        className="registration-form__submit-button"
         type="submit"
         disabled={
           !(

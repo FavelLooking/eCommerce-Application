@@ -33,7 +33,9 @@ function ShippingStreetInput({ onValidationChange }: InputStatus) {
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>{streetPatternRegistration.error}</div>
+        <div className="registration-error">
+          {streetPatternRegistration.error}
+        </div>
       )}
     </label>
   );

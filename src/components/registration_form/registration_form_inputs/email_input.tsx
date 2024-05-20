@@ -28,7 +28,9 @@ function EmailInput({ onValidationChange }: InputStatus): JSX.Element {
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>{emailPatternRegistration.error}</div>
+        <div className="registration-error">
+          {emailPatternRegistration.error}
+        </div>
       )}
     </label>
   );

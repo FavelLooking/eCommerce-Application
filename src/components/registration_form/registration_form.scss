@@ -4,22 +4,75 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
-  border: 1px solid black;
-  width: 400px;
+  gap: 20px;
+
+  & > label {
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    color: #48304d;
+    cursor: default;
+  }
+}
+
+input {
+  color: #48304d;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #48304d;
+  font-size: 1.5rem;
+  &:focus {
+    cursor: text;
+    border: 1px solid #48304d;
+    border-radius: 5px;
+  }
+}
+
+option,
+#billing-country-input,
+#shipping-country-input {
+  height: 40px;
+  border: 1px solid #48304d;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  background-color: white;
+}
+
+button {
+  height: 40px;
+  border: 1px solid #48304d;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  background-color: white;
+  &:hover {
+    cursor: pointer;
+    background-color: #fbcaef;
+  }
+}
+
+.registration-link {
+  text-decoration: none;
+  color: #f865b0;
+}
+
+.registration-error {
+  width: 310px;
+  color: red;
+  margin: 0;
+  padding: 0;
+  &::before {
+    content: '💥';
+  }
 }
 
 .registration-input__email-password-wrapper,
 .registration-input__wrapper,
 .registration-input__first-last-name-wrapper {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: start;
-}
-
-.birth-date-input {
-  border-bottom: 1px solid black;
-  padding-bottom: 5px;
+  gap: 15px;
 }
 
 .registration-input__switcher-wrapper {
