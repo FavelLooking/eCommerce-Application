@@ -30,7 +30,9 @@ function BillingCityInput({ onValidationChange }: InputStatus): JSX.Element {
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>{cityPatternRegistration.error}</div>
+        <div className="registration-error">
+          {cityPatternRegistration.error}
+        </div>
       )}
     </label>
   );

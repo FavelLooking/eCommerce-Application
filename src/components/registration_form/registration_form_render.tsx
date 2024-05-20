@@ -147,6 +147,7 @@ function RegisterPage() {
         )}
       </div>
       <button
+        className="registration-form__submit-button"
         type="submit"
         disabled={
           !(

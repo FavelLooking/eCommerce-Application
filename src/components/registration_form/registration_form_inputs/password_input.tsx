@@ -32,7 +32,9 @@ function PasswordInput({ onValidationChange }: InputStatus): JSX.Element {
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>{passwordPatternRegistration.error}</div>
+        <div className="registration-error">
+          {passwordPatternRegistration.error}
+        </div>
       )}
     </label>
   );

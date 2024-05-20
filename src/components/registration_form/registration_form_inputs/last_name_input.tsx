@@ -32,7 +32,9 @@ function LastNameInput({ onValidationChange }: InputStatus) {
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>{lastNamePatternRegistration.error}</div>
+        <div className="registration-error">
+          {lastNamePatternRegistration.error}
+        </div>
       )}
     </label>
   );
