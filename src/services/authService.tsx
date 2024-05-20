@@ -1,5 +1,7 @@
+import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
+import AuthManager from './authManager';
 
 class AuthService {
   static async loginUser(username: string, password: string) {
@@ -31,6 +33,59 @@ class AuthService {
       AuthService.saveToLocalStorage(storageLoginError, errorMessage);
     }
   }
+
+  static addressId: string | undefined;
+
+  static signUpCustomer = async (
+    username: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    dateOfBirth: string,
+    country: string,
+    city: string,
+    streetName: string,
+    postalCode: string
+  ) => {
+    try {
+      const clientAnonymous = ClientFactory.getClient('anonymous');
+      const apiRoot = createApiBuilderFromCtpClient(
+        clientAnonymous
+      ).withProjectKey({
+        projectKey: AuthManager.getProjectKey(),
+      });
+
+      const response = await apiRoot
+        .me()
+        .signup()
+        .post({
+          body: {
+            email: username,
+            password,
+            firstName,
+            lastName,
+            dateOfBirth,
+            addresses: [
+              {
+                country,
+                city,
+                streetName,
+                postalCode,
+              },
+            ],
+          },
+        })
+        .execute();
+      AuthService.addressId = response.body.customer.addresses[0].id;
+      console.log(AuthService.addressId);
+
+      return response;
+    } catch (error: unknown) {
+      const errorMessage = (error as Error).message;
+      localStorage.setItem('ErrorMessage', errorMessage);
+      throw error;
+    }
+  };
 
   static saveToLocalStorage(key: string, value: string) {
     localStorage.setItem(key, value);

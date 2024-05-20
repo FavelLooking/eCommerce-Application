@@ -17,6 +17,7 @@ import ShippingCountryInput from './registration_form_inputs/shipping_adress_fie
 import SwitchDefaultBilling from './registration_form_inputs/toggle_switches_addresses/switch_default_billing';
 import SwitchUseAsShipping from './registration_form_inputs/toggle_switches_addresses/switch_shipping_use_as_billing';
 import SwitchDefaultShipping from './registration_form_inputs/toggle_switches_addresses/switch_default_shipping';
+import AuthService from '../../services/authService';
 
 function RegisterPage() {
   const [billingSelectedCountry, billingSetSelectedCountry] = useState('');
@@ -76,7 +77,39 @@ function RegisterPage() {
     shippingSetSelectedCountry(country);
   };
 
-  const handleRegister = () => {};
+  const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target as HTMLFormElement);
+    const formValues: { [key: string]: string } = {};
+
+    formData.forEach((value, key) => {
+      formValues[key] = value as string;
+    });
+    const {
+      username,
+      password,
+      firstName,
+      lastName,
+      dateOfBirth,
+      city,
+      streetName,
+      postalCode,
+    } = formValues;
+
+    await AuthService.signUpCustomer(
+      username,
+      password,
+      firstName,
+      lastName,
+      dateOfBirth,
+      shippingSelectedCountry,
+      city,
+      streetName,
+      postalCode
+    );
+    await AuthService.loginUser(username, password);
+  };
 
   return (
     <form className="registration-form" onSubmit={handleRegister}>

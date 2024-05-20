@@ -1,11 +1,16 @@
 import {
   type HttpMiddlewareOptions,
   type PasswordAuthMiddlewareOptions,
+  type AnonymousAuthMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 import ConfigManager from './configManager';
 
+const { v4: uuidv4 } = require('uuid');
+
 class AuthManager {
   private static config = ConfigManager.createConfig();
+
+  private static anonymousId = uuidv4();
 
   static getHttpMiddlewareOptions(): HttpMiddlewareOptions {
     return {
@@ -25,6 +30,20 @@ class AuthManager {
         clientId: this.config.clientId,
         clientSecret: this.config.clientSecret,
         user: { username, password },
+      },
+      scopes: this.config.scopes,
+      fetch,
+    };
+  }
+
+  static getOptionsForAnonymousFlow(): AnonymousAuthMiddlewareOptions {
+    return {
+      host: this.config.authBaseUrl,
+      projectKey: this.config.projectKey,
+      credentials: {
+        clientId: this.config.clientId,
+        clientSecret: this.config.clientSecret,
+        anonymousId: this.anonymousId,
       },
       scopes: this.config.scopes,
       fetch,

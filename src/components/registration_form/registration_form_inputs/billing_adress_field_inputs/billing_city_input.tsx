@@ -23,6 +23,7 @@ function BillingCityInput({ onValidationChange }: InputStatus): JSX.Element {
       <p className="registration-input__billing-city-lable">city:</p>
       <input
         id="billing-city-input"
+        name="billing-city"
         type="text"
         placeholder="enter your city"
         value={inputValue}

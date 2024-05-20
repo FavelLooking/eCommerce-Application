@@ -26,6 +26,7 @@ function BillingCountryInput({
       </p>
       <select
         id="billing-country-input"
+        name="billing-country"
         value={selectedCountry}
         onChange={handleCountryChange}
       >
