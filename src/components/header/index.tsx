@@ -32,7 +32,7 @@ export default function Header() {
             className="header-link"
             style={() => ({
               color: '#48304D',
-              backgroundColor: 'white',
+              backgroundColor: '#fbcaef',
             })}
           >
             Logout
