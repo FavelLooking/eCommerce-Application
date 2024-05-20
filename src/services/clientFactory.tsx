@@ -1,11 +1,9 @@
-
 import { Client, ClientBuilder } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
-import AuthManager from './authManager';
+import { AuthManager } from './authManager';
 import { FlowType } from '../types/clientFactory';
 
 class ClientFactory {
-
   static client: Client | null = null;
 
   private static clientAnonymous: Client;
