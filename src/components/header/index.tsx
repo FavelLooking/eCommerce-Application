@@ -31,7 +31,7 @@ export default function Header() {
             onClick={logoutUser}
             className="header-link"
             style={() => ({
-              color: 'black',
+              color: '#48304D',
               backgroundColor: 'white',
             })}
           >
