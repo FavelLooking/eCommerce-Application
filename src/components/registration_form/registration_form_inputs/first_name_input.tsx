@@ -32,7 +32,9 @@ function FirstNameInput({ onValidationChange }: InputStatus): JSX.Element {
         style={{ borderColor: isValid ? 'initial' : 'red' }}
       />
       {!isValid && (
-        <div style={{ color: 'red' }}>{firstNamePatternRegistration.error}</div>
+        <div className="registration-error">
+          {firstNamePatternRegistration.error}
+        </div>
       )}
     </label>
   );
