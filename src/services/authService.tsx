@@ -3,12 +3,10 @@ import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
 import { tokenStore, AuthManager } from './authManager';
 
-
 const clientAnonymous = ClientFactory.getClient('anonymous');
 const apiRoot = createApiBuilderFromCtpClient(clientAnonymous).withProjectKey({
   projectKey: AuthManager.getProjectKey(),
 });
-
 
 class AuthService {
   static async loginUser(username: string, password: string) {
@@ -40,7 +38,6 @@ class AuthService {
       AuthService.saveToLocalStorage(storageLoginError, errorMessage);
     }
   }
-
 
   static shippingId: string | undefined;
 
@@ -103,12 +100,9 @@ class AuthService {
         this.billingId = billingAddress.id;
         this.shippingId = shippingId;
       }
-
-      return response;
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       localStorage.setItem('ErrorMessage', errorMessage);
-      throw error;
     }
   };
 
@@ -117,7 +111,6 @@ class AuthService {
     this.removeFromLocalStorage('IsUserLogined');
     tokenStore.clear();
   }
-
 
   static saveToLocalStorage(key: string, value: string) {
     localStorage.setItem(key, value);

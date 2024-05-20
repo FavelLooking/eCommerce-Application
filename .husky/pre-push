@@ -1,1 +1,1 @@
-npx validate-branch-name -r '^KAN-\d{2}-RSS-ECOMM-\d{1,2}_\d{1,2}-[\w-]+$|^project-setup$|^develop$' 
+npx validate-branch-name -r '^KAN-\d{3}-RSS-ECOMM-\d{1,2}_\d{1,2}-[\w-]+$|^project-setup$|^develop$' 

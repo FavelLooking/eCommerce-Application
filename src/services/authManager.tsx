@@ -10,9 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 
 export const tokenStore = new MyTokenCache();
 
-const { v4: uuidv4 } = require('uuid');
-
-class AuthManager {
+export class AuthManager {
   private static config = ConfigManager.createConfig();
 
   private static anonymousId = uuidv4();
@@ -57,23 +55,7 @@ class AuthManager {
     };
   }
 
-  static getOptionsForAnonymousFlow(): AnonymousAuthMiddlewareOptions {
-    return {
-      host: this.config.authBaseUrl,
-      projectKey: this.config.projectKey,
-      credentials: {
-        clientId: this.config.clientId,
-        clientSecret: this.config.clientSecret,
-        anonymousId: this.anonymousId,
-      },
-      scopes: this.config.scopes,
-      fetch,
-    };
-  }
-
   static getProjectKey(): string {
     return this.config.projectKey;
   }
 }
-
-export default AuthManager;
