@@ -3,6 +3,11 @@ import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
 import AuthManager from './authManager';
 
+const clientAnonymous = ClientFactory.getClient('anonymous');
+const apiRoot = createApiBuilderFromCtpClient(clientAnonymous).withProjectKey({
+  projectKey: AuthManager.getProjectKey(),
+});
+
 class AuthService {
   static async loginUser(username: string, password: string) {
     try {
@@ -54,13 +59,6 @@ class AuthService {
     billingPostalCode?: string
   ) => {
     try {
-      const clientAnonymous = ClientFactory.getClient('anonymous');
-      const apiRoot = createApiBuilderFromCtpClient(
-        clientAnonymous
-      ).withProjectKey({
-        projectKey: AuthManager.getProjectKey(),
-      });
-
       const response = await apiRoot
         .me()
         .signup()
@@ -100,8 +98,8 @@ class AuthService {
         response.body.customer.addresses;
       if (billingAddress) {
         this.billingId = billingAddress.id;
+        this.shippingId = shippingId;
       }
-      this.shippingId = shippingId;
 
       return response;
     } catch (error: unknown) {
