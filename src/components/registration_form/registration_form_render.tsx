@@ -20,7 +20,7 @@ import SwitchUseAsShipping from './registration_form_inputs/toggle_switches_addr
 import SwitchDefaultShipping from './registration_form_inputs/toggle_switches_addresses/switch_default_shipping';
 
 import AuthService from '../../services/authService';
-// import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 
 function RegisterPage() {
   const [billingSelectedCountry, billingSetSelectedCountry] = useState('');
@@ -43,7 +43,7 @@ function RegisterPage() {
   const [switchStateUseAsShipping, setSwitchStateUseAsShipping] =
     useState(false);
 
-  // const { login } = useAuth();
+  const { login } = useAuth();
 
   const showToast = (text: string) => {
     Toastify({
@@ -139,15 +139,14 @@ function RegisterPage() {
       billingPostalCode
     ).then(() => {
       const errorMessage = AuthService.getFromLocalStorage('ErrorMessage');
+      AuthService.removeFromLocalStorage('ErrorMessage');
       if (errorMessage) {
-        console.log(errorMessage);
         showToast(errorMessage);
+      } else {
+        showToast('You have been logged in');
+        login();
       }
     });
-
-    console.log(username, password);
-
-    // await AuthService.loginUser(username, password);
   };
 
   return (
