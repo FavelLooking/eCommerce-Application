@@ -100,12 +100,9 @@ class AuthService {
         this.billingId = billingAddress.id;
         this.shippingId = shippingId;
       }
-
-      return response;
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       localStorage.setItem('ErrorMessage', errorMessage);
-      throw error;
     }
   };
 

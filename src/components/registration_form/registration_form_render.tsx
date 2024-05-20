@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Toastify from 'toastify-js';
 import EmailInput from './registration_form_inputs/email_input';
 import PasswordInput from './registration_form_inputs/password_input';
 import FirstNameInput from './registration_form_inputs/first_name_input';
@@ -43,6 +44,16 @@ function RegisterPage() {
     useState(false);
 
   // const { login } = useAuth();
+
+  const showToast = (text: string) => {
+    Toastify({
+      text,
+      className: 'info',
+      style: {
+        background: 'linear-gradient(to right, #00b09b, #96c93d)',
+      },
+    }).showToast();
+  };
 
   const isPersonalFormValid = () =>
     passwordValid &&
@@ -126,8 +137,17 @@ function RegisterPage() {
       billingStreet,
       billingCountry,
       billingPostalCode
-    );
-    await AuthService.loginUser(username, password);
+    ).then(() => {
+      const errorMessage = AuthService.getFromLocalStorage('ErrorMessage');
+      if (errorMessage) {
+        console.log(errorMessage);
+        showToast(errorMessage);
+      }
+    });
+
+    console.log(username, password);
+
+    // await AuthService.loginUser(username, password);
   };
 
   return (
