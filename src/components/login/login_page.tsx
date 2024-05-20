@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 import AuthService from '../../services/authService';
@@ -18,6 +18,7 @@ import {
   storageLoginError,
 } from '../../utils/constants';
 import validateInput from '../../utils/validation';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function LoginPage() {
   const [hidden, setHidden] = useState(false);
@@ -31,7 +32,7 @@ export default function LoginPage() {
     reValidateMode: 'onChange',
     mode: 'onChange',
   });
-  const [isLogined, setIsLogined] = useState(false);
+  const { login } = useAuth();
 
   const showToast = (text: string) => {
     Toastify({
@@ -56,8 +57,7 @@ export default function LoginPage() {
         showToast(errorMessage);
       } else {
         reset();
-        AuthService.saveToLocalStorage('IsUserLogined', 'true');
-        setIsLogined(true);
+        login();
       }
     });
   };
@@ -113,7 +113,6 @@ export default function LoginPage() {
           </Link>
         </div>
       </form>
-      {isLogined && <Navigate to="/" />}
     </div>
   );
 }
