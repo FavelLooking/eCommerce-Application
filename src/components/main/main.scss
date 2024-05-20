@@ -1,6 +1,8 @@
 .main-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
 }
@@ -8,11 +10,11 @@
 .main-link-wrapper {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   height: calc(100% - 51px);
 }
 
 .main-link {
   text-decoration: none;
-  color: black;
+  color: #48304d;
 }

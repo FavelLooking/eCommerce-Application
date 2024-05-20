@@ -4,17 +4,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 #login-container {
   display: flex;
   flex-direction: column;
-
   width: 500px;
   & > label {
-    text-transform: capitalize;
     display: flex;
     flex-direction: column;
+    text-transform: capitalize;
+    font-size: 1rem;
+    color: #48304d;
+    cursor: default;
+    & > input {
+      color: #48304d;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid #48304d;
+      font-size: 1.5rem;
+      &:focus {
+        cursor: text;
+        border: 1px solid #48304d;
+        border-radius: 5px;
+      }
+    }
   }
   & > * {
     margin-top: 5px;
@@ -28,8 +43,32 @@
   color: red;
   margin: 0;
   padding: 0;
+  &::before {
+    content: '💥';
+  }
 }
 
 .login-link {
   text-decoration: none;
+  color: #f865b0;
+}
+
+.login-text {
+  color: #48304d;
+}
+
+.button {
+  height: 40px;
+  border: 1px solid #48304d;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  background-color: white;
+  &:hover {
+    cursor: pointer;
+    background-color: #fbcaef;
+  }
+}
+
+#login-checkbox {
+  color: #48304d;
 }

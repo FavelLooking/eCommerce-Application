@@ -105,9 +105,9 @@ export default function LoginPage() {
           Hide password
           <input type="checkbox" onClick={changePasswordVisability} />
         </div>
-        <input type="submit" value="Login" />
+        <input type="submit" value="Login" className="button" />
         <div>
-          <span>New to Comics Shop? </span>
+          <span className="login-text">New to Comics Shop? </span>
           <Link to="/register" className="login-link">
             Create an account.
           </Link>
