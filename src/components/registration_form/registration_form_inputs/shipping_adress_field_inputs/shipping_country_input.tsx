@@ -26,7 +26,7 @@ function ShippingCountryInput({
       </p>
       <select
         id="shipping-country-input"
-        name="shipping-country"
+        name="shippingCountry"
         value={selectedCountry}
         onChange={handleCountryChange}
       >

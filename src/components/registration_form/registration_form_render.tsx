@@ -92,10 +92,34 @@ function RegisterPage() {
       firstName,
       lastName,
       dateOfBirth,
-      city,
-      streetName,
-      postalCode,
+      shippingCity,
+      shippingStreet,
+      shippingCountry,
+      shippingPostalCode,
     } = formValues;
+
+    let { billingCity, billingStreet, billingCountry, billingPostalCode } =
+      formValues;
+
+    if (switchStateUseAsShipping) {
+      billingCity = '';
+      billingStreet = '';
+      billingCountry = '';
+      billingPostalCode = '';
+    }
+
+    console.log(
+      username,
+      password,
+      firstName,
+      lastName,
+      dateOfBirth,
+      shippingCity,
+      shippingStreet,
+      shippingCountry,
+      shippingPostalCode
+    );
+    console.log(billingCity, billingStreet, billingCountry, billingPostalCode);
 
     await AuthService.signUpCustomer(
       username,
@@ -103,10 +127,14 @@ function RegisterPage() {
       firstName,
       lastName,
       dateOfBirth,
-      shippingSelectedCountry,
-      city,
-      streetName,
-      postalCode
+      shippingCountry,
+      shippingCity,
+      shippingStreet,
+      shippingPostalCode,
+      billingCity,
+      billingStreet,
+      billingCountry,
+      billingPostalCode
     );
     await AuthService.loginUser(username, password);
   };

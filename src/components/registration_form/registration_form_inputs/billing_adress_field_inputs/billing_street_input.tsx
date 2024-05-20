@@ -26,7 +26,7 @@ function BillingStreetInput({ onValidationChange }: InputStatus) {
       <input
         id="billing-street-input"
         type="text"
-        name="billing-street"
+        name="billingStreet"
         placeholder="enter your street"
         value={inputValue}
         onChange={handleChange}

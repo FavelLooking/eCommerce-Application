@@ -34,7 +34,9 @@ class AuthService {
     }
   }
 
-  static addressId: string | undefined;
+  static shippingId: string;
+
+  static billingId: string | undefined;
 
   static signUpCustomer = async (
     username: string,
@@ -42,10 +44,14 @@ class AuthService {
     firstName: string,
     lastName: string,
     dateOfBirth: string,
-    country: string,
-    city: string,
-    streetName: string,
-    postalCode: string
+    shippingCountry: string,
+    shippingCity: string,
+    shippingStreet: string,
+    shippingPostalCode: string,
+    billingCity?: string,
+    billingStreet?: string,
+    billingCountry?: string,
+    billingPostalCode?: string
   ) => {
     try {
       const clientAnonymous = ClientFactory.getClient('anonymous');
@@ -67,16 +73,36 @@ class AuthService {
             dateOfBirth,
             addresses: [
               {
-                country,
-                city,
-                streetName,
-                postalCode,
+                country: shippingCountry,
+                city: shippingCity,
+                streetName: shippingStreet,
+                postalCode: shippingPostalCode,
               },
+              ...(billingCity &&
+              billingStreet &&
+              billingCountry &&
+              billingPostalCode
+                ? [
+                    {
+                      country: billingCountry,
+                      city: billingCity,
+                      streetName: billingStreet,
+                      postalCode: billingPostalCode,
+                    },
+                  ]
+                : []),
             ],
           },
         })
         .execute();
-      AuthService.addressId = response.body.customer.addresses[0].id;
+
+      const [{ id: shippingId }, billingAddress] =
+        response.body.customer.addresses;
+      if (billingAddress) {
+        this.billingId = billingAddress.id;
+      }
+
+      console.log(shippingId, this.billingId);
 
       return response;
     } catch (error: unknown) {

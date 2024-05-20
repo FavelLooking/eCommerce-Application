@@ -26,7 +26,7 @@ function ShippingStreetInput({ onValidationChange }: InputStatus) {
       <input
         id="shipping-street-input"
         type="text"
-        name="shipping-street"
+        name="shippingStreet"
         placeholder="enter your street"
         value={inputValue}
         onChange={handleChange}
