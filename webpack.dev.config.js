@@ -7,5 +7,6 @@ module.exports = merge(commonConfig, {
   devServer: {
     open: true,
     host: 'localhost',
+    historyApiFallback: true,
   },
 });

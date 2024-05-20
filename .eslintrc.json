@@ -9,5 +9,12 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["import", "@typescript-eslint", "react", "prettier"],
-  "rules": {}
+  "rules": {
+    "react/jsx-props-no-spreading": [
+      "error",
+      {
+        "exceptions": ["input", "TextInput"]
+      }
+    ]
+  }
 }
