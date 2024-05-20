@@ -19,5 +19,14 @@ class MyTokenCache implements TokenCache {
     Object.assign(this.myCache, newCache);
     this.saveTokenToLocalStorage();
   }
+
+  public clear(): void {
+    this.myCache = {
+      expirationTime: 0,
+      refreshToken: undefined,
+      token: '',
+    };
+    localStorage.removeItem('AccessToken');
+  }
 }
 export default MyTokenCache;

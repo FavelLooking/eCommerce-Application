@@ -1,5 +1,6 @@
 import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
+import { tokenStore } from './authManager';
 
 class AuthService {
   static async loginUser(username: string, password: string) {
@@ -30,6 +31,12 @@ class AuthService {
       const errorMessage = (error as Error).message;
       AuthService.saveToLocalStorage(storageLoginError, errorMessage);
     }
+  }
+
+  static async logoutUser() {
+    this.removeFromLocalStorage('customerId');
+    this.removeFromLocalStorage('IsUserLogined');
+    tokenStore.clear();
   }
 
   static saveToLocalStorage(key: string, value: string) {
