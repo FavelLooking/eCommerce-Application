@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import './header.scss';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import AuthService from '../../services/authService';
+import HeaderLink from './header_link';
 
 export default function Header() {
   const { user, logout } = useAuth();
@@ -18,28 +20,16 @@ export default function Header() {
         <img src="assets/logo.png" className="header-logo" alt="Logo" />
       </Link>
       <div className="header-links">
-        <NavLink to="/" className="header-link">
-          Home
-        </NavLink>
-        <NavLink to="login" className="header-link">
-          Login
-        </NavLink>
-        <NavLink to="register" className="header-link">
-          Register
-        </NavLink>
-        {user && (
-          <NavLink
-            to="/"
-            onClick={logoutUser}
-            className="header-link"
-            style={() => ({
-              color: '#48304D',
-              backgroundColor: '#fbcaef',
-            })}
-          >
-            Logout
-          </NavLink>
-        )}
+        <HeaderLink isDisplayed text="Home" />
+        <HeaderLink isDisplayed path="catalog" text="Catalog" />
+        <HeaderLink isDisplayed={!user} path="login" text="Login" />
+        <HeaderLink isDisplayed={!user} path="register" text="Register" />
+        <HeaderLink
+          isDisplayed={user}
+          text="Logout"
+          className="logout-link"
+          onclick={logoutUser}
+        />
       </div>
     </div>
   );
