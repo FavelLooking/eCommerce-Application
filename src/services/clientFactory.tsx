@@ -9,9 +9,6 @@ import { FlowType } from '../types/clientFactory';
 class ClientFactory {
   static client: Client | null | ByProjectKeyRequestBuilder = null;
 
-  private static clientAnonymous: Client | null | ByProjectKeyRequestBuilder =
-    null;
-
   static getClient(
     flowType: FlowType,
     username?: string,
@@ -42,48 +39,50 @@ class ClientFactory {
     }
 
     if (flowType === 'anonymous') {
-      if (this.clientAnonymous) {
-        return this.clientAnonymous;
+      if (this.client) {
+        return this.client;
       }
 
       const httpMiddlewareOptions = AuthManager.getHttpMiddlewareOptions();
       const optionsForAnonymousFlow = AuthManager.getOptionsForAnonymousFlow();
 
-      this.clientAnonymous = new ClientBuilder()
+      this.client = new ClientBuilder()
         .withHttpMiddleware(httpMiddlewareOptions)
         .withAnonymousSessionFlow(optionsForAnonymousFlow)
         .build();
 
-      return this.clientAnonymous;
+      return this.client;
     }
 
     throw new Error('Unsupported authentication flow type');
   }
 
-  static createApiRootWithPassword(username?: string, password?: string) {
-    if (this.client) {
-      return createApiBuilderFromCtpClient(this.client).withProjectKey({
-        projectKey: AuthManager.getProjectKey(),
-      });
+  static createApiRoot(
+    flowType: FlowType,
+    username?: string,
+    password?: string
+  ) {
+    let { client } = this;
+
+    if (!client) {
+      if (flowType === 'password') {
+        client = this.getClient('password', username, password);
+      } else if (flowType === 'anonymous') {
+        client = this.getClient('anonymous');
+      } else {
+        throw new Error('Unsupported authentication flow type');
+      }
+
+      this.client = client;
     }
 
-    const clientWithPassword = this.getClient('password', username, password);
-    this.client = clientWithPassword;
-    return createApiBuilderFromCtpClient(clientWithPassword).withProjectKey({
-      projectKey: AuthManager.getProjectKey(),
-    });
-  }
-
-  static createApiRootForAnonymous() {
-    const clientAnonymous = this.getClient('anonymous');
-    return createApiBuilderFromCtpClient(clientAnonymous).withProjectKey({
+    return createApiBuilderFromCtpClient(client).withProjectKey({
       projectKey: AuthManager.getProjectKey(),
     });
   }
 
   static resetClients() {
     this.client = null;
-    this.clientAnonymous = null;
   }
 }
 

@@ -7,7 +7,8 @@ class AuthService {
     try {
       AuthService.removeFromLocalStorage(storageLoginError);
 
-      const apiRootWithPassword = ClientFactory.createApiRootWithPassword(
+      const apiRootWithPassword = await ClientFactory.createApiRoot(
+        'password',
         username,
         password
       );
@@ -54,7 +55,7 @@ class AuthService {
     billingPostalCode?: string
   ) => {
     try {
-      const apiRootForAnonymous = ClientFactory.createApiRootForAnonymous();
+      const apiRootForAnonymous = ClientFactory.createApiRoot('anonymous');
 
       const response = await apiRootForAnonymous
         .me()
@@ -90,6 +91,8 @@ class AuthService {
           },
         })
         .execute();
+      ClientFactory.resetClients();
+      tokenStore.clear();
       await AuthService.loginUser(username, password);
 
       const [{ id: shippingId }, billingAddress] =
@@ -105,7 +108,7 @@ class AuthService {
   };
 
   static getCustomersDetails = async () => {
-    const apiRoot = ClientFactory.createApiRootWithPassword();
+    const apiRoot = ClientFactory.createApiRoot('password');
     return apiRoot.me().get().execute();
   };
 
