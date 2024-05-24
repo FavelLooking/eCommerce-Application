@@ -18,20 +18,24 @@
   height: 100%;
   gap: 5px;
   margin-right: 5px;
+}
 
-  .header-link {
-    width: fit-content;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    color: #48304d;
-    padding: 0 5px;
+.header-link {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #48304d;
+  padding: 0 5px;
+  &.active {
+    background-color: #15f1ec;
+    color: #f865b0;
   }
 }
 
-.header-links a.active {
-  background-color: #15f1ec;
-  color: #f865b0;
+.logout-link.active {
+  background-color: #fbcaef;
+  color: #48304d;
 }
