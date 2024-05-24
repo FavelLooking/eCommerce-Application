@@ -1,12 +1,6 @@
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
-import { tokenStore, AuthManager } from './authManager';
-
-const clientAnonymous = ClientFactory.getClient('anonymous');
-const apiRoot = createApiBuilderFromCtpClient(clientAnonymous).withProjectKey({
-  projectKey: AuthManager.getProjectKey(),
-});
+import { tokenStore } from './authManager';
 
 class AuthService {
   static async loginUser(username: string, password: string) {
@@ -28,9 +22,10 @@ class AuthService {
           },
         })
         .execute();
+      await this.getCustomersDetails();
 
-      AuthService.saveToLocalStorage(
-        `customerId`,
+      await AuthService.saveToLocalStorage(
+        'customerId',
         loginResponse.body.customer.id
       );
     } catch (error: unknown) {
@@ -59,7 +54,9 @@ class AuthService {
     billingPostalCode?: string
   ) => {
     try {
-      const response = await apiRoot
+      const apiRootForAnonymous = ClientFactory.createApiRootForAnonymous();
+
+      const response = await apiRootForAnonymous
         .me()
         .signup()
         .post({
@@ -93,12 +90,13 @@ class AuthService {
           },
         })
         .execute();
+      await AuthService.loginUser(username, password);
 
       const [{ id: shippingId }, billingAddress] =
         response.body.customer.addresses;
+      this.shippingId = shippingId;
       if (billingAddress) {
         this.billingId = billingAddress.id;
-        this.shippingId = shippingId;
       }
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
@@ -106,9 +104,15 @@ class AuthService {
     }
   };
 
+  static getCustomersDetails = async () => {
+    const apiRoot = ClientFactory.createApiRootWithPassword();
+    return apiRoot.me().get().execute();
+  };
+
   static async logoutUser() {
     this.removeFromLocalStorage('customerId');
     this.removeFromLocalStorage('IsUserLogined');
+    ClientFactory.resetClients();
     tokenStore.clear();
   }
 

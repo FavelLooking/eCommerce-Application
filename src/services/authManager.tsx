@@ -51,7 +51,6 @@ export class AuthManager {
       },
       scopes: this.config.scopes,
       fetch,
-      tokenCache: tokenStore,
     };
   }
 
