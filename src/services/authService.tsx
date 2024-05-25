@@ -8,13 +8,13 @@ class AuthService {
       AuthService.removeFromLocalStorage(storageLoginError);
       ClientFactory.flowType = 'password';
 
-      const apiRootWithPassword = await ClientFactory.createApiRoot(
+      const apiRoot = await ClientFactory.createApiRoot(
         ClientFactory.flowType,
         username,
         password
       );
 
-      const loginResponse = await apiRootWithPassword
+      const loginResponse = await apiRoot
         .me()
         .login()
         .post({
@@ -55,11 +55,9 @@ class AuthService {
     billingPostalCode?: string
   ) => {
     try {
-      const apiRootForAnonymous = ClientFactory.createApiRoot(
-        ClientFactory.flowType
-      );
+      const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
 
-      const response = await apiRootForAnonymous
+      const response = await apiRoot
         .me()
         .signup()
         .post({
