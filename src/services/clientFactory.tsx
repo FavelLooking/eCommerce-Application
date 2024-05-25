@@ -9,6 +9,8 @@ import { FlowType } from '../types/clientFactory';
 class ClientFactory {
   static client: Client | null | ByProjectKeyRequestBuilder = null;
 
+  static flowType: string = 'anonymous';
+
   static getClient(
     flowType: FlowType,
     username?: string,
@@ -57,11 +59,7 @@ class ClientFactory {
     throw new Error('Unsupported authentication flow type');
   }
 
-  static createApiRoot(
-    flowType: FlowType,
-    username?: string,
-    password?: string
-  ) {
+  static createApiRoot(flowType: string, username?: string, password?: string) {
     let { client } = this;
 
     if (!client) {
@@ -83,6 +81,10 @@ class ClientFactory {
 
   static resetClients() {
     this.client = null;
+  }
+
+  static resetFlow() {
+    this.flowType = 'anonymous';
   }
 }
 

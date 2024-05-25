@@ -6,9 +6,10 @@ class AuthService {
   static async loginUser(username: string, password: string) {
     try {
       AuthService.removeFromLocalStorage(storageLoginError);
+      ClientFactory.flowType = 'password';
 
       const apiRootWithPassword = await ClientFactory.createApiRoot(
-        'password',
+        ClientFactory.flowType,
         username,
         password
       );
@@ -24,7 +25,6 @@ class AuthService {
         })
         .execute();
       await this.getCustomersDetails();
-
       await AuthService.saveToLocalStorage(
         'customerId',
         loginResponse.body.customer.id
@@ -55,7 +55,9 @@ class AuthService {
     billingPostalCode?: string
   ) => {
     try {
-      const apiRootForAnonymous = ClientFactory.createApiRoot('anonymous');
+      const apiRootForAnonymous = ClientFactory.createApiRoot(
+        ClientFactory.flowType
+      );
 
       const response = await apiRootForAnonymous
         .me()
@@ -108,7 +110,7 @@ class AuthService {
   };
 
   static getCustomersDetails = async () => {
-    const apiRoot = ClientFactory.createApiRoot('password');
+    const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
     return apiRoot.me().get().execute();
   };
 
@@ -116,6 +118,7 @@ class AuthService {
     this.removeFromLocalStorage('customerId');
     this.removeFromLocalStorage('IsUserLogined');
     ClientFactory.resetClients();
+    ClientFactory.resetFlow();
     tokenStore.clear();
   }
 
