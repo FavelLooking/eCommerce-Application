@@ -1,62 +1,90 @@
 import { Client, ClientBuilder } from '@commercetools/sdk-client-v2';
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import {
+  createApiBuilderFromCtpClient,
+  ByProjectKeyRequestBuilder,
+} from '@commercetools/platform-sdk';
 import { AuthManager } from './authManager';
 import { FlowType } from '../types/clientFactory';
 
 class ClientFactory {
-  static client: Client | null = null;
+  static client: Client | null | ByProjectKeyRequestBuilder = null;
 
-  private static clientAnonymous: Client;
+  static flowType: string = 'anonymous';
 
-  static getClient(flowType: FlowType, username?: string, password?: string) {
-    const httpMiddlewareOptions = AuthManager.getHttpMiddlewareOptions();
-    const clientBuilder = new ClientBuilder().withHttpMiddleware(
-      httpMiddlewareOptions
-    );
-
-    switch (flowType) {
-      case 'password':
-        if (username && password) {
-          const passwordFlowOptions = AuthManager.provideOptionsForPasswordFlow(
-            username,
-            password
-          );
-          clientBuilder.withPasswordFlow(passwordFlowOptions);
-        } else {
-          throw new Error(
-            'Username and password must be provided for password flow'
-          );
-        }
-        break;
-      case 'anonymous': {
-        if (!this.clientAnonymous) {
-          const optionsForAnonymousFlow =
-            AuthManager.getOptionsForAnonymousFlow();
-          this.clientAnonymous = clientBuilder
-            .withAnonymousSessionFlow(optionsForAnonymousFlow)
-            .build();
-        }
-        return this.clientAnonymous;
+  static getClient(
+    flowType: FlowType,
+    username?: string,
+    password?: string
+  ): Client | ByProjectKeyRequestBuilder {
+    if (flowType === 'password') {
+      if (this.client) {
+        return this.client;
       }
-      default:
-        throw new Error('Unsupported authentication flow type');
+
+      if (username && password) {
+        const httpMiddlewareOptions = AuthManager.getHttpMiddlewareOptions();
+        const passwordFlowOptions = AuthManager.provideOptionsForPasswordFlow(
+          username,
+          password
+        );
+
+        this.client = new ClientBuilder()
+          .withHttpMiddleware(httpMiddlewareOptions)
+          .withPasswordFlow(passwordFlowOptions)
+          .build();
+
+        return this.client;
+      }
+      throw new Error(
+        'Username and password must be provided for password flow'
+      );
     }
-    this.client = clientBuilder.build();
-    return this.client;
+
+    if (flowType === 'anonymous') {
+      if (this.client) {
+        return this.client;
+      }
+
+      const httpMiddlewareOptions = AuthManager.getHttpMiddlewareOptions();
+      const optionsForAnonymousFlow = AuthManager.getOptionsForAnonymousFlow();
+
+      this.client = new ClientBuilder()
+        .withHttpMiddleware(httpMiddlewareOptions)
+        .withAnonymousSessionFlow(optionsForAnonymousFlow)
+        .build();
+
+      return this.client;
+    }
+
+    throw new Error('Unsupported authentication flow type');
   }
 
-  static createApiRootWithPassword(username: string, password: string) {
-    const clientWithPassword = this.getClient('password', username, password);
-    return createApiBuilderFromCtpClient(clientWithPassword).withProjectKey({
+  static createApiRoot(flowType: string, username?: string, password?: string) {
+    let { client } = this;
+
+    if (!client) {
+      if (flowType === 'password') {
+        client = this.getClient('password', username, password);
+      } else if (flowType === 'anonymous') {
+        client = this.getClient('anonymous');
+      } else {
+        throw new Error('Unsupported authentication flow type');
+      }
+
+      this.client = client;
+    }
+
+    return createApiBuilderFromCtpClient(client).withProjectKey({
       projectKey: AuthManager.getProjectKey(),
     });
   }
 
-  static createApiRootForAnonymous() {
-    const clientAnonymous = this.getClient('anonymous');
-    return createApiBuilderFromCtpClient(clientAnonymous).withProjectKey({
-      projectKey: AuthManager.getProjectKey(),
-    });
+  static resetClients() {
+    this.client = null;
+  }
+
+  static resetFlow() {
+    this.flowType = 'anonymous';
   }
 }
 

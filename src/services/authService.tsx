@@ -1,24 +1,20 @@
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
-import { tokenStore, AuthManager } from './authManager';
-
-const clientAnonymous = ClientFactory.getClient('anonymous');
-const apiRoot = createApiBuilderFromCtpClient(clientAnonymous).withProjectKey({
-  projectKey: AuthManager.getProjectKey(),
-});
+import { tokenStore } from './authManager';
 
 class AuthService {
   static async loginUser(username: string, password: string) {
     try {
       AuthService.removeFromLocalStorage(storageLoginError);
+      ClientFactory.flowType = 'password';
 
-      const apiRootWithPassword = ClientFactory.createApiRootWithPassword(
+      const apiRoot = await ClientFactory.createApiRoot(
+        ClientFactory.flowType,
         username,
         password
       );
 
-      const loginResponse = await apiRootWithPassword
+      const loginResponse = await apiRoot
         .me()
         .login()
         .post({
@@ -28,9 +24,9 @@ class AuthService {
           },
         })
         .execute();
-
-      AuthService.saveToLocalStorage(
-        `customerId`,
+      await this.getCustomersDetails();
+      await AuthService.saveToLocalStorage(
+        'customerId',
         loginResponse.body.customer.id
       );
     } catch (error: unknown) {
@@ -59,6 +55,8 @@ class AuthService {
     billingPostalCode?: string
   ) => {
     try {
+      const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
+
       const response = await apiRoot
         .me()
         .signup()
@@ -93,12 +91,15 @@ class AuthService {
           },
         })
         .execute();
+      ClientFactory.resetClients();
+      tokenStore.clear();
+      await AuthService.loginUser(username, password);
 
       const [{ id: shippingId }, billingAddress] =
         response.body.customer.addresses;
+      this.shippingId = shippingId;
       if (billingAddress) {
         this.billingId = billingAddress.id;
-        this.shippingId = shippingId;
       }
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
@@ -106,9 +107,16 @@ class AuthService {
     }
   };
 
+  static getCustomersDetails = async () => {
+    const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
+    return apiRoot.me().get().execute();
+  };
+
   static async logoutUser() {
     this.removeFromLocalStorage('customerId');
     this.removeFromLocalStorage('IsUserLogined');
+    ClientFactory.resetClients();
+    ClientFactory.resetFlow();
     tokenStore.clear();
   }
 
