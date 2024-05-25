@@ -1,6 +1,7 @@
 import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
 import { tokenStore } from './authManager';
+import { ExtendedCustomerDraft } from '../interfaces/authService';
 
 class AuthService {
   static async loginUser(username: string, password: string) {
@@ -52,7 +53,8 @@ class AuthService {
     billingCity?: string,
     billingStreet?: string,
     billingCountry?: string,
-    billingPostalCode?: string
+    billingPostalCode?: string,
+    switchStateUseAsShipping?: Boolean
   ) => {
     try {
       const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
@@ -67,6 +69,10 @@ class AuthService {
             firstName,
             lastName,
             dateOfBirth,
+            shippingAddresses: [0],
+            billingAddresses: [switchStateUseAsShipping ? 1 : 0],
+            defaultShippingAddress: 0,
+            defaultBillingAddress: switchStateUseAsShipping ? 1 : 0,
             addresses: [
               {
                 country: shippingCountry,
@@ -88,7 +94,7 @@ class AuthService {
                   ]
                 : []),
             ],
-          },
+          } as ExtendedCustomerDraft,
         })
         .execute();
       ClientFactory.resetClients();
