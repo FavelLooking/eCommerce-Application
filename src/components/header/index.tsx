@@ -29,6 +29,7 @@ export default function Header() {
           className="logout-link"
           onclick={logoutUser}
         />
+        <HeaderLink isDisplayed={user} path="profile" text="Profile" />
       </div>
     </div>
   );
