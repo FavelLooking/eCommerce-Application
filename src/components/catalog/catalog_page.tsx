@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { Product } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import {
@@ -8,36 +8,16 @@ import {
   getProductName,
   getProducts,
 } from '../../services/productService';
-import getInfoAboutProduct from '../../services/getDetailedProductInfo';
 
 export const catalogLoader = async () => getProducts();
 
 export function CatalogPage() {
   const data: Product[] = useLoaderData() as Product[];
 
-  const navigate = useNavigate();
-
-  const handleClick = (productId: string) => {
-    getInfoAboutProduct(productId).then(() => {
-      navigate(`/catalog/${productId}`);
-    });
-  };
-
   return (
     <div className="catalog-wrapper">
       {data.map((product) => (
-        <div
-          role="button"
-          tabIndex={0}
-          className="catalog-item"
-          key={product.id}
-          onClick={() => handleClick(product.id)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              handleClick(product.id);
-            }
-          }}
-        >
+        <div className="catalog-item">
           <img
             src={getProductImage(product)}
             alt="product"
