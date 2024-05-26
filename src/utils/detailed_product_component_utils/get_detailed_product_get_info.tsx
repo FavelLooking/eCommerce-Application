@@ -1,24 +1,24 @@
 import ClientFactory from '../../services/clientFactory';
 
 const getInfoAboutProduct = async (productId: string) => {
-  console.log(productId);
-  await ClientFactory.createApiRoot(ClientFactory.flowType)
-    .products()
-    .withId({ ID: productId })
-    .get()
-    .execute()
-    .then((data) => {
-      console.log('fetch data', data);
-      const getSelectedProductImages =
-        data.body.masterData.current.masterVariant.images;
-      const getSelectedProductName = data.body.masterData.current.name.en;
-      const getSelectedProductDescription =
-        data.body.masterData.current.metaDescription?.en;
+  try {
+    const data = await ClientFactory.createApiRoot(ClientFactory.flowType)
+      .products()
+      .withId({ ID: productId })
+      .get()
+      .execute();
 
-      console.log('name', getSelectedProductName);
-      console.log('description', getSelectedProductDescription);
-      console.log('imgs', getSelectedProductImages);
-    });
+    const productData = {
+      productName: data.body.masterData.current.name.en,
+      productDescription: data.body.masterData.current.metaDescription?.en,
+      productImages: data.body.masterData.current.masterVariant.images,
+    };
+
+    return productData;
+  } catch (error) {
+    console.error('Failed to fetch product data:', error);
+    throw error;
+  }
 };
 
 export default getInfoAboutProduct;

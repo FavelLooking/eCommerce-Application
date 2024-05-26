@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useNavigate, useLoaderData } from 'react-router-dom';
 import { Product } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import {
@@ -15,25 +15,32 @@ export const catalogLoader = async () => getProducts();
 export function CatalogPage() {
   const data: Product[] = useLoaderData() as Product[];
 
-  const handleKeyDown = (
-    event: React.KeyboardEvent<HTMLDivElement>,
-    productId: string
-  ) => {
-    if (event.key === 'Enter') {
-      getInfoAboutProduct(productId);
-    }
+  const navigate = useNavigate();
+
+  const handleClick = (productId: string) => {
+    getInfoAboutProduct(productId)
+      .then((productData) => {
+        navigate(`/catalog/${productId}`, { state: productData });
+      })
+      .catch((error) => {
+        console.error('Failed to fetch product data:', error);
+      });
   };
 
   return (
     <div className="catalog-wrapper">
       {data.map((product) => (
         <div
-          className="catalog-item"
-          key={product.id}
-          onClick={() => getInfoAboutProduct(product.id)}
-          onKeyDown={(event) => handleKeyDown(event, product.id)}
           role="button"
           tabIndex={0}
+          className="catalog-item"
+          key={product.id}
+          onClick={() => handleClick(product.id)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              handleClick(product.id);
+            }
+          }}
         >
           <img
             src={getProductImage(product)}
