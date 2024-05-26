@@ -11,7 +11,7 @@ import Header from './components/header';
 import MainPage from './components/main/main_page';
 import NotFoundPage from './components/not_found/not_found_page';
 import { AuthProvider, useAuth } from './hooks/useAuth';
-import CatalogPage from './components/catalog/catalog_page';
+import { CatalogPage, catalogLoader } from './components/catalog/catalog_page';
 
 function Root() {
   return (
@@ -57,6 +57,7 @@ const router = createBrowserRouter([
       {
         path: 'catalog',
         element: <CatalogPage />,
+        loader: catalogLoader,
       },
     ],
   },
