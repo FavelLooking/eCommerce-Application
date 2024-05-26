@@ -1,0 +1,22 @@
+.detailed-product-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailed-product__name {
+  color: #f865b0;
+}
+
+.detailed-product__img {
+  display: block;
+  width: 200px;
+  height: 300px;
+}
+
+.detailed-product__description {
+  max-width: 700px;
+  padding: 5px;
+  color: #48304d;
+}

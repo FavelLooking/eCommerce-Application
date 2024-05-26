@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import './detailed_product_style.scss';
 
 function DetailedProductPage() {
   const location = useLocation();
