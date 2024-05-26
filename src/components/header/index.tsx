@@ -23,6 +23,7 @@ export default function Header() {
         <HeaderLink isDisplayed path="catalog" text="Catalog" />
         <HeaderLink isDisplayed={!user} path="login" text="Login" />
         <HeaderLink isDisplayed={!user} path="register" text="Register" />
+        <HeaderLink isDisplayed={user} path="profile" text="Profile" />
         <HeaderLink
           isDisplayed={user}
           text="Logout"
