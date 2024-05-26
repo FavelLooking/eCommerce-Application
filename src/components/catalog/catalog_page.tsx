@@ -8,7 +8,7 @@ import {
   getProductName,
   getProducts,
 } from '../../services/productService';
-import getInfoAboutProduct from '../../utils/detailed_product_component_utils/getailed_product_get_info';
+import getInfoAboutProduct from '../../utils/detailed_product_component_utils/get_detailed_product_get_info';
 
 export const catalogLoader = async () => getProducts();
 
