@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './detailed_product_style.scss';
 import getInfoAboutProduct from '../../services/getDetailedProductInfo';
-import { ProductDataDetailedPage } from '../../types/detailed_product_page_types/detailed_product_page_types';
+import { ProductDataDetailedPage } from '../../interfaces/detailed_product_page_interfaces/detailed_product_page_interfaces';
 
 function DetailedProductPage() {
   const { productId } = useParams();
