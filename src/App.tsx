@@ -4,6 +4,7 @@ import {
   Navigate,
   Outlet,
   RouterProvider,
+  useLocation,
 } from 'react-router-dom';
 import LoginPage from './components/login/login_page';
 import RegisterPage from './components/registration_form/registration_form_render';
@@ -12,6 +13,7 @@ import MainPage from './components/main/main_page';
 import NotFoundPage from './components/not_found/not_found_page';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import CatalogPage from './components/catalog/catalog_page';
+import ProfilePage from './components/profile/profile_page';
 
 function Root() {
   return (
@@ -26,7 +28,13 @@ function Root() {
 
 function ProtectedRoute({ children }: { children: JSX.Element }): JSX.Element {
   const { user } = useAuth();
-  if (user) {
+  const location = useLocation();
+
+  if (!user && location.pathname === '/profile') {
+    return <Navigate to="/" />;
+  }
+
+  if (user && location.pathname === '/login') {
     return <Navigate to="/" />;
   }
   return children;
@@ -57,6 +65,14 @@ const router = createBrowserRouter([
       {
         path: 'catalog',
         element: <CatalogPage />,
+      },
+      {
+        path: 'profile',
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
