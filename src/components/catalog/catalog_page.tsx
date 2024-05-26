@@ -8,7 +8,7 @@ import {
   getProductName,
   getProducts,
 } from '../../services/productService';
-import getInfoAboutProduct from '../../utils/detailed_product_component_utils/get_detailed_product_get_info';
+import getInfoAboutProduct from '../../services/getDetailedProductInfo';
 
 export const catalogLoader = async () => getProducts();
 
@@ -18,13 +18,9 @@ export function CatalogPage() {
   const navigate = useNavigate();
 
   const handleClick = (productId: string) => {
-    getInfoAboutProduct(productId)
-      .then((productData) => {
-        navigate(`/catalog/${productId}`, { state: productData });
-      })
-      .catch((error) => {
-        console.error('Failed to fetch product data:', error);
-      });
+    getInfoAboutProduct(productId).then((productData) => {
+      navigate(`/catalog/${productId}`, { state: productData });
+    });
   };
 
   return (
