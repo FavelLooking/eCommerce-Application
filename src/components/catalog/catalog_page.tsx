@@ -18,8 +18,8 @@ export function CatalogPage() {
   const navigate = useNavigate();
 
   const handleClick = (productId: string) => {
-    getInfoAboutProduct(productId).then((productData) => {
-      navigate(`/catalog/${productId}`, { state: productData });
+    getInfoAboutProduct(productId).then(() => {
+      navigate(`/catalog/${productId}`);
     });
   };
 
