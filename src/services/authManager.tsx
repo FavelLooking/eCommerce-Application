@@ -6,14 +6,10 @@ import {
 import ConfigManager from './configManager';
 import MyTokenCache from './tokenCache';
 
-const { v4: uuidv4 } = require('uuid');
-
 export const tokenStore = new MyTokenCache();
 
 export class AuthManager {
   private static config = ConfigManager.createConfig();
-
-  private static anonymousId = uuidv4();
 
   static getHttpMiddlewareOptions(): HttpMiddlewareOptions {
     return {
@@ -47,7 +43,6 @@ export class AuthManager {
       credentials: {
         clientId: this.config.clientId,
         clientSecret: this.config.clientSecret,
-        anonymousId: this.anonymousId,
       },
       scopes: this.config.scopes,
       fetch,

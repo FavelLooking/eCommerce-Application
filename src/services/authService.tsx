@@ -6,6 +6,8 @@ import { ExtendedCustomerDraft } from '../interfaces/authService';
 class AuthService {
   static async loginUser(username: string, password: string) {
     try {
+      ClientFactory.resetClients();
+      tokenStore.clear();
       AuthService.removeFromLocalStorage(storageLoginError);
       ClientFactory.flowType = 'password';
 
@@ -97,8 +99,6 @@ class AuthService {
           } as ExtendedCustomerDraft,
         })
         .execute();
-      ClientFactory.resetClients();
-      tokenStore.clear();
       await AuthService.loginUser(username, password);
 
       const [{ id: shippingId }, billingAddress] =
