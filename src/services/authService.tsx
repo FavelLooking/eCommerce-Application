@@ -34,6 +34,8 @@ class AuthService {
       );
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
+      ClientFactory.resetClients();
+      ClientFactory.flowType = 'anonymous';
       AuthService.saveToLocalStorage(storageLoginError, errorMessage);
     }
   }
