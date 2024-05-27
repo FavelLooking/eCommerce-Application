@@ -32,7 +32,6 @@ function DetailedProductPage() {
         <div>
           <p>Product Name: {productInfo.productName}</p>
           <p>Product Description: {productInfo.productDescription}</p>
-          {/* Display other product details as needed */}
         </div>
       )}
     </div>
