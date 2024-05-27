@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { Product } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import {
@@ -17,7 +17,11 @@ export function CatalogPage() {
   return (
     <div className="catalog-wrapper">
       {data.map((product) => (
-        <div className="catalog-item" key={product.id}>
+        <Link
+          className="catalog-item"
+          key={product.id}
+          to={`category/subcategory/${product.id}`}
+        >
           <img
             src={getProductImage(product)}
             alt="product"
@@ -30,7 +34,7 @@ export function CatalogPage() {
             </span>
           </div>
           <input type="button" className="catalog-add" />
-        </div>
+        </Link>
       ))}
     </div>
   );
