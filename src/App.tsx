@@ -59,12 +59,10 @@ const router = createBrowserRouter([
         path: 'catalog',
         element: <CatalogPage />,
         loader: catalogLoader,
-        children: [
-          {
-            path: 'catalog/category/subcategory/:productId ',
-            element: <DetailedProductPage />,
-          },
-        ],
+      },
+      {
+        path: 'catalog/category/subcategory/:productId',
+        element: <DetailedProductPage />,
       },
     ],
   },
