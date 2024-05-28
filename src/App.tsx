@@ -31,7 +31,7 @@ function ProtectedRoute({ children }: { children: JSX.Element }): JSX.Element {
   const location = useLocation();
 
   if (!user && location.pathname === '/profile') {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   if (user && location.pathname === '/login') {
