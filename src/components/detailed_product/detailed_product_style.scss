@@ -1,4 +1,9 @@
-.detailde-product {
+.detailde-product-wrapper {
+  height: 100vh;
+}
+
+.detailde-product,
+.detailde-product-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;

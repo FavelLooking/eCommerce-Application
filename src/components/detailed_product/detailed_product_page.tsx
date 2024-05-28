@@ -21,7 +21,11 @@ function DetailedProductPage() {
   }, [productId]);
 
   if (errorFetch) {
-    return <NotFoundPage />;
+    return (
+      <div className="detailde-product-wrapper">
+        <NotFoundPage />;
+      </div>
+    );
   }
 
   return (
