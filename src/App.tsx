@@ -71,7 +71,9 @@ const router = createBrowserRouter([
       {
         path: 'catalog/category/subcategory/:productId',
         element: <DetailedProductPage />,
+      },
 
+      {
         path: 'profile',
         element: (
           <ProtectedRoute>
