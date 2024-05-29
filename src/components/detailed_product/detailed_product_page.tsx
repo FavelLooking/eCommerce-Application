@@ -32,7 +32,7 @@ function DetailedProductPage() {
     if (!productInfo?.productPrice) {
       return (
         <div className="detailed-product__price-wrapper">
-          <div className="detailed-product__price">SOLD OUT</div>
+          <div className="detailed-product__price-sold-out">SOLD OUT</div>
         </div>
       );
     }
@@ -40,10 +40,10 @@ function DetailedProductPage() {
     return productInfo.productDiscount ? (
       <div className="detailed-product__price-wrapper">
         <div className="detailed-product__price">
-          {productInfo.productPrice}
+          {productInfo.productDiscount}
         </div>
         <div className="detailed-product__price-discount">
-          {productInfo.productDiscount}
+          {productInfo.productPrice}
         </div>
       </div>
     ) : (
