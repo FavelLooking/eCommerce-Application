@@ -9,6 +9,7 @@ import {
   getProductPrice,
   getProducts,
 } from '../../services/productService';
+import Breadcrumb from './breadcrumb';
 
 export const catalogLoader = async () => getProducts();
 
@@ -37,24 +38,29 @@ export function CatalogPage() {
   };
 
   return (
-    <div className="catalog-wrapper">
-      {data.map((product) => (
-        <div className="catalog-item" key={product.id}>
-          <img
-            src={getProductImage(product)}
-            alt="product"
-            className="catalog-item-image"
-          />
-          <div className="catalog-item-info">
-            <span className="catalog-item-name">{getProductName(product)}</span>
-            <span className="catalog-item-description">
-              {getProductDescription(product)}
-            </span>
-            {getPrice(product)}
+    <div className="catalog_wrapper">
+      <Breadcrumb />
+      <div className="catalog_flex">
+        {data.map((product) => (
+          <div className="catalog-item" key={product.id}>
+            <img
+              src={getProductImage(product)}
+              alt="product"
+              className="catalog-item-image"
+            />
+            <div className="catalog-item-info">
+              <span className="catalog-item-name">
+                {getProductName(product)}
+              </span>
+              <span className="catalog-item-description">
+                {getProductDescription(product)}
+              </span>
+              {getPrice(product)}
+            </div>
+            <input type="button" className="catalog-add" />
           </div>
-          <input type="button" className="catalog-add" />
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

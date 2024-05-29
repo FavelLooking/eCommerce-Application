@@ -5,7 +5,11 @@ export const getProducts = async () => {
   const data: Product[] = [];
   await ClientFactory.createApiRoot(ClientFactory.flowType)
     .products()
-    .get()
+    .get({
+      queryArgs: {
+        limit: 500,
+      },
+    })
     .execute()
     .then((value) => {
       data.push(...(value.body.results as Product[]));
