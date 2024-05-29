@@ -1,4 +1,4 @@
-import { Product } from '@commercetools/platform-sdk';
+import { Product, Price, DiscountedPrice } from '@commercetools/platform-sdk';
 import ClientFactory from './clientFactory';
 
 export const getProducts = async () => {
@@ -11,6 +11,30 @@ export const getProducts = async () => {
       data.push(...(value.body.results as Product[]));
     });
   return data;
+};
+
+const getPriceValue = (price: Price | DiscountedPrice): string => {
+  const priceCurrency = '€';
+  const priceCents = price.value.centAmount;
+  const priceDigits = price.value.fractionDigits;
+
+  return `${priceCents / 10 ** priceDigits} ${priceCurrency}`;
+};
+
+export const getProductPrice = (
+  product: Product
+): [string | undefined, string | undefined] => {
+  const price = product.masterData.current.masterVariant.prices?.at(0);
+  if (!price) {
+    return [undefined, undefined];
+  }
+
+  const originalPrice = getPriceValue(price);
+  const discountPrice = price.discounted
+    ? getPriceValue(price.discounted)
+    : undefined;
+
+  return [originalPrice, discountPrice];
 };
 
 export const getProductImage = (product: Product): string =>

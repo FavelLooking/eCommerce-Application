@@ -1,10 +1,13 @@
 import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
 import { tokenStore } from './authManager';
+import { ExtendedCustomerDraft } from '../interfaces/authService';
 
 class AuthService {
   static async loginUser(username: string, password: string) {
     try {
+      ClientFactory.resetClients();
+      tokenStore.clear();
       AuthService.removeFromLocalStorage(storageLoginError);
       ClientFactory.flowType = 'password';
 
@@ -31,6 +34,8 @@ class AuthService {
       );
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
+      ClientFactory.resetClients();
+      ClientFactory.flowType = 'anonymous';
       AuthService.saveToLocalStorage(storageLoginError, errorMessage);
     }
   }
@@ -52,7 +57,8 @@ class AuthService {
     billingCity?: string,
     billingStreet?: string,
     billingCountry?: string,
-    billingPostalCode?: string
+    billingPostalCode?: string,
+    switchStateUseAsShipping?: Boolean
   ) => {
     try {
       const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
@@ -67,6 +73,10 @@ class AuthService {
             firstName,
             lastName,
             dateOfBirth,
+            shippingAddresses: [0],
+            billingAddresses: [switchStateUseAsShipping ? 1 : 0],
+            defaultShippingAddress: 0,
+            defaultBillingAddress: switchStateUseAsShipping ? 1 : 0,
             addresses: [
               {
                 country: shippingCountry,
@@ -88,11 +98,9 @@ class AuthService {
                   ]
                 : []),
             ],
-          },
+          } as ExtendedCustomerDraft,
         })
         .execute();
-      ClientFactory.resetClients();
-      tokenStore.clear();
       await AuthService.loginUser(username, password);
 
       const [{ id: shippingId }, billingAddress] =
