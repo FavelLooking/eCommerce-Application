@@ -29,18 +29,11 @@ module.exports = {
     new EslintPlugin({ extensions: ['tsx'] }),
     new Dotenv(),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: 'src/assets/', to: 'assets' },
-        { from: '_redirects', to: './' },
-      ],
+      patterns: [{ from: '_redirects', to: './' }],
     }),
   ],
   module: {
     rules: [
-      {
-        test: /\.(jpg|png|svg|jpeg|gif)$/,
-        type: 'asset/resource',
-      },
       {
         test: /\.s[ac]ss|css$/i,
         use: ['style-loader', 'css-loader', 'sass-loader'],

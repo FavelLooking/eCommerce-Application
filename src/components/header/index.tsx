@@ -16,7 +16,11 @@ export default function Header() {
   return (
     <div className="header">
       <Link to="/">
-        <img src="assets/logo.png" className="header-logo" alt="Logo" />
+        <img
+          src="https://drive.google.com/thumbnail?id=1anQTSugURy_yNgW3hAIzsbKneY-mCC3I"
+          className="header-logo"
+          alt="Logo"
+        />
       </Link>
       <div className="header-links">
         <HeaderLink isDisplayed text="Home" />
