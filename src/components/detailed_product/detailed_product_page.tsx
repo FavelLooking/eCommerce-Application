@@ -41,6 +41,7 @@ function DetailedProductPage() {
           <p className="detailed-product__description">
             {productInfo.productDescription}
           </p>
+          <p className="detailed-product__price">{productInfo.productPrice}</p>
         </div>
       )}
     </div>
