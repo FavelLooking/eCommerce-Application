@@ -12,7 +12,6 @@ export default function ProfilePage() {
   try {
     customerDetailsObject = JSON.parse(customerDetailsJSON);
   } catch (error) {
-    console.error('Failed to parse customer details:', error);
     return <div>Invalid customer details format.</div>;
   }
 
