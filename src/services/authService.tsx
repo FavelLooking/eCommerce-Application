@@ -2,6 +2,7 @@ import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
 import { tokenStore } from './authManager';
 import { ExtendedCustomerDraft } from '../interfaces/authService';
+import CustomerService from './customerService';
 
 class AuthService {
   static async loginUser(username: string, password: string) {
@@ -27,7 +28,8 @@ class AuthService {
           },
         })
         .execute();
-      await this.getCustomersDetails();
+      await CustomerService.getCustomersDetails();
+      await CustomerService.saveCustomerDetails();
       await AuthService.saveToLocalStorage(
         'customerId',
         loginResponse.body.customer.id
@@ -115,16 +117,13 @@ class AuthService {
     }
   };
 
-  static getCustomersDetails = async () => {
-    const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
-    return apiRoot.me().get().execute();
-  };
-
   static async logoutUser() {
     this.removeFromLocalStorage('customerId');
     this.removeFromLocalStorage('IsUserLogined');
     ClientFactory.resetClients();
     ClientFactory.resetFlow();
+    CustomerService.clearCustomerDetails();
+
     tokenStore.clear();
   }
 

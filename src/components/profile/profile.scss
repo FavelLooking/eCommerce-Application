@@ -1,0 +1,27 @@
+.profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10%;
+}
+
+.addresses {
+  display: flex;
+  flex-direction: column;
+}
+
+.personal-information,
+.address-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5%;
+}
+
+.personal-information-line,
+.address-information-line {
+  font-size: large;
+}
+
+.label {
+  font-weight: bold;
+}
