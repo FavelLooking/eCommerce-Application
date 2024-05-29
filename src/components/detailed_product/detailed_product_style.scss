@@ -1,0 +1,28 @@
+.detailde-product-wrapper {
+  height: 100vh;
+}
+
+.detailde-product,
+.detailde-product-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailed-product__name {
+  color: #f865b0;
+  text-align: center;
+}
+
+.detailed-product__img {
+  display: block;
+  width: 300px;
+  height: 500px;
+}
+
+.detailed-product__description {
+  max-width: 700px;
+  padding: 5px;
+  color: #48304d;
+}
