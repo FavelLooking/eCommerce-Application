@@ -16,15 +16,11 @@ const getInfoAboutProduct = async (productId: string) => {
   const fractionDigitsDiscount =
     currentPriceObject?.discounted?.value.fractionDigits;
 
-  console.log(currentPriceObject);
-
   let currentPrice: string | undefined;
   let discountedPrice: string | undefined;
 
   if (centAmount !== undefined && fractionDigits !== undefined) {
     currentPrice = priceCalculation(centAmount, fractionDigits);
-  } else {
-    currentPrice = undefined;
   }
 
   if (

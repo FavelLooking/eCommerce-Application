@@ -28,6 +28,33 @@ function DetailedProductPage() {
     );
   }
 
+  const productPrice = () => {
+    if (!productInfo?.productPrice) {
+      return (
+        <div className="detailed-product__price-wrapper">
+          <div className="detailed-product__price">SOLD OUT</div>
+        </div>
+      );
+    }
+
+    return productInfo.productDiscount ? (
+      <div className="detailed-product__price-wrapper">
+        <div className="detailed-product__price">
+          {productInfo.productPrice}
+        </div>
+        <div className="detailed-product__price-discount">
+          {productInfo.productDiscount}
+        </div>
+      </div>
+    ) : (
+      <div className="detailed-product__price-wrapper">
+        <div className="detailed-product__price">
+          {productInfo.productPrice}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="detailde-product-wrapper">
       {productInfo && (
@@ -41,7 +68,7 @@ function DetailedProductPage() {
           <p className="detailed-product__description">
             {productInfo.productDescription}
           </p>
-          <p className="detailed-product__price">{productInfo.productPrice}</p>
+          {productPrice()}
         </div>
       )}
     </div>
