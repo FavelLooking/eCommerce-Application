@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Navigate, useLoaderData } from 'react-router-dom';
 import { Product } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import {
@@ -37,7 +37,7 @@ export function CatalogPage() {
     );
   };
 
-  return (
+  return data.length ? (
     <div className="catalog_wrapper">
       <Breadcrumb />
       <div className="catalog_flex">
@@ -62,5 +62,7 @@ export function CatalogPage() {
         ))}
       </div>
     </div>
+  ) : (
+    <Navigate to="/catalog" />
   );
 }

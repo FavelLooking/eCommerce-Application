@@ -1,19 +1,22 @@
 import { Product, Price, DiscountedPrice } from '@commercetools/platform-sdk';
 import ClientFactory from './clientFactory';
+import { isValidPath } from '../utils';
 
 export const getProducts = async () => {
   const data: Product[] = [];
-  await ClientFactory.createApiRoot(ClientFactory.flowType)
-    .products()
-    .get({
-      queryArgs: {
-        limit: 500,
-      },
-    })
-    .execute()
-    .then((value) => {
-      data.push(...(value.body.results as Product[]));
-    });
+  if (isValidPath()) {
+    await ClientFactory.createApiRoot(ClientFactory.flowType)
+      .products()
+      .get({
+        queryArgs: {
+          limit: 500,
+        },
+      })
+      .execute()
+      .then((value) => {
+        data.push(...(value.body.results as Product[]));
+      });
+  }
   return data;
 };
 

@@ -64,58 +64,18 @@ const router = createBrowserRouter([
       },
       {
         path: 'catalog',
-        children: [
-          {
-            path: '',
-            element: <CatalogPage />,
-            loader: catalogLoader,
-          },
-          {
-            path: 'comics',
-            children: [
-              {
-                path: '',
-                element: <CatalogPage />,
-                loader: catalogLoader,
-              },
-              {
-                path: 'dc',
-                element: <CatalogPage />,
-                loader: catalogLoader,
-              },
-              {
-                path: 'marvel',
-                element: <CatalogPage />,
-                loader: catalogLoader,
-              },
-            ],
-          },
-          {
-            path: 'manga',
-            children: [
-              {
-                path: '',
-                element: <CatalogPage />,
-                loader: catalogLoader,
-              },
-              {
-                path: 'japan',
-                element: <CatalogPage />,
-                loader: catalogLoader,
-              },
-              {
-                path: 'korea',
-                element: <CatalogPage />,
-                loader: catalogLoader,
-              },
-              {
-                path: 'china',
-                element: <CatalogPage />,
-                loader: catalogLoader,
-              },
-            ],
-          },
-        ],
+        element: <CatalogPage />,
+        loader: catalogLoader,
+      },
+      {
+        path: 'catalog/:category',
+        element: <CatalogPage />,
+        loader: catalogLoader,
+      },
+      {
+        path: 'catalog/:category/:subcategory',
+        element: <CatalogPage />,
+        loader: catalogLoader,
       },
       {
         path: 'profile',
