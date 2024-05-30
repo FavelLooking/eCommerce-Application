@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './header.scss';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import AuthService from '../../services/authService';
 import HeaderLink from './header_link';
+import Dropdown from './dropdown';
 
 export default function Header() {
   const { user, logout } = useAuth();
+  const [dropdown, setDropdown] = useState(false);
 
   const logoutUser = () => {
     AuthService.logoutUser();
@@ -22,9 +24,15 @@ export default function Header() {
           alt="Logo"
         />
       </Link>
-      <div className="header-links">
+      <ul className="header-links">
         <HeaderLink isDisplayed text="Home" />
-        <HeaderLink isDisplayed path="catalog" text="Catalog" />
+        <li
+          onMouseEnter={() => setDropdown(true)}
+          onMouseLeave={() => setDropdown(false)}
+        >
+          <HeaderLink isDisplayed path="catalog" text="Catalog" />
+          {dropdown && <Dropdown />}
+        </li>
         <HeaderLink isDisplayed={!user} path="login" text="Login" />
         <HeaderLink isDisplayed={!user} path="register" text="Register" />
         <HeaderLink isDisplayed={user} path="profile" text="Profile" />
@@ -34,7 +42,7 @@ export default function Header() {
           className="logout-link"
           onclick={logoutUser}
         />
-      </div>
+      </ul>
     </div>
   );
 }
