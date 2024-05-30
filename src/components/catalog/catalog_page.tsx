@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import { getProducts } from '../../services/productService';
@@ -8,13 +8,15 @@ import CatalogItem from './catalog_item';
 
 export default function CatalogPage() {
   const location = useLocation();
-  const [data, setData] = useState<ProductProjection[] | null>(null);
+  const navigate = useNavigate();
+  const [data, setData] = useState<ProductProjection[]>();
 
   useEffect(() => {
-    getProducts(location.pathname).then((value: ProductProjection[]) =>
-      setData(value)
-    );
-  }, [location]);
+    getProducts(location.pathname).then((value: ProductProjection[]) => {
+      if (value.length) setData(value);
+      else navigate('not-found');
+    });
+  }, [location, navigate]);
 
   return (
     <div className="catalog_wrapper">
