@@ -1,6 +1,6 @@
 import { RegExps } from './types';
 import * as loginRegex from './utils/constants';
-import validateInput from './utils/validation';
+import { validateInput } from './utils';
 
 describe('test validation on login page', () => {
   const emailValidationRegex: RegExps[] = [loginRegex.emailPattern];

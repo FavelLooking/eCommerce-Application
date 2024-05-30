@@ -13,7 +13,7 @@ import MainPage from './components/main/main_page';
 import NotFoundPage from './components/not_found/not_found_page';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import ProfilePage from './components/profile/profile_page';
-import { CatalogPage, catalogLoader } from './components/catalog/catalog_page';
+import CatalogPage from './components/catalog/catalog_page';
 import DetailedProductPage from './components/detailed_product/detailed_product_page';
 
 function Root() {
@@ -66,7 +66,14 @@ const router = createBrowserRouter([
       {
         path: 'catalog',
         element: <CatalogPage />,
-        loader: catalogLoader,
+      },
+      {
+        path: 'catalog/:category',
+        element: <CatalogPage />,
+      },
+      {
+        path: 'catalog/:category/:subcategory',
+        element: <CatalogPage />,
       },
       {
         path: 'catalog/category/subcategory/:productId',

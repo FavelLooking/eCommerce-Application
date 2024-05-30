@@ -35,3 +35,45 @@ export const textSpacesPattern = {
 
 export const storageLoginError = 'LoginErrorMessage';
 export const storageIsLogined = 'IsUserLogined';
+
+export const catalogMenuItems = [
+  {
+    title: 'Comics',
+    path: '/catalog/comics',
+    classname: 'dropdown-link',
+    submenu: [
+      {
+        title: 'DC',
+        path: '/catalog/comics/dc',
+        classname: 'dropdown-link sublink',
+      },
+      {
+        title: 'Marvel',
+        path: '/catalog/comics/marvel',
+        classname: 'dropdown-link sublink',
+      },
+    ],
+  },
+  {
+    title: 'Manga',
+    path: '/catalog/manga',
+    classname: 'dropdown-link',
+    submenu: [
+      {
+        title: 'Japan',
+        path: '/catalog/manga/japan',
+        classname: 'dropdown-link sublink',
+      },
+      {
+        title: 'Korea',
+        path: '/catalog/manga/korea',
+        classname: 'dropdown-link sublink',
+      },
+      {
+        title: 'China',
+        path: '/catalog/manga/china',
+        classname: 'dropdown-link sublink',
+      },
+    ],
+  },
+];

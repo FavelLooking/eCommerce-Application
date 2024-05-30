@@ -12,6 +12,9 @@ export default function MainPage() {
         <Link to="register" className="main-link">
           Register
         </Link>
+        <Link to="catalog" className="main-link">
+          Catalog
+        </Link>
       </div>
     </div>
   );
