@@ -30,7 +30,7 @@ export default function Header() {
           role="presentation"
           onMouseEnter={() => setDropdown(true)}
           onMouseLeave={() => setDropdown(false)}
-          onClick={() => setDropdown(false)}
+          onClick={() => setDropdown(!dropdown)}
         >
           <HeaderLink isDisplayed path="catalog" text="Catalog" />
           {dropdown && <Dropdown />}
