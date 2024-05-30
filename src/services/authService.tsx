@@ -60,10 +60,14 @@ class AuthService {
     billingStreet?: string,
     billingCountry?: string,
     billingPostalCode?: string,
-    switchStateUseAsShipping?: Boolean
+    switchStateUseAsShipping?: Boolean,
+    switchStateDefaultShipping?: Boolean,
+    switchStateDefaultBilling?: Boolean
   ) => {
     try {
       const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
+      const defaultShipping = switchStateDefaultShipping ? 0 : null;
+      const defaultBilling = switchStateDefaultBilling ? 1 : null;
 
       const response = await apiRoot
         .me()
@@ -76,9 +80,9 @@ class AuthService {
             lastName,
             dateOfBirth,
             shippingAddresses: [0],
-            billingAddresses: [switchStateUseAsShipping ? 1 : 0],
-            defaultShippingAddress: 0,
-            defaultBillingAddress: switchStateUseAsShipping ? 1 : 0,
+            billingAddresses: [switchStateUseAsShipping ? 0 : 1],
+            defaultShippingAddress: defaultShipping,
+            defaultBillingAddress: defaultBilling,
             addresses: [
               {
                 country: shippingCountry,

@@ -137,7 +137,9 @@ function RegisterPage() {
       billingStreet,
       billingCountry,
       billingPostalCode,
-      switchStateUseAsShipping
+      switchStateUseAsShipping,
+      switchStateDefaultShipping,
+      switchStateDefaultBilling
     ).then(() => {
       const errorMessage = AuthService.getFromLocalStorage('ErrorMessage');
       AuthService.removeFromLocalStorage('ErrorMessage');
