@@ -1,5 +1,6 @@
 import React from 'react';
 import './profile.scss';
+import { Customer } from '@commercetools/platform-sdk';
 
 export default function ProfilePage() {
   const customerDetailsJSON = localStorage.getItem('customerDetails');
@@ -15,15 +16,12 @@ export default function ProfilePage() {
     return <div>Invalid customer details format.</div>;
   }
 
-  const {
-    firstName,
-    lastName,
-    dateOfBirth,
-    addresses: [{ streetName, postalCode, city, country }],
-  } = customerDetailsObject;
+  const { firstName, lastName, dateOfBirth, addresses } =
+    customerDetailsObject as Customer;
 
   return (
     <div className="profile-wrapper">
+      <h1>Personal Information:</h1>
       <div className="personal-information">
         <span className="personal-information-line">
           <span className="label">First name:</span> {firstName}
@@ -35,21 +33,24 @@ export default function ProfilePage() {
           <span className="label">Date of birth:</span> {dateOfBirth}
         </span>
       </div>
+      <h1>Addresses:</h1>
       <div className="addresses">
-        <div className="address-container">
-          <span className="address-information-line">
-            <span className="label">Street:</span> {streetName}
-          </span>
-          <span className="address-information-line">
-            <span className="label">Country:</span> {country}
-          </span>
-          <span className="address-information-line">
-            <span className="label">City:</span> {city}
-          </span>
-          <span className="address-information-line">
-            <span className="label">Postal code:</span> {postalCode}
-          </span>
-        </div>
+        {addresses.map(({ id, streetName, country, city, postalCode }) => (
+          <div className="address-container" key={id}>
+            <span className="address-information-line">
+              <span className="label">Street:</span> {streetName}
+            </span>
+            <span className="address-information-line">
+              <span className="label">Country:</span> {country}
+            </span>
+            <span className="address-information-line">
+              <span className="label">City:</span> {city}
+            </span>
+            <span className="address-information-line">
+              <span className="label">Postal code:</span> {postalCode}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
