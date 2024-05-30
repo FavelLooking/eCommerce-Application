@@ -11,7 +11,7 @@ export default function Dropdown() {
   const generateDropdownLink = (item: CatalogDropdownType): JSX.Element => (
     <div>
       <li key={`dropdown-${item.title}`}>
-        <NavLink className="dropdown-link" to={item.path}>
+        <NavLink className={item.classname} to={item.path}>
           {item.title}
         </NavLink>
       </li>

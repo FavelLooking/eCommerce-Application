@@ -12,4 +12,5 @@ export type CatalogDropdownType = {
   title: string;
   path: string;
   submenu?: CatalogDropdownType[];
+  classname?: string;
 };
