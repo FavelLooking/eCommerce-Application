@@ -27,8 +27,10 @@ export default function Header() {
       <ul className="header-links">
         <HeaderLink isDisplayed text="Home" />
         <li
+          role="presentation"
           onMouseEnter={() => setDropdown(true)}
           onMouseLeave={() => setDropdown(false)}
+          onClick={() => setDropdown(false)}
         >
           <HeaderLink isDisplayed path="catalog" text="Catalog" />
           {dropdown && <Dropdown />}

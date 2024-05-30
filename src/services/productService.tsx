@@ -1,20 +1,42 @@
-import { Product, Price, DiscountedPrice } from '@commercetools/platform-sdk';
+import {
+  Price,
+  DiscountedPrice,
+  ProductProjection,
+  Category,
+} from '@commercetools/platform-sdk';
 import ClientFactory from './clientFactory';
 import { isValidPath } from '../utils';
 
-export const getProducts = async () => {
-  const data: Product[] = [];
-  if (isValidPath()) {
+const getCategory = async () =>
+  ClientFactory.createApiRoot(ClientFactory.flowType)
+    .categories()
+    .get()
+    .execute()
+    .then((value) => value.body.results);
+
+export const getProducts = async (path: string) => {
+  const data: ProductProjection[] = [];
+  if (isValidPath(path)) {
+    const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
+    const currentCategory = (await getCategory()).filter(
+      (x: Category) => String(x.name.en).toLowerCase() === currentCategoryTitle
+    )[0];
+    const filterString =
+      currentCategoryTitle !== 'catalog'
+        ? [`categories.id: subtree("${currentCategory.id}")`]
+        : [];
     await ClientFactory.createApiRoot(ClientFactory.flowType)
-      .products()
+      .productProjections()
+      .search()
       .get({
         queryArgs: {
           limit: 500,
+          filter: filterString,
         },
       })
       .execute()
       .then((value) => {
-        data.push(...(value.body.results as Product[]));
+        data.push(...(value.body.results as ProductProjection[]));
       });
   }
   return data;
@@ -29,9 +51,9 @@ const getPriceValue = (price: Price | DiscountedPrice): string => {
 };
 
 export const getProductPrice = (
-  product: Product
+  product: ProductProjection
 ): [string | undefined, string | undefined] => {
-  const price = product.masterData.current.masterVariant.prices?.at(0);
+  const price = product.masterVariant.prices?.at(0);
   if (!price) {
     return [undefined, undefined];
   }
@@ -44,11 +66,11 @@ export const getProductPrice = (
   return [originalPrice, discountPrice];
 };
 
-export const getProductImage = (product: Product): string =>
-  product?.masterData?.current?.masterVariant?.images?.at(0)?.url ?? '';
+export const getProductImage = (product: ProductProjection): string =>
+  product?.masterVariant?.images?.at(0)?.url ?? '';
 
-export const getProductName = (product: Product): string =>
-  product.masterData.current.name.en;
+export const getProductName = (product: ProductProjection): string =>
+  product.name.en;
 
-export const getProductDescription = (product: Product): string =>
-  product.masterData.current.metaDescription?.en ?? '';
+export const getProductDescription = (product: ProductProjection): string =>
+  product.metaDescription?.en ?? '';

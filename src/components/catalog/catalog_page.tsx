@@ -1,28 +1,31 @@
-import React from 'react';
-import { Navigate, useLoaderData } from 'react-router-dom';
-import { Product } from '@commercetools/platform-sdk';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import { getProducts } from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 
-export const catalogLoader = async () => getProducts();
+export default function CatalogPage() {
+  const location = useLocation();
+  const [data, setData] = useState<ProductProjection[] | null>(null);
 
-export function CatalogPage() {
-  const data: Product[] = useLoaderData() as Product[];
+  useEffect(() => {
+    getProducts(location.pathname).then((value: ProductProjection[]) =>
+      setData(value)
+    );
+  }, [location]);
 
-  return data.length ? (
+  return (
     <div className="catalog_wrapper">
       <Breadcrumb />
       <div className="catalog_flex">
-        {data.map((item) => (
+        {data?.map((item) => (
           <li key={item.id}>
             <CatalogItem product={item} />
           </li>
         ))}
       </div>
     </div>
-  ) : (
-    <Navigate to="/catalog" />
   );
 }

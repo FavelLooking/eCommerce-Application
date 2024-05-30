@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from '@commercetools/platform-sdk';
+import { ProductProjection } from '@commercetools/platform-sdk';
 import {
   getProductDescription,
   getProductImage,
@@ -7,7 +7,7 @@ import {
   getProductPrice,
 } from '../../services/productService';
 
-export default function CatalogItem(props: { product: Product }) {
+export default function CatalogItem(props: { product: ProductProjection }) {
   const { product } = props;
 
   const getPrice = (): JSX.Element => {
