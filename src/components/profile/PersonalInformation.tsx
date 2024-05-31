@@ -1,10 +1,5 @@
 import React from 'react';
-
-interface CustomerDetails {
-  firstName: string | undefined;
-  lastName: string | undefined;
-  dateOfBirth: string | undefined;
-}
+import CustomerDetails from '../../interfaces/personalInformation';
 
 function PersonalInformation(props: CustomerDetails): JSX.Element {
   const { firstName, lastName, dateOfBirth } = props;
