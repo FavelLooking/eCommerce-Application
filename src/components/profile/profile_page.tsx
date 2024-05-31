@@ -28,53 +28,44 @@ export default function ProfilePage() {
     return <div className="loading">Loading...</div>;
   }
 
-  const {
-    firstName,
-    lastName,
-    dateOfBirth,
-    addresses,
-    defaultBillingAddressId,
-    defaultShippingAddressId,
-    billingAddressIds,
-    shippingAddressIds,
-  } = customerDetails as Customer;
-
   const isDefaultBillingAddress = (id: string): boolean =>
-    defaultBillingAddressId === id;
+    customerDetails.defaultBillingAddressId === id;
 
   const isDefaultShippingAddress = (id: string): boolean =>
-    defaultShippingAddressId === id;
+    customerDetails.defaultShippingAddressId === id;
 
   const isBillingAddress = (id: string): boolean =>
-    billingAddressIds?.includes(id) ?? false;
+    customerDetails.billingAddressIds?.includes(id) ?? false;
 
   const isShippingAddress = (id: string): boolean =>
-    shippingAddressIds?.includes(id) ?? false;
+    customerDetails.shippingAddressIds?.includes(id) ?? false;
 
   return (
     <div className="profile-wrapper">
       <h1 className="title">Personal Information:</h1>
       <PersonalInformation
-        firstName={firstName}
-        lastName={lastName}
-        dateOfBirth={dateOfBirth}
+        firstName={customerDetails.firstName}
+        lastName={customerDetails.lastName}
+        dateOfBirth={customerDetails.dateOfBirth}
       />
       <h1 className="title">Addresses:</h1>
       <div className="addresses">
-        {addresses.map(({ id, streetName, country, city, postalCode }) => (
-          <AddressComponent
-            id={id}
-            streetName={streetName}
-            country={country}
-            city={city}
-            postalCode={postalCode}
-            isDefaultShippingAddress={isDefaultShippingAddress}
-            isDefaultBillingAddress={isDefaultBillingAddress}
-            isShippingAddress={isShippingAddress}
-            isBillingAddress={isBillingAddress}
-            key={id}
-          />
-        ))}
+        {customerDetails.addresses.map(
+          ({ id, streetName, country, city, postalCode }) => (
+            <AddressComponent
+              id={id}
+              streetName={streetName}
+              country={country}
+              city={city}
+              postalCode={postalCode}
+              isDefaultShippingAddress={isDefaultShippingAddress}
+              isDefaultBillingAddress={isDefaultBillingAddress}
+              isShippingAddress={isShippingAddress}
+              isBillingAddress={isBillingAddress}
+              key={id}
+            />
+          )
+        )}
       </div>
     </div>
   );
