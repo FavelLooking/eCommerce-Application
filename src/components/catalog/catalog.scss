@@ -108,3 +108,36 @@
     cursor: pointer;
   }
 }
+
+.some-catalog-div-with-breadcrumb-and-utils,
+.catalog-utils {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.catalog-button {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  background: center no-repeat;
+  background-size: 25px 25px;
+  border: 1px solid black;
+  border-radius: 100px;
+  &:hover {
+    cursor: pointer;
+    background-color: #15f1ec;
+  }
+}
+
+.catalog-search {
+  background-image: url('https://drive.google.com/thumbnail?id=10QCeEIZ-dr3qLhspp7SyzMpxskeqtcER');
+}
+
+.catalog-filter {
+  background-image: url('https://drive.google.com/thumbnail?id=1gx7U93vZRU_rnGGcQCMYC8v_mb8hnlKi');
+}
+
+.catalog-sort {
+  background-image: url('https://drive.google.com/thumbnail?id=1CtRTizCp5-UTDd0WPUmeSvNsI_c0eAhj');
+}

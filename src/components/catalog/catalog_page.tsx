@@ -5,6 +5,7 @@ import './catalog.scss';
 import { getProducts } from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
+import CatalogUtils from './catalog_utils';
 
 export default function CatalogPage() {
   const location = useLocation();
@@ -20,7 +21,10 @@ export default function CatalogPage() {
 
   return (
     <div className="catalog_wrapper">
-      <Breadcrumb />
+      <div className="some-catalog-div-with-breadcrumb-and-utils">
+        <Breadcrumb />
+        <CatalogUtils />
+      </div>
       <div className="catalog_flex">
         {data?.map((item) => (
           <li key={item.id}>
