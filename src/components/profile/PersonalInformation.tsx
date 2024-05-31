@@ -1,4 +1,5 @@
 import React from 'react';
+
 import CustomerDetails from '../../interfaces/personalInformation';
 
 function PersonalInformation(props: CustomerDetails): JSX.Element {
