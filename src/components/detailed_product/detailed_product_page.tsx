@@ -100,7 +100,6 @@ function DetailedProductPage() {
               {productInfo.productImages?.map((image, index) => (
                 // eslint-disable-next-line
                 <div className="swiper-slide" key={index}>
-                  {/* eslint-disable-next-line */}
                   <img
                     className="detailed-product__img"
                     src={image.url}
@@ -121,20 +120,18 @@ function DetailedProductPage() {
           {productPrice()}
         </div>
       )}
-      {/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */}
       {isModalOpen && (
-        <div className="modal" onClick={closeModal}>
+        <div className="modal">
           <span className="modal-close" onClick={closeModal}>
             &times;
           </span>
           <img
             className="modal-content"
             src={modalImage}
-            alt="Enlarged product"
+            alt="enlarged_product"
           />
         </div>
       )}
-      {/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */}
     </div>
   );
 }
