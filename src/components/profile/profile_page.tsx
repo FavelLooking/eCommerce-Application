@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './profile.scss';
 import { Customer } from '@commercetools/platform-sdk';
 import CustomerService from '../../services/customerService';
@@ -8,7 +8,7 @@ import AddressComponent from './Address';
 
 export default function ProfilePage() {
   const [customerDetails, setCustomerDetails] = useState<Customer | null>(null);
-  const [errorOccurred, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -16,16 +16,13 @@ export default function ProfilePage() {
         const apiResponse = await CustomerService.getCustomersDetails();
         setCustomerDetails(apiResponse.body);
       } catch (error) {
-        setError('Failed to fetch customer details');
+        navigate('not-found', { replace: true });
       }
+      return undefined;
     };
 
     fetchDetails();
-  }, []);
-
-  if (errorOccurred) {
-    return <Navigate to="not-found" replace />;
-  }
+  }, [navigate]);
 
   if (!customerDetails) {
     return <div className="loading">Loading...</div>;
