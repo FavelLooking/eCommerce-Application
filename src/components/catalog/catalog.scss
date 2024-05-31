@@ -108,3 +108,53 @@
     cursor: pointer;
   }
 }
+
+.some-catalog-div-with-breadcrumb-and-utils,
+.catalog-utils,
+.catalog-sorting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.catalog-sorting {
+  justify-content: flex-end;
+  & > * {
+    width: fit-content;
+    border: none;
+    padding: 5px;
+    background-color: transparent;
+    align-self: flex-end;
+    &:hover {
+      background-color: #15f1ec;
+      cursor: pointer;
+      color: #f865b0;
+    }
+  }
+}
+
+.catalog-button {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  background: center no-repeat;
+  background-size: 25px 25px;
+  border: none;
+  border-radius: 100px;
+  &:hover {
+    cursor: pointer;
+    background-color: #15f1ec;
+  }
+}
+
+.catalog-toogle-search {
+  background-image: url('https://drive.google.com/thumbnail?id=10QCeEIZ-dr3qLhspp7SyzMpxskeqtcER');
+}
+
+.catalog-toogle-filter {
+  background-image: url('https://drive.google.com/thumbnail?id=1gx7U93vZRU_rnGGcQCMYC8v_mb8hnlKi');
+}
+
+.catalog-toogle-sort {
+  background-image: url('https://drive.google.com/thumbnail?id=1CtRTizCp5-UTDd0WPUmeSvNsI_c0eAhj');
+}
