@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import './profile.scss';
 import { Customer } from '@commercetools/platform-sdk';
 import CustomerService from '../../services/customerService';
@@ -24,7 +24,7 @@ export default function ProfilePage() {
   }, []);
 
   if (errorOccurred || !customerDetails) {
-    return <Link to="/not-found"> </Link>;
+    return <Navigate to="not-found" replace />;
   }
 
   const {
