@@ -2,19 +2,36 @@ import React from 'react';
 import { Address } from '@commercetools/platform-sdk';
 
 interface AddressProps extends Address {
-  getTypeAddressClass: (id: string) => string;
-  getAddressClass: (id: string) => string;
+  isDefaultShippingAddress: (id: string) => boolean;
+  isDefaultBillingAddress: (id: string) => boolean;
+  isShippingAddress: (id: string) => boolean;
+  isBillingAddress: (id: string) => boolean;
 }
 
-function AddressComponent({
-  id = '',
-  streetName,
-  country,
-  city,
-  postalCode,
-  getTypeAddressClass,
-  getAddressClass,
-}: AddressProps): JSX.Element {
+function AddressComponent(props: AddressProps): JSX.Element {
+  const {
+    id = '',
+    streetName,
+    country,
+    city,
+    postalCode,
+    isDefaultShippingAddress,
+    isDefaultBillingAddress,
+    isShippingAddress,
+    isBillingAddress,
+  } = props;
+  const getAddressClass = (addressId: string) => {
+    if (isDefaultShippingAddress(addressId)) return 'default-shipping';
+    if (isDefaultBillingAddress(addressId)) return 'default-billing';
+    return '';
+  };
+
+  const getTypeAddressClass = (addressId: string) => {
+    if (isShippingAddress(addressId)) return 'type-shipping';
+    if (isBillingAddress(addressId)) return 'type-billing';
+    return '';
+  };
+
   return (
     <div
       className={`${getTypeAddressClass(id)} address-container ${getAddressClass(id)}`}
