@@ -14,6 +14,8 @@ function DetailedProductPage() {
   const { productId } = useParams();
   const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
   const [errorFetch, setErrorFetch] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState('');
 
   useEffect(() => {
     getInfoAboutProduct(productId as string)
@@ -42,6 +44,16 @@ function DetailedProductPage() {
       });
     }
   }, [productInfo]);
+
+  const openModal = (imageUrl: string) => {
+    setModalImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalImage('');
+  };
 
   if (errorFetch) {
     return (
@@ -88,10 +100,12 @@ function DetailedProductPage() {
               {productInfo.productImages?.map((image, index) => (
                 // eslint-disable-next-line
                 <div className="swiper-slide" key={index}>
+                  {/* eslint-disable-next-line */}
                   <img
                     className="detailed-product__img"
                     src={image.url}
                     alt={`slide_${index + 1}`}
+                    onClick={() => openModal(image.url)}
                   />
                 </div>
               ))}
@@ -107,6 +121,20 @@ function DetailedProductPage() {
           {productPrice()}
         </div>
       )}
+      {/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */}
+      {isModalOpen && (
+        <div className="modal" onClick={closeModal}>
+          <span className="modal-close" onClick={closeModal}>
+            &times;
+          </span>
+          <img
+            className="modal-content"
+            src={modalImage}
+            alt="Enlarged product"
+          />
+        </div>
+      )}
+      {/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */}
     </div>
   );
 }
