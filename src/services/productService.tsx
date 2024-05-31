@@ -89,7 +89,7 @@ export const getProductName = (product: ProductProjection): string =>
 export const getProductDescription = (product: ProductProjection): string =>
   product.metaDescription?.en ?? '';
 
-export const sortProducts = async (path: string) => {
+export const sortProducts = async (path: string, sortingType: string) => {
   const data: ProductProjection[] = [];
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
@@ -105,7 +105,7 @@ export const sortProducts = async (path: string) => {
         queryArgs: {
           limit: 500,
           filter: filterString,
-          sort: 'name.en asc',
+          sort: sortingType,
         },
       })
       .execute()

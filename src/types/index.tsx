@@ -14,3 +14,10 @@ export type CatalogDropdownType = {
   submenu?: CatalogDropdownType[];
   classname?: string;
 };
+
+export enum SortingTypes {
+  NAMEASC = 'name.en asc',
+  NAMEDESC = 'name.en desc',
+  PRICEASC = 'price asc',
+  PRICEDESC = 'price desc',
+}
