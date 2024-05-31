@@ -1,80 +1,83 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './profile.scss';
 import { Customer } from '@commercetools/platform-sdk';
-
-type AddressType = 'billing' | 'shipping';
+import CustomerService from '../../services/customerService';
+import PersonalInformation from './PersonalInformation';
+import Address from './Address';
 
 export default function ProfilePage() {
-  const customerDetailsJSON = localStorage.getItem('customerDetails');
+  const [customerDetails, setCustomerDetails] = useState<Customer | null>(null);
+  const [errorOccurred, setError] = useState<string | null>(null);
 
-  if (!customerDetailsJSON) {
-    return <div>No customer details found.</div>;
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const apiResponse = await CustomerService.getCustomersDetails();
+        setCustomerDetails(apiResponse.body);
+      } catch (error) {
+        setError('Failed to fetch customer details');
+      }
+    };
+
+    fetchDetails();
+  }, []);
+
+  if (errorOccurred) {
+    return <div>{errorOccurred}</div>;
   }
 
-  let customerDetailsObject;
-  try {
-    customerDetailsObject = JSON.parse(customerDetailsJSON);
-  } catch (error) {
-    return <div>Invalid customer details format.</div>;
+  if (!customerDetails) {
+    return <div>No user Information</div>;
   }
 
   const { firstName, lastName, dateOfBirth, addresses } =
-    customerDetailsObject as Customer;
+    customerDetails as Customer;
 
-  const isDefaultAddress = (id: string, type: AddressType): boolean => {
-    if (type === 'billing') {
-      return id === customerDetailsObject.defaultBillingAddressId;
-    }
-    if (type === 'shipping') {
-      return id === customerDetailsObject.defaultShippingAddressId;
-    }
-    return false;
+  const isDefaultBillingAddress = (id: string): boolean =>
+    customerDetails?.defaultBillingAddressId === id;
+
+  const isDefaultShippingAddress = (id: string): boolean =>
+    customerDetails?.defaultShippingAddressId === id;
+
+  const isBillingAddress = (id: string): boolean =>
+    customerDetails?.billingAddressIds?.includes(id) ?? false;
+
+  const isShippingAddress = (id: string): boolean =>
+    customerDetails?.shippingAddressIds?.includes(id) ?? false;
+
+  const getAddressClass = (id: string) => {
+    if (isDefaultShippingAddress(id)) return 'default-shipping';
+    if (isDefaultBillingAddress(id)) return 'default-billing';
+    return '';
   };
 
-  const addressClass = (id: string) => {
-    if (isDefaultAddress(id, 'shipping')) {
-      return ' default-shipping';
-    }
-    if (isDefaultAddress(id, 'billing')) {
-      return ' default-billing';
-    }
+  const getTypeAddressClass = (id: string) => {
+    if (isShippingAddress(id)) return 'type-shipping';
+    if (isBillingAddress(id)) return 'type-billing';
     return '';
   };
 
   return (
     <div className="profile-wrapper">
       <h1 className="title">Personal Information:</h1>
-      <div className="personal-information">
-        <span className="personal-information-line">
-          <span className="label">First name:</span> {firstName}
-        </span>
-        <span className="personal-information-line">
-          <span className="label">Last name:</span> {lastName}
-        </span>
-        <span className="personal-information-line">
-          <span className="label">Date of birth:</span> {dateOfBirth}
-        </span>
-      </div>
+      <PersonalInformation
+        firstName={firstName}
+        lastName={lastName}
+        dateOfBirth={dateOfBirth}
+      />
       <h1 className="title">Addresses:</h1>
       <div className="addresses">
         {addresses.map(({ id, streetName, country, city, postalCode }) => (
-          <div
-            className={`address-container${addressClass(id as string)} `}
+          <Address
+            id={id}
+            streetName={streetName}
+            country={country}
+            city={city}
+            postalCode={postalCode}
+            getTypeAddressClass={getTypeAddressClass}
+            getAddressClass={getAddressClass}
             key={id}
-          >
-            <span className="address-information-line">
-              <span className="label">Street:</span> {streetName}
-            </span>
-            <span className="address-information-line">
-              <span className="label">Country:</span> {country}
-            </span>
-            <span className="address-information-line">
-              <span className="label">City:</span> {city}
-            </span>
-            <span className="address-information-line">
-              <span className="label">Postal code:</span> {postalCode}
-            </span>
-          </div>
+          />
         ))}
       </div>
     </div>

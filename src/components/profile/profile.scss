@@ -84,3 +84,20 @@
   content: 'default shipping';
   background-color: #fbcaef;
 }
+.type-billing::after {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  padding: 0.2rem;
+  color: #00000044;
+  content: 'billing';
+}
+
+.type-shipping::after {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  padding: 0.2rem;
+  color: #00000044;
+  content: 'shipping';
+}
