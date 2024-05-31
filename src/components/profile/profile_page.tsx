@@ -23,8 +23,12 @@ export default function ProfilePage() {
     fetchDetails();
   }, []);
 
-  if (errorOccurred || !customerDetails) {
+  if (errorOccurred) {
     return <Navigate to="not-found" replace />;
+  }
+
+  if (!customerDetails) {
+    return <div className="loading">Loading...</div>;
   }
 
   const {
