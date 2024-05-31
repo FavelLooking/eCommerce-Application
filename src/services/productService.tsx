@@ -7,6 +7,10 @@ import {
 import ClientFactory from './clientFactory';
 import { isValidPath } from '../utils';
 
+type FilterProps = {
+  category: Category | undefined;
+};
+
 const getCategory = async () =>
   ClientFactory.createApiRoot(ClientFactory.flowType)
     .categories()
@@ -14,17 +18,27 @@ const getCategory = async () =>
     .execute()
     .then((value) => value.body.results);
 
+const getCategoryByPath = async (path: string) =>
+  (await getCategory()).filter(
+    (x: Category) => String(x.name.en).toLowerCase() === path
+  )[0];
+
+const generateFilterString = (props: FilterProps): string[] => {
+  const result = [];
+  if (props.category)
+    result.push(`categories.id: subtree("${props.category.id}")`);
+  return result;
+};
+
 export const getProducts = async (path: string) => {
   const data: ProductProjection[] = [];
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
-    const currentCategory = (await getCategory()).filter(
-      (x: Category) => String(x.name.en).toLowerCase() === currentCategoryTitle
-    )[0];
-    const filterString =
-      currentCategoryTitle !== 'catalog'
-        ? [`categories.id: subtree("${currentCategory.id}")`]
-        : [];
+    const currentCategory = await getCategoryByPath(currentCategoryTitle);
+    const filterString = generateFilterString({
+      category:
+        currentCategoryTitle !== 'catalog' ? currentCategory : undefined,
+    });
     await ClientFactory.createApiRoot(ClientFactory.flowType)
       .productProjections()
       .search()
@@ -74,3 +88,30 @@ export const getProductName = (product: ProductProjection): string =>
 
 export const getProductDescription = (product: ProductProjection): string =>
   product.metaDescription?.en ?? '';
+
+export const sortProducts = async (path: string) => {
+  const data: ProductProjection[] = [];
+  if (isValidPath(path)) {
+    const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
+    const currentCategory = await getCategoryByPath(currentCategoryTitle);
+    const filterString = generateFilterString({
+      category:
+        currentCategoryTitle !== 'catalog' ? currentCategory : undefined,
+    });
+    await ClientFactory.createApiRoot(ClientFactory.flowType)
+      .productProjections()
+      .search()
+      .get({
+        queryArgs: {
+          limit: 500,
+          filter: filterString,
+          sort: 'name.en asc',
+        },
+      })
+      .execute()
+      .then((value) => {
+        data.push(...(value.body.results as ProductProjection[]));
+      });
+  }
+  return data;
+};
