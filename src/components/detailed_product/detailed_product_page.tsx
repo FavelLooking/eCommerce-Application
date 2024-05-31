@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Swiper from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import './detailed_product_style.scss';
 import { useParams } from 'react-router-dom';
 import getInfoAboutProduct from '../../services/getDetailedProductInfo';
@@ -19,6 +24,24 @@ function DetailedProductPage() {
         setErrorFetch(true);
       });
   }, [productId]);
+
+  useEffect(() => {
+    if (productInfo) {
+      // eslint-disable-next-line
+      const swiper = new Swiper('.swiper', {
+        modules: [Navigation, Pagination],
+        direction: 'horizontal',
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+    }
+  }, [productInfo]);
 
   if (errorFetch) {
     return (
@@ -60,11 +83,24 @@ function DetailedProductPage() {
       {productInfo && (
         <div className="detailde-product">
           <h2 className="detailed-product__name">{productInfo.productName}</h2>
-          <img
-            className="detailed-product__img"
-            src={productInfo.productImages?.at(0)?.url}
-            alt="detailed_img"
-          />
+          <div className="swiper">
+            <div className="swiper-wrapper">
+              {productInfo.productImages?.map((image, index) => (
+                // eslint-disable-next-line
+                <div className="swiper-slide" key={index}>
+                  <img
+                    className="detailed-product__img"
+                    src={image.url}
+                    alt={`slide_${index + 1}`}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="swiper-pagination"> </div>
+            <div className="swiper-button-prev"> </div>
+            <div className="swiper-button-next"> </div>
+            <div className="swiper-scrollbar"> </div>
+          </div>
           <p className="detailed-product__description">
             {productInfo.productDescription}
           </p>
