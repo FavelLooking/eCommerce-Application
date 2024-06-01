@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './profile.scss';
 import { Customer } from '@commercetools/platform-sdk';
 import CustomerService from '../../services/customerService';
@@ -67,6 +67,11 @@ export default function ProfilePage() {
           )
         )}
       </div>
+      <Link to="change-password">
+        <button type="button" className="button">
+          Change Password
+        </button>
+      </Link>
     </div>
   );
 }
