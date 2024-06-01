@@ -11,7 +11,6 @@ import {
   textSpacesPattern,
   textSymbolPattern,
   textUpperPattern,
-  storageLoginError,
 } from '../../utils/constants';
 import AuthService from '../../services/authService';
 import { validateInput } from '../../utils';
@@ -40,20 +39,33 @@ export default function ChangePasswordPage() {
     }).showToast();
   };
 
+  const reconnect = (email: string, renew: string) => {
+    AuthService.logoutUser();
+    AuthService.loginUser(email, renew);
+  };
+
+  const handleErrors = () => {
+    const errorMessage = AuthService.getFromLocalStorage('ErrorMessage');
+    if (errorMessage) {
+      showToast(errorMessage);
+    }
+    AuthService.removeFromLocalStorage('ErrorMessage');
+  };
+
   const onSubmit: SubmitHandler<PasswordFormFields> = async (data) => {
-    const { currentPassword, newPassword } = data;
-    await CustomerService.changePassword(currentPassword, newPassword).then(
-      () => {
-        const errorMessage = AuthService.getFromLocalStorage(storageLoginError);
-        AuthService.removeFromLocalStorage(storageLoginError);
-        if (errorMessage) {
-          showToast(errorMessage);
-        } else {
-          reset();
-          showToast('Password changed successfully');
-        }
+    const { current, renew } = data;
+    try {
+      const email = await CustomerService.changePassword(current, renew);
+      if (!email) {
+        throw new Error('Email not found after changing password.');
       }
-    );
+
+      reset();
+      showToast('Password changed successfully');
+      reconnect(email, renew);
+    } catch (error) {
+      handleErrors();
+    }
   };
 
   const handleCancel = () => {
@@ -67,7 +79,7 @@ export default function ChangePasswordPage() {
           id="current-password"
           type="text"
           placeholder="type your current password"
-          {...register('currentPassword', {
+          {...register('current', {
             required: 'password is required',
             validate: (value: string) =>
               validateInput(
@@ -85,13 +97,13 @@ export default function ChangePasswordPage() {
         />
 
         <div className="input-error-password">
-          {errors.currentPassword && errors.currentPassword.message}
+          {errors.current && errors.current.message}
         </div>
         <TextInput
           id="new-password"
           type="text"
           placeholder="type your new password"
-          {...register('newPassword', {
+          {...register('renew', {
             required: 'password is required',
             validate: (value: string) =>
               validateInput(
@@ -108,7 +120,7 @@ export default function ChangePasswordPage() {
           })}
         />
         <div className="input-error-password">
-          {errors.newPassword && errors.newPassword.message}
+          {errors.renew && errors.renew.message}
         </div>
         <input type="submit" value="Change password" className="button" />
         <button type="button" className="button" onClick={handleCancel}>

@@ -1,4 +1,4 @@
 export type PasswordFormFields = {
-  currentPassword: string;
-  newPassword: string;
+  current: string;
+  renew: string;
 };

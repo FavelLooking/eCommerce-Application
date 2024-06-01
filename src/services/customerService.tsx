@@ -1,6 +1,5 @@
 import ClientFactory from './clientFactory';
 import AuthService from './authService';
-import { storageLoginError } from '../utils/constants';
 
 class CustomerService {
   static getCustomersDetails = async () => {
@@ -15,10 +14,10 @@ class CustomerService {
     try {
       const customerDetails = await CustomerService.getCustomersDetails();
       const { body } = customerDetails;
-      const { version } = body;
+      const { version, email } = body;
 
       const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
-      return await apiRoot
+      await apiRoot
         .me()
         .password()
         .post({
@@ -29,9 +28,10 @@ class CustomerService {
           },
         })
         .execute();
+      return email;
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
-      AuthService.saveToLocalStorage(storageLoginError, errorMessage);
+      AuthService.saveToLocalStorage('ErrorMessage', errorMessage);
     }
     return undefined;
   };
