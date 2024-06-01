@@ -27,7 +27,6 @@ class AuthService {
           },
         })
         .execute();
-      await this.getCustomersDetails();
       await AuthService.saveToLocalStorage(
         'customerId',
         loginResponse.body.customer.id
@@ -119,16 +118,12 @@ class AuthService {
     }
   };
 
-  static getCustomersDetails = async () => {
-    const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
-    return apiRoot.me().get().execute();
-  };
-
   static async logoutUser() {
     this.removeFromLocalStorage('customerId');
     this.removeFromLocalStorage('IsUserLogined');
     ClientFactory.resetClients();
     ClientFactory.resetFlow();
+
     tokenStore.clear();
   }
 
