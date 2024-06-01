@@ -130,7 +130,6 @@ function DetailedProductPage() {
             <div className="swiper-pagination"> </div>
             <div className="swiper-button-prev"> </div>
             <div className="swiper-button-next"> </div>
-            <div className="swiper-scrollbar"> </div>
           </div>
           <p className="detailed-product__description">
             {productInfo.productDescription}
@@ -159,7 +158,6 @@ function DetailedProductPage() {
             <div className="swiper-pagination"> </div>
             <div className="swiper-button-prev"> </div>
             <div className="swiper-button-next"> </div>
-            <div className="swiper-scrollbar"> </div>
           </div>
         </div>
       )}
