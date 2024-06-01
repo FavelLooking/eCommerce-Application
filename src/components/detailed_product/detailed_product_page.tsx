@@ -14,6 +14,8 @@ function DetailedProductPage() {
   const { productId } = useParams();
   const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
   const [errorFetch, setErrorFetch] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState('');
 
   useEffect(() => {
     getInfoAboutProduct(productId as string)
@@ -42,6 +44,16 @@ function DetailedProductPage() {
       });
     }
   }, [productInfo]);
+
+  const openModal = (imageUrl: string) => {
+    setModalImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalImage('');
+  };
 
   if (errorFetch) {
     return (
@@ -92,6 +104,7 @@ function DetailedProductPage() {
                     className="detailed-product__img"
                     src={image.url}
                     alt={`slide_${index + 1}`}
+                    onClick={() => openModal(image.url)}
                   />
                 </div>
               ))}
@@ -105,6 +118,18 @@ function DetailedProductPage() {
             {productInfo.productDescription}
           </p>
           {productPrice()}
+        </div>
+      )}
+      {isModalOpen && (
+        <div className="modal">
+          <span className="modal-close" onClick={closeModal}>
+            &times;
+          </span>
+          <img
+            className="modal-content"
+            src={modalImage}
+            alt="enlarged_product"
+          />
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import { getProducts, sortProducts } from '../../services/productService';
@@ -75,7 +75,10 @@ export default function CatalogPage() {
       <div className="catalog_flex">
         {data?.map((item) => (
           <li key={item.id}>
-            <CatalogItem product={item} />
+            {/* There is a test rout, after we'll change it */}
+            <Link to={`category/subcategory/${item.id}`}>
+              <CatalogItem product={item} />
+            </Link>
           </li>
         ))}
       </div>
