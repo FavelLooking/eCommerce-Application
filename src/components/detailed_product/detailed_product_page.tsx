@@ -15,7 +15,7 @@ function DetailedProductPage() {
   const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
   const [errorFetch, setErrorFetch] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalImage, setModalImage] = useState('');
+  const [startIndex, setStartIndex] = useState(0);
 
   useEffect(() => {
     getInfoAboutProduct(productId as string)
@@ -45,14 +45,32 @@ function DetailedProductPage() {
     }
   }, [productInfo]);
 
-  const openModal = (imageUrl: string) => {
-    setModalImage(imageUrl);
+  useEffect(() => {
+    if (isModalOpen) {
+      // eslint-disable-next-line
+      new Swiper('.swiper-modal', {
+        modules: [Navigation, Pagination],
+        initialSlide: startIndex,
+        direction: 'horizontal',
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+    }
+  }, [isModalOpen, startIndex]);
+
+  const openModal = (index: number) => {
     setIsModalOpen(true);
+    setStartIndex(index);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setModalImage('');
   };
 
   if (errorFetch) {
@@ -104,7 +122,7 @@ function DetailedProductPage() {
                     className="detailed-product__img"
                     src={image.url}
                     alt={`slide_${index + 1}`}
-                    onClick={() => openModal(image.url)}
+                    onClick={() => openModal(index)}
                   />
                 </div>
               ))}
@@ -125,11 +143,24 @@ function DetailedProductPage() {
           <span className="modal-close" onClick={closeModal}>
             &times;
           </span>
-          <img
-            className="modal-content"
-            src={modalImage}
-            alt="enlarged_product"
-          />
+          <div className="swiper swiper-modal">
+            <div className="swiper-wrapper">
+              {productInfo?.productImages?.map((image, index) => (
+                // eslint-disable-next-line
+                <div className="swiper-slide" key={index}>
+                  <img
+                    className="modal-content"
+                    src={image.url}
+                    alt={`slide_${index + 1}`}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="swiper-pagination"> </div>
+            <div className="swiper-button-prev"> </div>
+            <div className="swiper-button-next"> </div>
+            <div className="swiper-scrollbar"> </div>
+          </div>
         </div>
       )}
     </div>
