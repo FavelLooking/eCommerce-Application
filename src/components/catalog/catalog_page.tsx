@@ -58,14 +58,15 @@ export default function CatalogPage() {
   const filter: SubmitHandler<FilterFields> = async (filterData) => {
     const price = filterData.price.split(' ');
     if (price.length === 5) {
-      // ADD STRING HERE
-      sessionStorage.setItem('price', ``);
+      sessionStorage.setItem(
+        'price',
+        `variants.price.centAmount:range (${Number(price[1]) * 100} to ${Number(price[3]) * 100})`
+      );
     } else {
       sessionStorage.removeItem('price');
     }
     const len = filterData.length.split(' ');
     if (len.length === 5) {
-      // ADD STRING HERE
       sessionStorage.setItem('page', ``);
     } else {
       sessionStorage.removeItem('page');

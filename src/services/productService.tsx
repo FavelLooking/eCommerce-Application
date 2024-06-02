@@ -9,11 +9,6 @@ import { isValidPath } from '../utils';
 import { SortingTypes } from '../types';
 import { priceCurrency } from '../utils/constants';
 
-type FilterProps = {
-  category?: Category | undefined;
-  filter?: string[] | undefined;
-};
-
 const getCategory = async () =>
   ClientFactory.createApiRoot(ClientFactory.flowType)
     .categories()
@@ -26,18 +21,10 @@ const getCategoryByPath = async (path: string) =>
     (x: Category) => String(x.name.en).toLowerCase() === path
   )[0];
 
-const generateFilterString = (props: FilterProps): string[] => {
-  const result = [];
-  if (props.category)
-    result.push(`categories.id: subtree("${props.category.id}")`);
-  if (props.filter) {
-    for (let i = 0; i < props?.filter?.length; i += 1) {
-      if (props.filter[i].length > 0) result.push(props.filter[i]);
-    }
-  }
-
-  return result;
-};
+const generateFilterString = (props: {
+  category: Category | undefined;
+}): string[] =>
+  props.category ? [`categories.id: subtree("${props.category.id}")`] : [];
 
 export const getProducts = async (
   path: string,
@@ -51,8 +38,8 @@ export const getProducts = async (
     const filterString = generateFilterString({
       category:
         currentCategoryTitle !== 'catalog' ? currentCategory : undefined,
-      filter: filteringType,
     });
+    if (filteringType !== undefined) filterString.push(...filteringType);
     await ClientFactory.createApiRoot(ClientFactory.flowType)
       .productProjections()
       .search()
