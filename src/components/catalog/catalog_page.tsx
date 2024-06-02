@@ -15,21 +15,17 @@ export default function CatalogPage() {
   const [isSort, setSort] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const products = await getProducts(location.pathname);
-      if (products.length) {
-        setData(products);
-      } else {
-        navigate('not-found');
-      }
-    };
-    fetchData();
+    getProducts(location.pathname).then((value: ProductProjection[]) => {
+      if (value.length) setData(value);
+      else navigate('not-found');
+    });
   }, [location, navigate]);
 
   const sort = async (sortingType: string) => {
     setSort(false);
-    const sortedData = await sortProducts(location.pathname, sortingType);
-    setData(sortedData);
+    sortProducts(location.pathname, sortingType).then(
+      (value: ProductProjection[]) => setData(value)
+    );
   };
 
   const redirect = async (categoryId: string, productId: string) => {
