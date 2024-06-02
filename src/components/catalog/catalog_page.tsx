@@ -6,7 +6,7 @@ import { getProducts, sortProducts } from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { SortingTypes } from '../../types';
-import categoryById from '../../services/getSubcategory';
+import redirect from '../../services/redirectService';
 
 export default function CatalogPage() {
   const location = useLocation();
@@ -25,13 +25,6 @@ export default function CatalogPage() {
     setSort(false);
     sortProducts(location.pathname, sortingType).then(
       (value: ProductProjection[]) => setData(value)
-    );
-  };
-
-  const redirect = async (categoryId: string, productId: string) => {
-    const categoryResult = await categoryById(categoryId);
-    navigate(
-      `/catalog/${categoryResult.parentCategory}/${categoryResult.subCategory}/${productId}`
     );
   };
 
@@ -85,7 +78,7 @@ export default function CatalogPage() {
           <li
             key={item.id}
             onClick={() =>
-              redirect(item.categories.at(0)?.id as string, item.id)
+              redirect(item.categories.at(0)?.id as string, item.id, navigate)
             }
           >
             <CatalogItem product={item} />
