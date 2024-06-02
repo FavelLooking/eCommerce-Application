@@ -1,3 +1,5 @@
+import { SortingTypes } from '../types';
+
 export const emailPattern = {
   regex: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
   error: 'wrong email format',
@@ -52,6 +54,21 @@ export const catalogMenuItems = [
         path: '/catalog/comics/marvel',
         classname: 'dropdown-link sublink',
       },
+      {
+        title: 'Archie',
+        path: 'catalog/comics/archie',
+        classname: 'dropdown-link sublink',
+      },
+      {
+        title: 'Boom',
+        path: 'catalog/comics/boom',
+        classname: 'dropdown-link sublink',
+      },
+      {
+        title: 'Darkhorse',
+        path: 'catalog/comics/darkhorse',
+        classname: 'dropdown-link sublink',
+      },
     ],
   },
   {
@@ -75,5 +92,31 @@ export const catalogMenuItems = [
         classname: 'dropdown-link sublink',
       },
     ],
+  },
+];
+
+export const comicsSet = ['dc', 'marvel', 'archie', 'boom', 'darkhorse'];
+export const mangaSet = ['japan', 'korea', 'china'];
+
+export const sortButtons = [
+  {
+    type: 'button',
+    value: 'name ↑',
+    sort: SortingTypes.NAMEASC,
+  },
+  {
+    type: 'button',
+    value: 'name ↓',
+    sort: SortingTypes.NAMEDESC,
+  },
+  {
+    type: 'button',
+    value: 'price ↑',
+    sort: SortingTypes.PRICEASC,
+  },
+  {
+    type: 'button',
+    value: 'price ↓',
+    sort: SortingTypes.PRICEDESC,
   },
 ];

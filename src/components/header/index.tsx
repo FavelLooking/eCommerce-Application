@@ -31,6 +31,7 @@ export default function Header() {
           onMouseEnter={() => setDropdown(true)}
           onMouseLeave={() => setDropdown(false)}
           onClick={() => setDropdown(!dropdown)}
+          key="dropdown-toogle-link"
         >
           <HeaderLink isDisplayed path="catalog" text="Catalog" />
           {dropdown && <Dropdown />}
