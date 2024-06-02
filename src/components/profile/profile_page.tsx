@@ -47,6 +47,7 @@ export default function ProfilePage() {
         firstName={customerDetails.firstName}
         lastName={customerDetails.lastName}
         dateOfBirth={customerDetails.dateOfBirth}
+        email={customerDetails.email}
       />
       <h1 className="title">Addresses:</h1>
       <div className="addresses">
