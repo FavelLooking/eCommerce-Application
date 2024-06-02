@@ -118,3 +118,12 @@ export const sortButtons = [
 ];
 
 export const priceCurrency = '€';
+
+export const priceFilter = [
+  'any price',
+  'from 0 to 10 €',
+  'from 10 to 20 €',
+  'from 20 to 50 €',
+  'from 50 to 100 €',
+  'from 100 to 200 €',
+];

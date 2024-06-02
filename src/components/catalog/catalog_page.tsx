@@ -7,7 +7,7 @@ import { getProducts } from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { FilterFields, SortingTypes } from '../../types';
-import { priceCurrency, sortButtons } from '../../utils/constants';
+import { priceFilter, sortButtons } from '../../utils/constants';
 
 export default function CatalogPage() {
   const location = useLocation();
@@ -16,12 +16,11 @@ export default function CatalogPage() {
   const [isSort, setSort] = useState(false);
   const [isFilter, setFilter] = useState(false);
 
-  const { register, handleSubmit } = useForm<FilterFields>();
+  const { register, handleSubmit, reset } = useForm<FilterFields>();
 
   useEffect(() => {
     getProducts(location.pathname).then((value: ProductProjection[]) => {
       sessionStorage.removeItem('price');
-      sessionStorage.removeItem('page');
       sessionStorage.removeItem('sort');
       if (value.length) setData(value);
       else navigate('not-found');
@@ -35,7 +34,6 @@ export default function CatalogPage() {
 
   const generateFilterString = (): string[] => [
     sessionStorage.getItem('price') ?? '',
-    sessionStorage.getItem('page') ?? '',
   ];
 
   const generateSortingString = (): string =>
@@ -65,12 +63,13 @@ export default function CatalogPage() {
     } else {
       sessionStorage.removeItem('price');
     }
-    const len = filterData.length.split(' ');
-    if (len.length === 5) {
-      sessionStorage.setItem('page', ``);
-    } else {
-      sessionStorage.removeItem('page');
-    }
+    await changeData();
+  };
+
+  const clearFilters = async () => {
+    sessionStorage.removeItem('price');
+    sessionStorage.removeItem('page');
+    reset();
     await changeData();
   };
 
@@ -101,21 +100,14 @@ export default function CatalogPage() {
       >
         <form id="filter-form" onSubmit={handleSubmit(filter)}>
           <select {...register('price')}>
-            <option>any price</option>
-            <option>from 0 to 10 {priceCurrency}</option>
-            <option>from 10 to 20 {priceCurrency}</option>
-            <option>from 20 to 50 {priceCurrency}</option>
-            <option>from 50 to 100 {priceCurrency}</option>
-            <option>from 100 to 200 {priceCurrency}</option>
-          </select>
-          <select {...register('length')}>
-            <option>any length</option>
-            <option>from 0 to 40 pages</option>
-            <option>from 40 to 100 pages</option>
-            <option>from 100 to 300 pages</option>
-            <option>from 300 to 500 pages</option>
+            {priceFilter.map((x: string) => (
+              <option key={`catalog-filtering-${x.split(' ').join()}`}>
+                {x}
+              </option>
+            ))}
           </select>
           <input type="submit" />
+          <input type="button" value="Reset Filters" onClick={clearFilters} />
         </form>
       </div>
       <div
