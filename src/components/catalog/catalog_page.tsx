@@ -6,6 +6,7 @@ import { getProducts, sortProducts } from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { SortingTypes } from '../../types';
+import categoryById from '../../services/getSubcategory';
 
 export default function CatalogPage() {
   const location = useLocation();
@@ -73,14 +74,19 @@ export default function CatalogPage() {
         />
       </div>
       <div className="catalog_flex">
-        {data?.map((item) => (
-          <li key={item.id}>
-            {/* There is a test rout, after we'll change it */}
-            <Link to={`category/subcategory/${item.id}`}>
-              <CatalogItem product={item} />
-            </Link>
-          </li>
-        ))}
+        {data?.map((item) => {
+          const categoryId = item.categories.at(0)?.id;
+          if (categoryId) {
+            categoryById(categoryId);
+          }
+          return (
+            <li key={item.id}>
+              <Link to={`/catalog/${item.categories}`}>
+                <CatalogItem product={item} />
+              </Link>
+            </li>
+          );
+        })}
       </div>
     </div>
   );
