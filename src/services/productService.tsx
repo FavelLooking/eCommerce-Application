@@ -66,8 +66,6 @@ export const getProducts = async (
       .execute()
       .then((value) => {
         data.push(...(value.body.results as ProductProjection[]));
-        // eslint-disable-next-line no-console
-        console.log(data);
       });
   }
   return data;
