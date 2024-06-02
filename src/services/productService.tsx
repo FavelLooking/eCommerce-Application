@@ -115,3 +115,31 @@ export const sortProducts = async (path: string, sortingType: string) => {
   }
   return data;
 };
+
+export const searchProducts = async (path: string, searchValue: string) => {
+  const data: ProductProjection[] = [];
+  if (isValidPath(path)) {
+    const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
+    const currentCategory = await getCategoryByPath(currentCategoryTitle);
+    const filterString = generateFilterString({
+      category:
+        currentCategoryTitle !== 'catalog' ? currentCategory : undefined,
+    });
+    await ClientFactory.createApiRoot(ClientFactory.flowType)
+      .productProjections()
+      .search()
+      .get({
+        queryArgs: {
+          limit: 500,
+          filter: filterString,
+          'text.en': searchValue,
+          fuzzy: true,
+        },
+      })
+      .execute()
+      .then((value) => {
+        data.push(...(value.body.results as ProductProjection[]));
+      });
+  }
+  return data;
+};

@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
-import { getProducts, sortProducts } from '../../services/productService';
+import {
+  getProducts,
+  searchProducts,
+  sortProducts,
+} from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { SortingTypes } from '../../types';
@@ -12,6 +16,7 @@ export default function CatalogPage() {
   const navigate = useNavigate();
   const [data, setData] = useState<ProductProjection[]>();
   const [isSort, setSort] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     getProducts(location.pathname).then((value: ProductProjection[]) => {
@@ -27,14 +32,28 @@ export default function CatalogPage() {
     );
   };
 
+  const search = async () => {
+    searchProducts(location.pathname, searchValue).then(
+      (value: ProductProjection[]) => setData(value)
+    );
+  };
+
   return (
     <div className="catalog_wrapper">
       <div className="some-catalog-div-with-breadcrumb-and-utils">
         <Breadcrumb />
         <div className="catalog-utils">
           <input
+            type="text"
+            className="catalog-search"
+            onInput={(e) =>
+              setSearchValue((e.target as HTMLInputElement).value)
+            }
+          />
+          <input
             type="button"
             className="catalog-button catalog-toogle-search"
+            onClick={search}
           />
           <input
             type="button"
