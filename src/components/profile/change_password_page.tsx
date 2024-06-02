@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import Toastify from 'toastify-js';
 import { TextInput } from '../login/text_input';
 import './change_password_page.scss';
@@ -55,6 +56,10 @@ export default function ChangePasswordPage() {
   const onSubmit: SubmitHandler<PasswordFormFields> = async (data) => {
     const { current, renew } = data;
     try {
+      if (current === renew) {
+        showToast('Please enter different passwords');
+        throw new Error('Please enter different passwords');
+      }
       const email = await CustomerService.changePassword(current, renew);
       if (!email) {
         throw new Error('Email not found after changing password.');
@@ -65,11 +70,8 @@ export default function ChangePasswordPage() {
       reconnect(email, renew);
     } catch (error) {
       handleErrors();
+      reset();
     }
-  };
-
-  const handleCancel = () => {
-    reset();
   };
 
   return (
@@ -123,9 +125,11 @@ export default function ChangePasswordPage() {
           {errors.renew && errors.renew.message}
         </div>
         <input type="submit" value="Change password" className="button" />
-        <button type="button" className="button" onClick={handleCancel}>
-          Cancel
-        </button>
+        <Link to="/profile">
+          <button type="button" className="button">
+            Cancel
+          </button>
+        </Link>
       </form>
     </div>
   );

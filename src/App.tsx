@@ -32,7 +32,10 @@ function ProtectedRoute({ children }: { children: JSX.Element }): JSX.Element {
   const { user } = useAuth();
   const location = useLocation();
 
-  if (!user && location.pathname === '/profile') {
+  if (
+    (!user && location.pathname === '/profile') ||
+    (!user && location.pathname === '/profile/change-password')
+  ) {
     return <Navigate to="/login" />;
   }
 
@@ -82,7 +85,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'profile/change-password',
-        element: <ChangePasswordPage />,
+        element: (
+          <ProtectedRoute>
+            <ChangePasswordPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: 'profile',
