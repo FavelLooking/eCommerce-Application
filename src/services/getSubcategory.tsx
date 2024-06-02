@@ -25,7 +25,6 @@ const categoryById = async (subCategoryId: string) => {
 
     parentCategory = dataCategory.body.name?.en.toLowerCase();
   }
-  console.log({ parentCategory, subCategory });
   return { parentCategory, subCategory };
 };
 
