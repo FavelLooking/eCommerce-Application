@@ -1,9 +1,24 @@
 import React, { useState } from 'react';
 import './profile.scss';
 import CustomerDetails from '../../interfaces/personalInformation';
+import validationInput from '../../utils/registration_form_utils/registration_form_validation_regex';
+import {
+  emailPatternRegistration,
+  firstNamePatternRegistration,
+  lastNamePatternRegistration,
+} from '../../utils/registration_form_utils/registration_form_regex';
 
-function PersonalInformation(props: CustomerDetails): JSX.Element {
-  const { firstName, lastName, dateOfBirth, email } = props;
+interface PersonalInformationProps extends CustomerDetails {
+  onSave: (updatedValues: CustomerDetails) => void;
+}
+
+function PersonalInformation({
+  firstName,
+  lastName,
+  dateOfBirth,
+  email,
+  onSave,
+}: PersonalInformationProps): JSX.Element {
   const [editing, setEditing] = useState(false);
   const [editedValues, setEditedValues] = useState({
     firstName,
@@ -11,6 +26,10 @@ function PersonalInformation(props: CustomerDetails): JSX.Element {
     dateOfBirth,
     email,
   });
+  const [emailValid, setIsEmailValid] = useState(true);
+  const [firstNameValid, setFirstNameValid] = useState(true);
+  const [lastNameValid, setLastNameValid] = useState(true);
+  const [birthDateValid, setBirthDateValid] = useState(true);
 
   const handleEditClick = () => {
     setEditing(true);
@@ -22,9 +41,29 @@ function PersonalInformation(props: CustomerDetails): JSX.Element {
       ...editedValues,
       [name]: value,
     });
+    if (name === 'email') {
+      const isValid = validationInput(emailPatternRegistration.regex, value);
+      setIsEmailValid(isValid);
+    }
+    if (name === 'firstName') {
+      const isValid = validationInput(
+        firstNamePatternRegistration.regex,
+        value
+      );
+      setFirstNameValid(isValid);
+    }
+    if (name === 'lastName') {
+      const isValid = validationInput(lastNamePatternRegistration.regex, value);
+      setLastNameValid(isValid);
+    }
+    if (name === 'dateOfBirth') {
+      const isValid = validationInput(lastNamePatternRegistration.regex, value);
+      setBirthDateValid(isValid);
+    }
   };
 
   const handleSaveClick = () => {
+    onSave(editedValues);
     setEditing(false);
   };
 
@@ -39,6 +78,11 @@ function PersonalInformation(props: CustomerDetails): JSX.Element {
             value={editedValues.firstName}
             onChange={handleChange}
           />
+          {!firstNameValid && (
+            <div className="registration-error">
+              {firstNamePatternRegistration.error}
+            </div>
+          )}
         </div>
         <div className="personal-information-line">
           <span className="label">Last name:</span>{' '}
@@ -48,6 +92,11 @@ function PersonalInformation(props: CustomerDetails): JSX.Element {
             value={editedValues.lastName}
             onChange={handleChange}
           />
+          {!lastNameValid && (
+            <div className="registration-error">
+              {lastNamePatternRegistration.error}
+            </div>
+          )}
         </div>
         <div className="personal-information-line">
           <span className="label">Date of birth:</span>{' '}
@@ -57,6 +106,11 @@ function PersonalInformation(props: CustomerDetails): JSX.Element {
             value={editedValues.dateOfBirth}
             onChange={handleChange}
           />
+          {!birthDateValid && (
+            <div className="registration-error">
+              you should be at least 13 years old to register
+            </div>
+          )}
         </div>
         <div className="personal-information-line">
           <span className="label">Email:</span>{' '}
@@ -66,8 +120,18 @@ function PersonalInformation(props: CustomerDetails): JSX.Element {
             value={editedValues.email}
             onChange={handleChange}
           />
+          {!emailValid && (
+            <div className="registration-error">
+              {emailPatternRegistration.error}
+            </div>
+          )}
         </div>
-        <button type="button" className="button" onClick={handleSaveClick}>
+        <button
+          type="button"
+          className="button"
+          onClick={handleSaveClick}
+          disabled={!emailValid || !firstNameValid || !lastNameValid}
+        >
           Save
         </button>
       </div>

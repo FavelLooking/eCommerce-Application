@@ -24,6 +24,16 @@ export default function ProfilePage() {
     fetchDetails();
   }, [navigate]);
 
+  const handleSave = (updatedDetails: Partial<Customer>) => {
+    setCustomerDetails((prevDetails) => {
+      if (!prevDetails) return null;
+      return {
+        ...prevDetails,
+        ...updatedDetails,
+      };
+    });
+  };
+
   if (!customerDetails) {
     return <div className="loading">Loading...</div>;
   }
@@ -48,6 +58,7 @@ export default function ProfilePage() {
         lastName={customerDetails.lastName}
         dateOfBirth={customerDetails.dateOfBirth}
         email={customerDetails.email}
+        onSave={handleSave}
       />
       <h1 className="title">Addresses:</h1>
       <div className="addresses">

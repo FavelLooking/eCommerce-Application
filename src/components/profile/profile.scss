@@ -1,7 +1,7 @@
 .profile-wrapper {
   display: flex;
   flex-direction: column;
-  padding-top: 6%;
+  padding-top: 1%;
   align-items: center;
 }
 
@@ -19,15 +19,20 @@
 .address-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 7%;
+  margin-bottom: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.089);
   border-radius: 5px;
-  padding: 2.5rem;
+  padding: 2rem;
   @media (max-width: 500px) {
     padding: 1.5rem 40px;
     margin: 0;
   }
   outline: #f11515;
+}
+
+.personal-information {
+  min-height: 190px;
+  min-width: 310px;
 }
 
 .address-container {
