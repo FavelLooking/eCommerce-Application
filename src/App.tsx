@@ -76,7 +76,7 @@ const router = createBrowserRouter([
         element: <CatalogPage />,
       },
       {
-        path: 'catalog/category/subcategory/:productId',
+        path: 'catalog/:category/:subcategory/:productId',
         element: <DetailedProductPage />,
       },
       {

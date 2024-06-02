@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import { getProducts, sortProducts } from '../../services/productService';
@@ -15,16 +15,27 @@ export default function CatalogPage() {
   const [isSort, setSort] = useState(false);
 
   useEffect(() => {
-    getProducts(location.pathname).then((value: ProductProjection[]) => {
-      if (value.length) setData(value);
-      else navigate('not-found');
-    });
+    const fetchData = async () => {
+      const products = await getProducts(location.pathname);
+      if (products.length) {
+        setData(products);
+      } else {
+        navigate('not-found');
+      }
+    };
+    fetchData();
   }, [location, navigate]);
 
   const sort = async (sortingType: string) => {
     setSort(false);
-    sortProducts(location.pathname, sortingType).then(
-      (value: ProductProjection[]) => setData(value)
+    const sortedData = await sortProducts(location.pathname, sortingType);
+    setData(sortedData);
+  };
+
+  const redirect = async (categoryId: string, productId: string) => {
+    const categoryResult = await categoryById(categoryId);
+    navigate(
+      `/catalog/${categoryResult.parentCategory}/${categoryResult.subCategory}/${productId}`
     );
   };
 
@@ -74,19 +85,16 @@ export default function CatalogPage() {
         />
       </div>
       <div className="catalog_flex">
-        {data?.map((item) => {
-          const categoryId = item.categories.at(0)?.id;
-          if (categoryId) {
-            categoryById(categoryId);
-          }
-          return (
-            <li key={item.id}>
-              <Link to={`/catalog/${item.categories}`}>
-                <CatalogItem product={item} />
-              </Link>
-            </li>
-          );
-        })}
+        {data?.map((item) => (
+          <li
+            key={item.id}
+            onClick={() =>
+              redirect(item.categories.at(0)?.id as string, item.id)
+            }
+          >
+            <CatalogItem product={item} />
+          </li>
+        ))}
       </div>
     </div>
   );

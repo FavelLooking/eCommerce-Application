@@ -1,7 +1,6 @@
 import ClientFactory from './clientFactory';
 
 const categoryById = async (subCategoryId: string) => {
-  // Получение данных подкатегории
   const dataSubCategory = await ClientFactory.createApiRoot(
     ClientFactory.flowType
   )
@@ -10,8 +9,10 @@ const categoryById = async (subCategoryId: string) => {
     .get()
     .execute();
 
-  const subCategory = dataSubCategory.body.name?.en;
+  const subCategory = dataSubCategory.body.name?.en.toLowerCase();
   const parentCategoryId = dataSubCategory.body.parent?.id;
+
+  let parentCategory: string | undefined;
 
   if (parentCategoryId) {
     const dataCategory = await ClientFactory.createApiRoot(
@@ -22,9 +23,10 @@ const categoryById = async (subCategoryId: string) => {
       .get()
       .execute();
 
-    const parentCategory = dataCategory.body.name?.en;
-    console.log({ parentCategory, subCategory });
+    parentCategory = dataCategory.body.name?.en.toLowerCase();
   }
+  console.log({ parentCategory, subCategory });
+  return { parentCategory, subCategory };
 };
 
 export default categoryById;
