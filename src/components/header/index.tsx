@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import AuthService from '../../services/authService';
 import HeaderLink from './header_link';
 import Dropdown from './dropdown';
+import { catalogMenuItems } from '../../utils/constants';
 
 export default function Header() {
   const { user, logout } = useAuth();
@@ -31,10 +32,9 @@ export default function Header() {
           onMouseEnter={() => setDropdown(true)}
           onMouseLeave={() => setDropdown(false)}
           onClick={() => setDropdown(!dropdown)}
-          key="dropdown-toogle-link"
         >
           <HeaderLink isDisplayed path="catalog" text="Catalog" />
-          {dropdown && <Dropdown />}
+          {dropdown && <Dropdown data={catalogMenuItems} id="catalog" />}
         </li>
         <HeaderLink isDisplayed={!user} path="login" text="Login" />
         <HeaderLink isDisplayed={!user} path="register" text="Register" />

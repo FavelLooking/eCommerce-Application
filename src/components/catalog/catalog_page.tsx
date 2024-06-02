@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import { getProducts } from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
-import { SortingTypes } from '../../types';
-import { sortButtons } from '../../utils/constants';
+import { FilterFields, SortingTypes } from '../../types';
+import { priceCurrency, sortButtons } from '../../utils/constants';
 
 export default function CatalogPage() {
   const location = useLocation();
@@ -15,8 +16,13 @@ export default function CatalogPage() {
   const [isSort, setSort] = useState(false);
   const [isFilter, setFilter] = useState(false);
 
+  const { register, handleSubmit } = useForm<FilterFields>();
+
   useEffect(() => {
     getProducts(location.pathname).then((value: ProductProjection[]) => {
+      sessionStorage.removeItem('price');
+      sessionStorage.removeItem('page');
+      sessionStorage.removeItem('sort');
       if (value.length) setData(value);
       else navigate('not-found');
     });
@@ -27,24 +33,44 @@ export default function CatalogPage() {
     setFilter(toogleFilter);
   };
 
-  const sort = async (sortingType: string) => {
+  const generateFilterString = (): string[] => [
+    sessionStorage.getItem('price') ?? '',
+    sessionStorage.getItem('page') ?? '',
+  ];
+
+  const generateSortingString = (): string =>
+    sessionStorage.getItem('sort') ?? SortingTypes.NAMEASC;
+
+  const changeData = async () => {
     toogleSettings(false, false);
-    sessionStorage.setItem('sort', sortingType);
     getProducts(
       location.pathname,
-      sortingType,
-      sessionStorage.getItem('filter') ?? ''
+      generateSortingString(),
+      generateFilterString()
     ).then((value: ProductProjection[]) => setData(value));
   };
 
-  const filter = async (filteringType: string) => {
-    toogleSettings(false, false);
-    sessionStorage.setItem('filter', filteringType);
-    getProducts(
-      location.pathname,
-      sessionStorage.getItem('sort') ?? SortingTypes.NAMEASC,
-      filteringType
-    ).then((value: ProductProjection[]) => setData(value));
+  const sort = async (sortingType: string) => {
+    sessionStorage.setItem('sort', sortingType);
+    await changeData();
+  };
+
+  const filter: SubmitHandler<FilterFields> = async (filterData) => {
+    const price = filterData.price.split(' ');
+    if (price.length === 5) {
+      // ADD STRING HERE
+      sessionStorage.setItem('price', ``);
+    } else {
+      sessionStorage.removeItem('price');
+    }
+    const len = filterData.length.split(' ');
+    if (len.length === 5) {
+      // ADD STRING HERE
+      sessionStorage.setItem('page', ``);
+    } else {
+      sessionStorage.removeItem('page');
+    }
+    await changeData();
   };
 
   return (
@@ -72,15 +98,24 @@ export default function CatalogPage() {
         className="catalog-filtering"
         style={{ display: `${isFilter ? '' : 'none'}` }}
       >
-        <div role="presentation" onClick={() => filter('')}>
-          PriceFilter
-        </div>
-        <div role="presentation" onClick={() => filter('')}>
-          CauntOfPagesFilter
-        </div>
-        <div role="presentation" onClick={() => filter('')}>
-          Publisher
-        </div>
+        <form id="filter-form" onSubmit={handleSubmit(filter)}>
+          <select {...register('price')}>
+            <option>any price</option>
+            <option>from 0 to 10 {priceCurrency}</option>
+            <option>from 10 to 20 {priceCurrency}</option>
+            <option>from 20 to 50 {priceCurrency}</option>
+            <option>from 50 to 100 {priceCurrency}</option>
+            <option>from 100 to 200 {priceCurrency}</option>
+          </select>
+          <select {...register('length')}>
+            <option>any length</option>
+            <option>from 0 to 40 pages</option>
+            <option>from 40 to 100 pages</option>
+            <option>from 100 to 300 pages</option>
+            <option>from 300 to 500 pages</option>
+          </select>
+          <input type="submit" />
+        </form>
       </div>
       <div
         className="catalog-sorting"

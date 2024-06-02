@@ -43,55 +43,51 @@ export const catalogMenuItems = [
     title: 'Comics',
     path: '/catalog/comics',
     classname: 'dropdown-link',
-    submenu: [
-      {
-        title: 'DC',
-        path: '/catalog/comics/dc',
-        classname: 'dropdown-link sublink',
-      },
-      {
-        title: 'Marvel',
-        path: '/catalog/comics/marvel',
-        classname: 'dropdown-link sublink',
-      },
-      {
-        title: 'Archie',
-        path: 'catalog/comics/archie',
-        classname: 'dropdown-link sublink',
-      },
-      {
-        title: 'Boom',
-        path: 'catalog/comics/boom',
-        classname: 'dropdown-link sublink',
-      },
-      {
-        title: 'Darkhorse',
-        path: 'catalog/comics/darkhorse',
-        classname: 'dropdown-link sublink',
-      },
-    ],
+  },
+  {
+    title: 'DC',
+    path: '/catalog/comics/dc',
+    classname: 'dropdown-link sublink',
+  },
+  {
+    title: 'Marvel',
+    path: '/catalog/comics/marvel',
+    classname: 'dropdown-link sublink',
+  },
+  {
+    title: 'Archie',
+    path: 'catalog/comics/archie',
+    classname: 'dropdown-link sublink',
+  },
+  {
+    title: 'Boom',
+    path: 'catalog/comics/boom',
+    classname: 'dropdown-link sublink',
+  },
+  {
+    title: 'Darkhorse',
+    path: 'catalog/comics/darkhorse',
+    classname: 'dropdown-link sublink',
   },
   {
     title: 'Manga',
     path: '/catalog/manga',
     classname: 'dropdown-link',
-    submenu: [
-      {
-        title: 'Japan',
-        path: '/catalog/manga/japan',
-        classname: 'dropdown-link sublink',
-      },
-      {
-        title: 'Korea',
-        path: '/catalog/manga/korea',
-        classname: 'dropdown-link sublink',
-      },
-      {
-        title: 'China',
-        path: '/catalog/manga/china',
-        classname: 'dropdown-link sublink',
-      },
-    ],
+  },
+  {
+    title: 'Japan',
+    path: '/catalog/manga/japan',
+    classname: 'dropdown-link sublink',
+  },
+  {
+    title: 'Korea',
+    path: '/catalog/manga/korea',
+    classname: 'dropdown-link sublink',
+  },
+  {
+    title: 'China',
+    path: '/catalog/manga/china',
+    classname: 'dropdown-link sublink',
   },
 ];
 
@@ -120,3 +116,5 @@ export const sortButtons = [
     sort: SortingTypes.PRICEDESC,
   },
 ];
+
+export const priceCurrency = '€';

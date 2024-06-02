@@ -162,3 +162,8 @@
 .catalog-filtering {
   display: flex;
 }
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+}

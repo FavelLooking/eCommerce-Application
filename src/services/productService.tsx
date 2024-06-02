@@ -7,10 +7,11 @@ import {
 import ClientFactory from './clientFactory';
 import { isValidPath } from '../utils';
 import { SortingTypes } from '../types';
+import { priceCurrency } from '../utils/constants';
 
 type FilterProps = {
   category?: Category | undefined;
-  filter?: string | undefined;
+  filter?: string[] | undefined;
 };
 
 const getCategory = async () =>
@@ -29,14 +30,19 @@ const generateFilterString = (props: FilterProps): string[] => {
   const result = [];
   if (props.category)
     result.push(`categories.id: subtree("${props.category.id}")`);
-  if (props.filter?.length) result.push(props.filter);
+  if (props.filter) {
+    for (let i = 0; i < props?.filter?.length; i += 1) {
+      if (props.filter[i].length > 0) result.push(props.filter[i]);
+    }
+  }
+
   return result;
 };
 
 export const getProducts = async (
   path: string,
   sortingType: string | undefined = undefined,
-  filteringType: string | undefined = undefined
+  filteringType: string[] | undefined = undefined
 ) => {
   const data: ProductProjection[] = [];
   if (isValidPath(path)) {
@@ -60,13 +66,14 @@ export const getProducts = async (
       .execute()
       .then((value) => {
         data.push(...(value.body.results as ProductProjection[]));
+        // eslint-disable-next-line no-console
+        console.log(data);
       });
   }
   return data;
 };
 
 const getPriceValue = (price: Price | DiscountedPrice): string => {
-  const priceCurrency = '€';
   const priceCents = price.value.centAmount;
   const priceDigits = price.value.fractionDigits;
 
