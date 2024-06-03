@@ -7,7 +7,6 @@ import 'swiper/css/pagination';
 import './detailed_product_style.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import getInfoAboutProduct from '../../services/getDetailedProductInfo';
-// import NotFoundPage from '../not_found/not_found_page';
 import ProductInfo from '../../types/detailed_product_types/fetch_detailed_product_types';
 
 function DetailedProductPage() {
