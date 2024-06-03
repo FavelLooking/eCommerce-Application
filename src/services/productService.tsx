@@ -6,10 +6,8 @@ import {
 } from '@commercetools/platform-sdk';
 import ClientFactory from './clientFactory';
 import { isValidPath } from '../utils';
-
-type FilterProps = {
-  category: Category | undefined;
-};
+import { SortingTypes } from '../types';
+import { priceCurrency } from '../utils/constants';
 
 const getCategory = async () =>
   ClientFactory.createApiRoot(ClientFactory.flowType)
@@ -23,14 +21,16 @@ const getCategoryByPath = async (path: string) =>
     (x: Category) => String(x.name.en).toLowerCase() === path
   )[0];
 
-const generateFilterString = (props: FilterProps): string[] => {
-  const result = [];
-  if (props.category)
-    result.push(`categories.id: subtree("${props.category.id}")`);
-  return result;
-};
+const generateFilterString = (props: {
+  category: Category | undefined;
+}): string[] =>
+  props.category ? [`categories.id: subtree("${props.category.id}")`] : [];
 
-export const getProducts = async (path: string) => {
+export const getProducts = async (
+  path: string,
+  sortingType: string | undefined = undefined,
+  filteringType: string[] | undefined = undefined
+) => {
   const data: ProductProjection[] = [];
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
@@ -39,6 +39,7 @@ export const getProducts = async (path: string) => {
       category:
         currentCategoryTitle !== 'catalog' ? currentCategory : undefined,
     });
+    if (filteringType !== undefined) filterString.push(...filteringType);
     await ClientFactory.createApiRoot(ClientFactory.flowType)
       .productProjections()
       .search()
@@ -46,6 +47,7 @@ export const getProducts = async (path: string) => {
         queryArgs: {
           limit: 500,
           filter: filterString,
+          sort: sortingType ?? SortingTypes.NAMEASC,
         },
       })
       .execute()
@@ -57,7 +59,6 @@ export const getProducts = async (path: string) => {
 };
 
 const getPriceValue = (price: Price | DiscountedPrice): string => {
-  const priceCurrency = '€';
   const priceCents = price.value.centAmount;
   const priceDigits = price.value.fractionDigits;
 
@@ -88,33 +89,6 @@ export const getProductName = (product: ProductProjection): string =>
 
 export const getProductDescription = (product: ProductProjection): string =>
   product.metaDescription?.en ?? '';
-
-export const sortProducts = async (path: string, sortingType: string) => {
-  const data: ProductProjection[] = [];
-  if (isValidPath(path)) {
-    const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
-    const currentCategory = await getCategoryByPath(currentCategoryTitle);
-    const filterString = generateFilterString({
-      category:
-        currentCategoryTitle !== 'catalog' ? currentCategory : undefined,
-    });
-    await ClientFactory.createApiRoot(ClientFactory.flowType)
-      .productProjections()
-      .search()
-      .get({
-        queryArgs: {
-          limit: 500,
-          filter: filterString,
-          sort: sortingType,
-        },
-      })
-      .execute()
-      .then((value) => {
-        data.push(...(value.body.results as ProductProjection[]));
-      });
-  }
-  return data;
-};
 
 export const searchProducts = async (path: string, searchValue: string) => {
   const data: ProductProjection[] = [];

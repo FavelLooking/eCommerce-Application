@@ -11,7 +11,6 @@ export type RegExps = {
 export type CatalogDropdownType = {
   title: string;
   path: string;
-  submenu?: CatalogDropdownType[];
   classname?: string;
 };
 
@@ -21,3 +20,8 @@ export enum SortingTypes {
   PRICEASC = 'price asc',
   PRICEDESC = 'price desc',
 }
+
+export type FilterFields = {
+  price: string;
+  length: string;
+};

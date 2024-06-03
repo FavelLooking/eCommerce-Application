@@ -171,4 +171,18 @@
   &:hover {
     cursor: text;
   }
+
+.catalog-filtering {
+  display: flex;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.catalog-error {
+  width: fit-content;
+  color: #48304d;
+  align-self: center;
 }

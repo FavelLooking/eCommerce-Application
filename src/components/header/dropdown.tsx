@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { catalogMenuItems } from '../../utils/constants';
 import { CatalogDropdownType } from '../../types';
 
-export default function Dropdown() {
+export default function Dropdown(props: {
+  data: CatalogDropdownType[];
+  id: string;
+}) {
+  const { data, id } = props;
   const [click, setChick] = useState(false);
-
-  const handleClick = () => setChick(!click);
-
-  const generateDropdownLink = (item: CatalogDropdownType): JSX.Element => (
-    <div>
-      <li key={`dropdown-${item.title}`}>
-        <NavLink className={item.classname} to={item.path}>
-          {item.title}
-        </NavLink>
-      </li>
-      {item.submenu &&
-        item.submenu.map((subitem) => generateDropdownLink(subitem))}
-    </div>
-  );
 
   return (
     <ul
       role="presentation"
-      onClick={handleClick}
+      onClick={() => setChick(!click)}
       className={click ? 'dropdown-menu clicked' : 'dropdown-menu'}
     >
-      {catalogMenuItems.map((item) => generateDropdownLink(item))}
+      {data.map((x: CatalogDropdownType) => (
+        <li key={`dropdown--${id}-${x.title}`}>
+          <NavLink className={x.classname} to={x.path}>
+            {x.title}
+          </NavLink>
+        </li>
+      ))}
     </ul>
   );
 }
