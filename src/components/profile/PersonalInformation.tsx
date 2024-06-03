@@ -67,12 +67,17 @@ function PersonalInformation({
     setEditing(false);
   };
 
+  const handleCancel = () => {
+    setEditing(false);
+  };
+
   if (editing) {
     return (
       <div className="personal-information">
         <div className="personal-information-line">
           <span className="label">First name:</span>{' '}
           <input
+            className="input-field"
             type="text"
             name="firstName"
             value={editedValues.firstName}
@@ -87,6 +92,7 @@ function PersonalInformation({
         <div className="personal-information-line">
           <span className="label">Last name:</span>{' '}
           <input
+            className="input-field"
             type="text"
             name="lastName"
             value={editedValues.lastName}
@@ -101,6 +107,7 @@ function PersonalInformation({
         <div className="personal-information-line">
           <span className="label">Date of birth:</span>{' '}
           <input
+            className="input-field"
             type="date"
             name="dateOfBirth"
             value={editedValues.dateOfBirth}
@@ -115,6 +122,7 @@ function PersonalInformation({
         <div className="personal-information-line">
           <span className="label">Email:</span>{' '}
           <input
+            className="input-field"
             type="email"
             name="email"
             value={editedValues.email}
@@ -133,6 +141,9 @@ function PersonalInformation({
           disabled={!emailValid || !firstNameValid || !lastNameValid}
         >
           Save
+        </button>
+        <button type="button" className="button" onClick={handleCancel}>
+          Cancel
         </button>
       </div>
     );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './profile.scss';
-import { Customer } from '@commercetools/platform-sdk';
+import { Address, Customer } from '@commercetools/platform-sdk';
 import CustomerService from '../../services/customerService';
 import PersonalInformation from './PersonalInformation';
 import AddressComponent from './Address';
@@ -30,6 +30,25 @@ export default function ProfilePage() {
       return {
         ...prevDetails,
         ...updatedDetails,
+      };
+    });
+  };
+
+  const handleSaveAddress = (updatedAddress: Partial<Address>) => {
+    setCustomerDetails((prevDetails) => {
+      if (!prevDetails) return null;
+      const updatedAddresses = prevDetails.addresses.map((address) => {
+        if (address.id === updatedAddress.id) {
+          return {
+            ...address,
+            ...updatedAddress,
+          };
+        }
+        return address;
+      });
+      return {
+        ...prevDetails,
+        addresses: updatedAddresses,
       };
     });
   };
@@ -75,6 +94,7 @@ export default function ProfilePage() {
               isShippingAddress={isShippingAddress}
               isBillingAddress={isBillingAddress}
               key={id}
+              onSave={handleSaveAddress}
             />
           )
         )}
