@@ -7,7 +7,7 @@ import { getProducts } from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { FilterFields, SortingTypes } from '../../types';
-import { priceFilter, sortButtons } from '../../utils/constants';
+import { lengthFilter, priceFilter, sortButtons } from '../../utils/constants';
 
 export default function CatalogPage() {
   const location = useLocation();
@@ -18,22 +18,25 @@ export default function CatalogPage() {
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
 
+  const toogleSettings = (toogleSort: boolean, toogleFilter: boolean) => {
+    setSort(toogleSort);
+    setFilter(toogleFilter);
+  };
+
   useEffect(() => {
+    toogleSettings(false, false);
     getProducts(location.pathname).then((value: ProductProjection[]) => {
       sessionStorage.removeItem('price');
+      sessionStorage.removeItem('page');
       sessionStorage.removeItem('sort');
       if (value.length) setData(value);
       else navigate('not-found');
     });
   }, [location, navigate]);
 
-  const toogleSettings = (toogleSort: boolean, toogleFilter: boolean) => {
-    setSort(toogleSort);
-    setFilter(toogleFilter);
-  };
-
   const generateFilterString = (): string[] => [
     sessionStorage.getItem('price') ?? '',
+    sessionStorage.getItem('page') ?? '',
   ];
 
   const generateSortingString = (): string =>
@@ -63,6 +66,15 @@ export default function CatalogPage() {
     } else {
       sessionStorage.removeItem('price');
     }
+    const len = filterData.length.split(' ');
+    if (len.length === 5) {
+      sessionStorage.setItem(
+        'page',
+        `variants.attributes.len:range (${len[1]} to ${len[3]})`
+      );
+    } else {
+      sessionStorage.removeItem('page');
+    }
     await changeData();
   };
 
@@ -85,12 +97,12 @@ export default function CatalogPage() {
           <input
             type="button"
             className="catalog-button catalog-toogle-filter"
-            onClick={() => toogleSettings(false, true)}
+            onClick={() => toogleSettings(false, !isFilter)}
           />
           <input
             type="button"
             className="catalog-button catalog-toogle-sort"
-            onClick={() => toogleSettings(true, false)}
+            onClick={() => toogleSettings(!isSort, false)}
           />
         </div>
       </div>
@@ -101,7 +113,14 @@ export default function CatalogPage() {
         <form id="filter-form" onSubmit={handleSubmit(filter)}>
           <select {...register('price')}>
             {priceFilter.map((x: string) => (
-              <option key={`catalog-filtering-${x.split(' ').join()}`}>
+              <option key={`catalog-filtering-price-${x.split(' ').join()}`}>
+                {x}
+              </option>
+            ))}
+          </select>
+          <select {...register('length')}>
+            {lengthFilter.map((x: string) => (
+              <option key={`catalog-filtering-length-${x.split(' ').join()}`}>
                 {x}
               </option>
             ))}
@@ -123,13 +142,17 @@ export default function CatalogPage() {
           />
         ))}
       </div>
-      <div className="catalog_flex">
-        {data?.map((item) => (
-          <li key={item.id}>
-            <CatalogItem product={item} />
-          </li>
-        ))}
-      </div>
+      {data?.length ? (
+        <div className="catalog_flex">
+          {data?.map((item) => (
+            <li key={item.id}>
+              <CatalogItem product={item} />
+            </li>
+          ))}
+        </div>
+      ) : (
+        <div className="catalog-error">There are no matching products</div>
+      )}
     </div>
   );
 }

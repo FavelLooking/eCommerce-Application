@@ -127,3 +127,11 @@ export const priceFilter = [
   'from 50 to 100 €',
   'from 100 to 200 €',
 ];
+
+export const lengthFilter = [
+  'any length',
+  'from 0 to 40 pages',
+  'from 40 to 100 pages',
+  'from 100 to 300 pages',
+  'from 300 to 1000 pages',
+];
