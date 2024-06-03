@@ -18,6 +18,7 @@ export default function HeaderLink(props: Partial<HeaderLinkProps>) {
         to={path || '/'}
         className={`header-link ${className}`}
         onClick={onclick}
+        key={`header-link-${text}`}
       >
         {text}
       </NavLink>

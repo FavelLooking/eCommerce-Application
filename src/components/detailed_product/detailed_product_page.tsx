@@ -5,27 +5,32 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './detailed_product_style.scss';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import getInfoAboutProduct from '../../services/getDetailedProductInfo';
-import NotFoundPage from '../not_found/not_found_page';
 import ProductInfo from '../../types/detailed_product_types/fetch_detailed_product_types';
+import { isValidPath } from '../../utils';
 
 function DetailedProductPage() {
   const { productId } = useParams();
   const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
-  const [errorFetch, setErrorFetch] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    getInfoAboutProduct(productId as string)
-      .then((data: ProductInfo) => {
-        setProductInfo(data);
-      })
-      .catch(() => {
-        setErrorFetch(true);
-      });
-  }, [productId]);
+    if (!isValidPath(location.pathname)) {
+      navigate('not-found');
+    } else {
+      getInfoAboutProduct(productId as string)
+        .then((data: ProductInfo) => {
+          setProductInfo(data);
+        })
+        .catch(() => {
+          navigate('not-found');
+        });
+    }
+  }, [location.pathname, navigate, productId]);
 
   useEffect(() => {
     if (productInfo) {
@@ -72,14 +77,6 @@ function DetailedProductPage() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  if (errorFetch) {
-    return (
-      <div className="detailde-product-wrapper">
-        <NotFoundPage />;
-      </div>
-    );
-  }
 
   const productPrice = () => {
     if (!productInfo?.productPrice) {

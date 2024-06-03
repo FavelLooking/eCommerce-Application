@@ -158,3 +158,32 @@
 .catalog-toogle-sort {
   background-image: url('https://drive.google.com/thumbnail?id=1CtRTizCp5-UTDd0WPUmeSvNsI_c0eAhj');
 }
+
+.catalog-search {
+  display: block;
+  width: 100px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #48304d;
+  &:focus {
+    border-bottom: 1px solid #f865b0;
+  }
+  &:hover {
+    cursor: text;
+  }
+}
+
+.catalog-filtering {
+  display: flex;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.catalog-error {
+  width: fit-content;
+  color: #48304d;
+  align-self: center;
+}
