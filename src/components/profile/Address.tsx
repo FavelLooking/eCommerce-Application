@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Toastify from 'toastify-js';
 import './profile.scss';
 import AddressProps from '../../interfaces/Address';
 import validationInput from '../../utils/registration_form_utils/registration_form_validation_regex';
@@ -6,9 +7,12 @@ import {
   streetPatternRegistration,
   cityPatternRegistration,
 } from '../../utils/registration_form_utils/registration_form_regex';
+import CustomerService from '../../services/customerService';
+import AuthService from '../../services/authService';
 
 interface AddressInformationProps extends AddressProps {
   onSave: (updatedValues: AddressProps) => void;
+  onDelete: (id: string) => void;
   id: string | undefined;
 }
 
@@ -23,6 +27,7 @@ function AddressComponent({
   isShippingAddress,
   isBillingAddress,
   onSave,
+  onDelete,
 }: AddressInformationProps): JSX.Element {
   const [isEditing, setIsEditing] = useState(false);
   const [editedAddress, setEditedAddress] = useState({
@@ -49,6 +54,40 @@ function AddressComponent({
 
   const [streetValid, setIsStreetValid] = useState(true);
   const [cityValid, setCityValid] = useState(true);
+  const [isDefaultShipping, setIsDefaultShipping] = useState(() =>
+    isDefaultShippingAddress(id)
+  );
+  const [isDefaultBilling, setIsDefaultBilling] = useState(() =>
+    isDefaultBillingAddress(id)
+  );
+
+  const handleBillingChange = () => {
+    if (isDefaultBilling) {
+      CustomerService.setBillingAddress();
+    } else {
+      CustomerService.setBillingAddress(id);
+    }
+    setIsDefaultBilling((prevState) => !prevState);
+  };
+
+  const handleShippingChange = () => {
+    if (isDefaultBilling) {
+      CustomerService.setShippingAddress();
+    } else {
+      CustomerService.setShippingAddress(id);
+    }
+    setIsDefaultShipping((prevState) => !prevState);
+  };
+
+  const showToast = (text: string) => {
+    Toastify({
+      text,
+      className: 'info',
+      style: {
+        background: 'linear-gradient(to right, #00b09b, #96c93d)',
+      },
+    }).showToast();
+  };
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -58,8 +97,59 @@ function AddressComponent({
     setIsEditing(false);
   };
 
-  const handleSaveAddress = () => {
-    onSave(editedAddress);
+  const handleErrors = () => {
+    const errorMessage = AuthService.getFromLocalStorage('ErrorMessage');
+    if (errorMessage) {
+      showToast(errorMessage);
+    }
+    AuthService.removeFromLocalStorage('ErrorMessage');
+  };
+
+  const handleDelete = async () => {
+    try {
+      await CustomerService.deleteAddress(id);
+      onDelete(id);
+      showToast('Address was deleted');
+    } catch (error) {
+      handleErrors();
+    }
+  };
+
+  const handleAddAddress = async () => {
+    try {
+      if ((editedAddress.streetName, editedAddress.city)) {
+        await CustomerService.addUserAddress(
+          editedAddress.streetName as string,
+          editedAddress.country,
+          editedAddress.city,
+          editedAddress.postalCode as string
+        );
+      }
+      showToast('New address was added (but please refresh)');
+    } catch (error) {
+      handleErrors();
+    }
+
+    setIsEditing(false);
+  };
+
+  const handleSaveAddress = async () => {
+    try {
+      onSave(editedAddress);
+      if ((editedAddress.streetName, editedAddress.city)) {
+        CustomerService.updateUserAddress(
+          editedAddress.id,
+          editedAddress.streetName as string,
+          editedAddress.country,
+          editedAddress.city,
+          editedAddress.postalCode as string
+        );
+      }
+      showToast('Address was updated');
+    } catch (error) {
+      handleErrors();
+    }
+
     setIsEditing(false);
   };
 
@@ -167,11 +257,28 @@ function AddressComponent({
               onChange={handleChange}
             />
           </div>
-          <button type="button" className="button" onClick={handleSaveAddress}>
+          <button
+            type="button"
+            className="button-address"
+            onClick={handleSaveAddress}
+            disabled={!streetValid || !cityValid}
+          >
             Save
           </button>
-          <button type="button" className="button" onClick={handleCancel}>
+          <button
+            type="button"
+            className="button-address"
+            onClick={handleCancel}
+          >
             Cancel
+          </button>
+          <button
+            type="button"
+            className="button-address"
+            onClick={handleAddAddress}
+            disabled={!streetValid || !cityValid}
+          >
+            Add new
           </button>
         </div>
       ) : (
@@ -188,9 +295,38 @@ function AddressComponent({
           <span className="address-information-line">
             <span className="label">Postal code:</span> {postalCode}
           </span>
-          <button type="button" className="button" onClick={handleEdit}>
-            Edit
-          </button>
+          <div className="button-container">
+            <button
+              type="button"
+              className="button-address"
+              onClick={handleEdit}
+            >
+              Edit
+            </button>
+            <button
+              type="button"
+              className="button-address"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+            <div className="radio-container">
+              <input
+                type="checkbox"
+                className="checkbox"
+                checked={isDefaultBilling}
+                onChange={handleBillingChange}
+              />{' '}
+              Default Billing
+              <input
+                type="checkbox"
+                className="checkbox"
+                checked={isDefaultShipping}
+                onChange={handleShippingChange}
+              />{' '}
+              Default Shipping
+            </div>
+          </div>
         </>
       )}
     </div>

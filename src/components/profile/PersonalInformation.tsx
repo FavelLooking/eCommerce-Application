@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Toastify from 'toastify-js';
 import './profile.scss';
 import CustomerDetails from '../../interfaces/personalInformation';
 import validationInput from '../../utils/registration_form_utils/registration_form_validation_regex';
@@ -7,6 +8,8 @@ import {
   firstNamePatternRegistration,
   lastNamePatternRegistration,
 } from '../../utils/registration_form_utils/registration_form_regex';
+import CustomerService from '../../services/customerService';
+import AuthService from '../../services/authService';
 
 interface PersonalInformationProps extends CustomerDetails {
   onSave: (updatedValues: CustomerDetails) => void;
@@ -19,8 +22,32 @@ function PersonalInformation({
   email,
   onSave,
 }: PersonalInformationProps): JSX.Element {
+  const showToast = (text: string) => {
+    Toastify({
+      text,
+      className: 'info',
+      style: {
+        background: 'linear-gradient(to right, #00b09b, #96c93d)',
+      },
+    }).showToast();
+  };
+
+  const handleErrors = () => {
+    const errorMessage = AuthService.getFromLocalStorage('ErrorMessage');
+    if (errorMessage) {
+      showToast(errorMessage);
+    }
+    AuthService.removeFromLocalStorage('ErrorMessage');
+  };
+
   const [editing, setEditing] = useState(false);
   const [editedValues, setEditedValues] = useState({
+    firstName,
+    lastName,
+    dateOfBirth,
+    email,
+  });
+  const [initialValues, setInitialValues] = useState({
     firstName,
     lastName,
     dateOfBirth,
@@ -32,6 +59,7 @@ function PersonalInformation({
   const [birthDateValid, setBirthDateValid] = useState(true);
 
   const handleEditClick = () => {
+    setEditedValues(initialValues);
     setEditing(true);
   };
 
@@ -62,9 +90,23 @@ function PersonalInformation({
     }
   };
 
-  const handleSaveClick = () => {
-    onSave(editedValues);
-    setEditing(false);
+  const handleSaveClick = async () => {
+    try {
+      if (editedValues.email)
+        await CustomerService.updateUserInfo(
+          editedValues.email,
+          editedValues.firstName,
+          editedValues.lastName,
+          editedValues.dateOfBirth
+        );
+      onSave(editedValues);
+      setEditing(false);
+      setInitialValues(editedValues);
+      showToast('User details were changed successfully');
+    } catch (error) {
+      handleErrors();
+      setEditing(false);
+    }
   };
 
   const handleCancel = () => {
@@ -84,7 +126,7 @@ function PersonalInformation({
             onChange={handleChange}
           />
           {!firstNameValid && (
-            <div className="registration-error">
+            <div className="registration-error error-personal">
               {firstNamePatternRegistration.error}
             </div>
           )}
@@ -136,13 +178,13 @@ function PersonalInformation({
         </div>
         <button
           type="button"
-          className="button"
+          className="button-address"
           onClick={handleSaveClick}
           disabled={!emailValid || !firstNameValid || !lastNameValid}
         >
           Save
         </button>
-        <button type="button" className="button" onClick={handleCancel}>
+        <button type="button" className="button-address" onClick={handleCancel}>
           Cancel
         </button>
       </div>
@@ -163,7 +205,11 @@ function PersonalInformation({
       <div className="personal-information-line">
         <span className="label">Email:</span> {email}
       </div>
-      <button type="button" className="button" onClick={handleEditClick}>
+      <button
+        type="button"
+        className="button-address"
+        onClick={handleEditClick}
+      >
         Edit
       </button>
     </div>

@@ -17,6 +17,7 @@
 
 .personal-information,
 .address-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
@@ -36,6 +37,7 @@
 }
 
 .address-container {
+  max-width: 200px;
   min-width: 170px;
   padding: auto 40px;
   position: relative;
@@ -117,11 +119,12 @@
   height: 100vh;
 }
 
-.button {
+.button-address {
+  min-width: 90px;
   height: 2rem;
   border: 1px solid #48304d;
   border-radius: 30px;
-  font-size: 1.5rem;
+  font-size: 1rem;
   background-color: white;
   margin-top: 1rem;
   margin-right: 0.5rem;
@@ -131,14 +134,9 @@
   }
 }
 
-input {
-  max-width: fit-content;
-}
-
 .input-field {
   max-width: 9rem;
   width: max-content;
-  position: relative;
 }
 
 .input-address {
@@ -149,6 +147,19 @@ input {
   position: absolute;
   top: 100%;
   left: 0;
-  font-size: small;
+  font-size: x-small;
   max-width: 170px;
+}
+
+.registration-error.error-personal {
+  max-width: 300px;
+}
+
+// .button-container {
+//   display: flex;
+// }
+
+.radio-container {
+  font-size: x-small;
+  display: block;
 }

@@ -53,6 +53,19 @@ export default function ProfilePage() {
     });
   };
 
+  const handleDelete = (id: string) => {
+    setCustomerDetails((prevDetails) => {
+      if (!prevDetails) return null;
+      const updatedAddresses = prevDetails.addresses.filter(
+        (address) => address.id !== id
+      );
+      return {
+        ...prevDetails,
+        addresses: updatedAddresses,
+      };
+    });
+  };
+
   if (!customerDetails) {
     return <div className="loading">Loading...</div>;
   }
@@ -95,6 +108,7 @@ export default function ProfilePage() {
               isBillingAddress={isBillingAddress}
               key={id}
               onSave={handleSaveAddress}
+              onDelete={handleDelete}
             />
           )
         )}
