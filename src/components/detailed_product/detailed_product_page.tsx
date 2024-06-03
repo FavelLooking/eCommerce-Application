@@ -12,7 +12,7 @@ import ProductInfo from '../../types/detailed_product_types/fetch_detailed_produ
 function DetailedProductPage() {
   const { productId } = useParams();
   const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
-  const [errorFetch, setErrorFetch] = useState(false);
+  // const [errorFetch, setErrorFetch] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
   const navigate = useNavigate();
@@ -23,9 +23,10 @@ function DetailedProductPage() {
         setProductInfo(data);
       })
       .catch(() => {
-        setErrorFetch(true);
+        // setErrorFetch(true);
+        navigate('not-found');
       });
-  }, [productId]);
+  }, [navigate, productId]);
 
   useEffect(() => {
     if (productInfo) {
@@ -73,9 +74,9 @@ function DetailedProductPage() {
     setIsModalOpen(false);
   };
 
-  if (errorFetch) {
-    navigate('not-found');
-  }
+  // if (errorFetch) {
+  //   navigate('not-found');
+  // }
 
   const productPrice = () => {
     if (!productInfo?.productPrice) {
