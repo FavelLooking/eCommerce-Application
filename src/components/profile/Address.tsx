@@ -283,8 +283,8 @@ function AddressComponent({
           </div>
           {!postalCodeValid && (
             <div className="registration-error-address">
-              must follow the format for the {editedAddress.postalCode} postal
-              code for example: &apos;
+              must follow the format for the {editedAddress.country} postal code
+              for example: &apos;
               {examplePostalCode[editedAddress.country as CountryType]}
               &apos;
             </div>
