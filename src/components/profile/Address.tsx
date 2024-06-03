@@ -78,10 +78,10 @@ function AddressComponent({
   const handleBillingChange = () => {
     if (isDefaultBilling) {
       CustomerService.setBillingAddress();
-      showToast('Default billing address was unselected');
+      showToast('Default billing address was unselected (please refresh page)');
     } else {
       CustomerService.setBillingAddress(id);
-      showToast('Default billing address was selected');
+      showToast('Default billing address was selected (please refresh page)');
     }
     setIsDefaultBilling((prevState) => !prevState);
   };
@@ -89,10 +89,12 @@ function AddressComponent({
   const handleShippingChange = () => {
     if (isDefaultShipping) {
       CustomerService.setShippingAddress();
-      showToast('Default shipping address was unselected');
+      showToast(
+        'Default shipping address was unselected (please refresh page)'
+      );
     } else {
       CustomerService.setShippingAddress(id);
-      showToast('Default shipping address was selected');
+      showToast('Default shipping address was selected (please refresh page)');
     }
     setIsDefaultShipping((prevState) => !prevState);
   };
@@ -134,7 +136,7 @@ function AddressComponent({
         );
         onSave(editedAddress);
       }
-      showToast('New address was added (but please refresh)');
+      showToast('New address was added ( but please refresh page)');
     } catch (error) {
       handleErrors();
     }
