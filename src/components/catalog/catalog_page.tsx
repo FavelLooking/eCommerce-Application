@@ -3,10 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
-import {
-  getProducts,
-  sortProducts,
-} from '../../services/productService';
+import { getProducts, searchProducts } from '../../services/productService';
 
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
@@ -28,12 +25,16 @@ export default function CatalogPage() {
     setFilter(toogleFilter);
   };
 
+  const clearUtilsStorage = () => {
+    sessionStorage.removeItem('price');
+    sessionStorage.removeItem('page');
+    sessionStorage.removeItem('sort');
+  };
+
   useEffect(() => {
     toogleSettings(false, false);
     getProducts(location.pathname).then((value: ProductProjection[]) => {
-      sessionStorage.removeItem('price');
-      sessionStorage.removeItem('page');
-      sessionStorage.removeItem('sort');
+      clearUtilsStorage();
       if (value.length) setData(value);
       else navigate('not-found');
     });
@@ -84,13 +85,14 @@ export default function CatalogPage() {
   };
 
   const clearFilters = async () => {
-    sessionStorage.removeItem('price');
-    sessionStorage.removeItem('page');
+    clearUtilsStorage();
     reset();
     await changeData();
   };
 
   const search = async () => {
+    clearUtilsStorage();
+    reset();
     searchProducts(location.pathname, searchValue).then(
       (value: ProductProjection[]) => setData(value)
     );
