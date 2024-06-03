@@ -1,0 +1,110 @@
+.profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 6%;
+  align-items: center;
+}
+
+.addresses {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+.personal-information,
+.address-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 7%;
+  border: 1px solid rgba(0, 0, 0, 0.089);
+  border-radius: 5px;
+  padding: 2.5rem;
+  @media (max-width: 500px) {
+    padding: 1.5rem 40px;
+    margin: 0;
+  }
+  outline: #f11515;
+}
+
+.address-container {
+  padding: auto 80px;
+  position: relative;
+  min-width: 7.5rem;
+  @media (max-width: 500px) {
+    padding: 1.9rem 40px 0.5rem;
+    margin: 0;
+  }
+  @media (max-width: 750px) {
+    padding: 1.9rem 2rem 0.5rem;
+  }
+}
+
+.personal-information-line,
+.address-information-line {
+  font-size: large;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.title {
+  @media (max-width: 500px) {
+    margin: 0.5rem;
+  }
+}
+
+.default-shipping {
+  background-color: #15f1ed3f;
+}
+
+.default-billing {
+  background-color: #fbcaef46;
+}
+
+.address-container::before {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  border: 1px solid #15f1ec;
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+}
+
+.default-billing::before {
+  content: 'default billing';
+  background-color: #15f1ed63;
+}
+
+.default-shipping::before {
+  content: 'default shipping';
+  background-color: #fbcaef;
+}
+.type-billing::after {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  padding: 0.2rem;
+  color: #00000044;
+  content: 'billing';
+}
+
+.type-shipping::after {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  padding: 0.2rem;
+  color: #00000044;
+  content: 'shipping';
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

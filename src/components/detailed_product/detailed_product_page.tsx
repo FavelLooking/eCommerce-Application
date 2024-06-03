@@ -14,6 +14,8 @@ function DetailedProductPage() {
   const { productId } = useParams();
   const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
   const [errorFetch, setErrorFetch] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
 
   useEffect(() => {
     getInfoAboutProduct(productId as string)
@@ -42,6 +44,34 @@ function DetailedProductPage() {
       });
     }
   }, [productInfo]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      // eslint-disable-next-line
+      new Swiper('.swiper-modal', {
+        modules: [Navigation, Pagination],
+        initialSlide: startIndex,
+        direction: 'horizontal',
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+    }
+  }, [isModalOpen, startIndex]);
+
+  const openModal = (index: number) => {
+    setIsModalOpen(true);
+    setStartIndex(index);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   if (errorFetch) {
     return (
@@ -92,6 +122,7 @@ function DetailedProductPage() {
                     className="detailed-product__img"
                     src={image.url}
                     alt={`slide_${index + 1}`}
+                    onClick={() => openModal(index)}
                   />
                 </div>
               ))}
@@ -99,12 +130,35 @@ function DetailedProductPage() {
             <div className="swiper-pagination"> </div>
             <div className="swiper-button-prev"> </div>
             <div className="swiper-button-next"> </div>
-            <div className="swiper-scrollbar"> </div>
           </div>
           <p className="detailed-product__description">
             {productInfo.productDescription}
           </p>
           {productPrice()}
+        </div>
+      )}
+      {isModalOpen && (
+        <div className="modal">
+          <span className="modal-close" onClick={closeModal}>
+            &times;
+          </span>
+          <div className="swiper swiper-modal">
+            <div className="swiper-wrapper">
+              {productInfo?.productImages?.map((image, index) => (
+                // eslint-disable-next-line
+                <div className="swiper-slide" key={index}>
+                  <img
+                    className="modal-content"
+                    src={image.url}
+                    alt={`slide_${index + 1}`}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="swiper-pagination"> </div>
+            <div className="swiper-button-prev"> </div>
+            <div className="swiper-button-next"> </div>
+          </div>
         </div>
       )}
     </div>
