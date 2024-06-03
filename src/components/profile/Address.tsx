@@ -6,9 +6,12 @@ import validationInput from '../../utils/registration_form_utils/registration_fo
 import {
   streetPatternRegistration,
   cityPatternRegistration,
+  postalCodeFormatsRegistration,
+  examplePostalCode,
 } from '../../utils/registration_form_utils/registration_form_regex';
 import CustomerService from '../../services/customerService';
 import AuthService from '../../services/authService';
+import { CountryType } from '../../types/registration_form_types/registration_form_types';
 
 interface AddressInformationProps extends AddressProps {
   onSave: (updatedValues: AddressProps) => void;
@@ -54,30 +57,13 @@ function AddressComponent({
 
   const [streetValid, setIsStreetValid] = useState(true);
   const [cityValid, setCityValid] = useState(true);
+  const [postalCodeValid, setPostalCodeValid] = useState(true);
   const [isDefaultShipping, setIsDefaultShipping] = useState(() =>
     isDefaultShippingAddress(id)
   );
   const [isDefaultBilling, setIsDefaultBilling] = useState(() =>
     isDefaultBillingAddress(id)
   );
-
-  const handleBillingChange = () => {
-    if (isDefaultBilling) {
-      CustomerService.setBillingAddress();
-    } else {
-      CustomerService.setBillingAddress(id);
-    }
-    setIsDefaultBilling((prevState) => !prevState);
-  };
-
-  const handleShippingChange = () => {
-    if (isDefaultBilling) {
-      CustomerService.setShippingAddress();
-    } else {
-      CustomerService.setShippingAddress(id);
-    }
-    setIsDefaultShipping((prevState) => !prevState);
-  };
 
   const showToast = (text: string) => {
     Toastify({
@@ -87,6 +73,28 @@ function AddressComponent({
         background: 'linear-gradient(to right, #00b09b, #96c93d)',
       },
     }).showToast();
+  };
+
+  const handleBillingChange = () => {
+    if (isDefaultBilling) {
+      CustomerService.setBillingAddress();
+      showToast('Default billing address was unselected');
+    } else {
+      CustomerService.setBillingAddress(id);
+      showToast('Default billing address was selected');
+    }
+    setIsDefaultBilling((prevState) => !prevState);
+  };
+
+  const handleShippingChange = () => {
+    if (isDefaultShipping) {
+      CustomerService.setShippingAddress();
+      showToast('Default shipping address was unselected');
+    } else {
+      CustomerService.setShippingAddress(id);
+      showToast('Default shipping address was selected');
+    }
+    setIsDefaultShipping((prevState) => !prevState);
   };
 
   const handleEdit = () => {
@@ -167,13 +175,21 @@ function AddressComponent({
       const isValid = validationInput(cityPatternRegistration.regex, value);
       setCityValid(isValid);
     }
-    // if (name === 'postalCode') {
-    //   const isValid = validationInput(
-    //     postalCodeFormatsRegistration.regex,
-    //     value
-    //   );
-    //   setPostalCodeValid(isValid);
-    // }
+    if (name === 'postalCode') {
+      const countryCode = editedAddress.country;
+      if (
+        countryCode === 'US' ||
+        countryCode === 'CA' ||
+        countryCode === 'RU' ||
+        countryCode === 'GE'
+      ) {
+        const isValid = validationInput(
+          postalCodeFormatsRegistration[countryCode],
+          value
+        );
+        setPostalCodeValid(isValid);
+      }
+    }
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -185,8 +201,15 @@ function AddressComponent({
   };
 
   const getAddressClass = (addressId: string) => {
+    if (
+      isDefaultBillingAddress(addressId) &&
+      isDefaultShippingAddress(addressId)
+    ) {
+      return 'default-billing default-shipping';
+    }
     if (isDefaultShippingAddress(addressId)) return 'default-shipping';
     if (isDefaultBillingAddress(addressId)) return 'default-billing';
+
     return '';
   };
 
@@ -257,11 +280,19 @@ function AddressComponent({
               onChange={handleChange}
             />
           </div>
+          {!postalCodeValid && (
+            <div className="registration-error">
+              must follow the format for the {editedAddress.postalCode} postal
+              code for example: &apos;
+              {examplePostalCode[editedAddress.postalCode as CountryType]}
+              &apos;
+            </div>
+          )}
           <button
             type="button"
             className="button-address"
             onClick={handleSaveAddress}
-            disabled={!streetValid || !cityValid}
+            disabled={!streetValid || !cityValid || !postalCodeValid}
           >
             Save
           </button>
@@ -276,7 +307,7 @@ function AddressComponent({
             type="button"
             className="button-address"
             onClick={handleAddAddress}
-            disabled={!streetValid || !cityValid}
+            disabled={!streetValid || !cityValid || !postalCodeValid}
           >
             Add new
           </button>

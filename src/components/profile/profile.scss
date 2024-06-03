@@ -155,11 +155,13 @@
   max-width: 300px;
 }
 
-// .button-container {
-//   display: flex;
-// }
-
 .radio-container {
   font-size: x-small;
   display: block;
+}
+.default-billing.default-shipping {
+  background-color: #49d83c38;
+}
+.default-billing.default-shipping::before {
+  content: 'default billing / shipping';
 }
