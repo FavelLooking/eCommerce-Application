@@ -6,13 +6,31 @@ class MyTokenCache implements TokenCache {
   constructor() {
     const existingCache = MyTokenCache.getTokenFromLocalStorage();
     if (existingCache) {
-      this.myCache = JSON.parse(existingCache);
+      if (MyTokenCache.isValidJsonString(existingCache)) {
+        this.myCache = JSON.parse(existingCache);
+      } else {
+        MyTokenCache.removeFromLocalStorage();
+        this.myCache = {
+          expirationTime: 0,
+          refreshToken: undefined,
+          token: '',
+        };
+      }
     } else {
       this.myCache = {
         expirationTime: 0,
         refreshToken: undefined,
         token: '',
       };
+    }
+  }
+
+  static isValidJsonString(str: string) {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 
@@ -26,6 +44,10 @@ class MyTokenCache implements TokenCache {
 
   static getTokenFromLocalStorage(): string | null {
     return localStorage.getItem('AccessToken');
+  }
+
+  static removeFromLocalStorage() {
+    localStorage.removeItem('AccessToken');
   }
 
   public set(newCache: TokenStore): void {
