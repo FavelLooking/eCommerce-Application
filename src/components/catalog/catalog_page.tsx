@@ -166,14 +166,16 @@ export default function CatalogPage() {
       </div>
       {data?.length ? (
         <div className="catalog_flex">
-          <li
-            key={item.id}
-            onClick={() =>
-              redirect(item.categories.at(0)?.id as string, item.id, navigate)
-            }
-          >
-            <CatalogItem product={item} />
-          </li>
+          {data?.map((item) => (
+            <li
+              key={item.id}
+              onClick={() =>
+                redirect(item.categories.at(0)?.id as string, item.id, navigate)
+              }
+            >
+              <CatalogItem product={item} />
+            </li>
+          ))}
         </div>
       ) : (
         <div className="catalog-error">There are no matching products</div>
