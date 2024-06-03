@@ -130,8 +130,8 @@ export const priceFilter = [
 
 export const lengthFilter = [
   'any length',
-  'from 0 to 40 pages',
-  'from 40 to 100 pages',
+  'from 0 to 100 pages',
   'from 100 to 300 pages',
-  'from 300 to 1000 pages',
+  'from 300 to 500 pages',
+  'from 500 to 1500 pages',
 ];
