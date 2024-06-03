@@ -21,14 +21,15 @@ function DetailedProductPage() {
   useEffect(() => {
     if (!isValidPath(location.pathname)) {
       navigate('not-found');
+    } else {
+      getInfoAboutProduct(productId as string)
+        .then((data: ProductInfo) => {
+          setProductInfo(data);
+        })
+        .catch(() => {
+          navigate('not-found');
+        });
     }
-    getInfoAboutProduct(productId as string)
-      .then((data: ProductInfo) => {
-        setProductInfo(data);
-      })
-      .catch(() => {
-        navigate('not-found');
-      });
   }, [location.pathname, navigate, productId]);
 
   useEffect(() => {
