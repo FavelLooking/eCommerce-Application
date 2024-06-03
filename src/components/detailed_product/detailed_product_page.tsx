@@ -5,9 +5,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './detailed_product_style.scss';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import getInfoAboutProduct from '../../services/getDetailedProductInfo';
 import ProductInfo from '../../types/detailed_product_types/fetch_detailed_product_types';
+import { isValidPath } from '../../utils';
 
 function DetailedProductPage() {
   const { productId } = useParams();
@@ -15,8 +16,12 @@ function DetailedProductPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    if (!isValidPath(location.pathname)) {
+      navigate('not-found');
+    }
     getInfoAboutProduct(productId as string)
       .then((data: ProductInfo) => {
         setProductInfo(data);
@@ -24,7 +29,7 @@ function DetailedProductPage() {
       .catch(() => {
         navigate('not-found');
       });
-  }, [navigate, productId]);
+  }, [location.pathname, navigate, productId]);
 
   useEffect(() => {
     if (productInfo) {
