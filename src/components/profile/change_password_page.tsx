@@ -40,11 +40,6 @@ export default function ChangePasswordPage() {
     }).showToast();
   };
 
-  const reconnect = (email: string, renew: string) => {
-    AuthService.logoutUser();
-    AuthService.loginUser(email, renew);
-  };
-
   const handleErrors = () => {
     const errorMessage = AuthService.getFromLocalStorage('ErrorMessage');
     if (errorMessage) {
@@ -67,7 +62,7 @@ export default function ChangePasswordPage() {
 
       reset();
       showToast('Password changed successfully');
-      reconnect(email, renew);
+      AuthService.reconnect(email, renew);
     } catch (error) {
       handleErrors();
       reset();

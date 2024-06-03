@@ -127,6 +127,11 @@ class AuthService {
     tokenStore.clear();
   }
 
+  static reconnect = (email: string, renew: string) => {
+    this.logoutUser();
+    this.loginUser(email, renew);
+  };
+
   static saveToLocalStorage(key: string, value: string) {
     localStorage.setItem(key, value);
   }
