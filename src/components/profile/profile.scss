@@ -20,9 +20,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.089);
   border-radius: 5px;
-  padding: 0.3rem 0.8rem;
+  padding: 2rem 0.8rem;
   @media (max-width: 500px) {
     padding: 1.5rem 40px;
     margin: 0;
@@ -32,6 +33,7 @@
 
 .personal-information {
   min-width: 250px;
+  padding: 0.5rem 0.8rem;
 }
 
 .address-container {
@@ -59,9 +61,7 @@
 .label {
   font-weight: bold;
 }
-.title {
-  margin: 0.7rem;
-}
+
 .title {
   @media (max-width: 500px) {
     margin: 0.5rem;
@@ -141,7 +141,7 @@
 }
 
 .input-address {
-  max-width: 4rem;
+  max-width: 5.8rem;
 }
 
 .registration-error-address {
@@ -166,4 +166,8 @@
 }
 .default-billing.default-shipping::before {
   content: 'default billing / shipping';
+}
+
+.button-address:disabled {
+  pointer-events: none;
 }
