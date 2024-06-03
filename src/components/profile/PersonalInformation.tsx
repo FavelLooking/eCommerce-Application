@@ -126,7 +126,7 @@ function PersonalInformation({
             onChange={handleChange}
           />
           {!firstNameValid && (
-            <div className="registration-error error-personal">
+            <div className="registration-error-address error-personal">
               {firstNamePatternRegistration.error}
             </div>
           )}
@@ -141,7 +141,7 @@ function PersonalInformation({
             onChange={handleChange}
           />
           {!lastNameValid && (
-            <div className="registration-error">
+            <div className="registration-error-address">
               {lastNamePatternRegistration.error}
             </div>
           )}
@@ -156,7 +156,7 @@ function PersonalInformation({
             onChange={handleChange}
           />
           {!birthDateValid && (
-            <div className="registration-error">
+            <div className="registration-error-address">
               you should be at least 13 years old to register
             </div>
           )}
@@ -171,7 +171,7 @@ function PersonalInformation({
             onChange={handleChange}
           />
           {!emailValid && (
-            <div className="registration-error">
+            <div className="registration-error-address">
               {emailPatternRegistration.error}
             </div>
           )}

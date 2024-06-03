@@ -132,6 +132,7 @@ function AddressComponent({
           editedAddress.city,
           editedAddress.postalCode as string
         );
+        onSave(editedAddress);
       }
       showToast('New address was added (but please refresh)');
     } catch (error) {
@@ -143,7 +144,6 @@ function AddressComponent({
 
   const handleSaveAddress = async () => {
     try {
-      onSave(editedAddress);
       if ((editedAddress.streetName, editedAddress.city)) {
         CustomerService.updateUserAddress(
           editedAddress.id,
@@ -152,6 +152,7 @@ function AddressComponent({
           editedAddress.city,
           editedAddress.postalCode as string
         );
+        onSave(editedAddress);
       }
       showToast('Address was updated');
     } catch (error) {
@@ -236,7 +237,7 @@ function AddressComponent({
               onChange={handleChange}
             />
             {!streetValid && (
-              <div className="registration-error">
+              <div className="registration-error-address">
                 {streetPatternRegistration.error}
               </div>
             )}
@@ -266,7 +267,7 @@ function AddressComponent({
             />
           </div>
           {!cityValid && (
-            <div className="registration-error">
+            <div className="registration-error-address">
               {cityPatternRegistration.error}
             </div>
           )}
@@ -281,10 +282,10 @@ function AddressComponent({
             />
           </div>
           {!postalCodeValid && (
-            <div className="registration-error">
+            <div className="registration-error-address">
               must follow the format for the {editedAddress.postalCode} postal
               code for example: &apos;
-              {examplePostalCode[editedAddress.postalCode as CountryType]}
+              {examplePostalCode[editedAddress.country as CountryType]}
               &apos;
             </div>
           )}
