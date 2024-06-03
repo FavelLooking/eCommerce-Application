@@ -7,6 +7,7 @@ import { getProducts, searchProducts } from '../../services/productService';
 
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
+import redirect from '../../services/redirectService';
 import { FilterFields, SortingTypes } from '../../types';
 import { lengthFilter, priceFilter, sortButtons } from '../../utils/constants';
 
@@ -165,11 +166,14 @@ export default function CatalogPage() {
       </div>
       {data?.length ? (
         <div className="catalog_flex">
-          {data?.map((item) => (
-            <li key={item.id}>
-              <CatalogItem product={item} />
-            </li>
-          ))}
+          <li
+            key={item.id}
+            onClick={() =>
+              redirect(item.categories.at(0)?.id as string, item.id, navigate)
+            }
+          >
+            <CatalogItem product={item} />
+          </li>
         </div>
       ) : (
         <div className="catalog-error">There are no matching products</div>

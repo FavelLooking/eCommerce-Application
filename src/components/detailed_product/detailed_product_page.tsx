@@ -5,9 +5,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './detailed_product_style.scss';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import getInfoAboutProduct from '../../services/getDetailedProductInfo';
-import NotFoundPage from '../not_found/not_found_page';
 import ProductInfo from '../../types/detailed_product_types/fetch_detailed_product_types';
 
 function DetailedProductPage() {
@@ -16,6 +15,7 @@ function DetailedProductPage() {
   const [errorFetch, setErrorFetch] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getInfoAboutProduct(productId as string)
@@ -74,11 +74,7 @@ function DetailedProductPage() {
   };
 
   if (errorFetch) {
-    return (
-      <div className="detailde-product-wrapper">
-        <NotFoundPage />;
-      </div>
-    );
+    navigate('not-found');
   }
 
   const productPrice = () => {
