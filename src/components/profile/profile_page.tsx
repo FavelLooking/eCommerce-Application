@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './profile.scss';
-import { Customer } from '@commercetools/platform-sdk';
+import { Address, Customer } from '@commercetools/platform-sdk';
 import CustomerService from '../../services/customerService';
 import PersonalInformation from './PersonalInformation';
 import AddressComponent from './Address';
@@ -23,6 +23,48 @@ export default function ProfilePage() {
 
     fetchDetails();
   }, [navigate]);
+
+  const handleSave = (updatedDetails: Partial<Customer>) => {
+    setCustomerDetails((prevDetails) => {
+      if (!prevDetails) return null;
+      return {
+        ...prevDetails,
+        ...updatedDetails,
+      };
+    });
+  };
+
+  const handleSaveAddress = (updatedAddress: Partial<Address>) => {
+    setCustomerDetails((prevDetails) => {
+      if (!prevDetails) return null;
+      const updatedAddresses = prevDetails.addresses.map((address) => {
+        if (address.id === updatedAddress.id) {
+          return {
+            ...address,
+            ...updatedAddress,
+          };
+        }
+        return address;
+      });
+      return {
+        ...prevDetails,
+        addresses: updatedAddresses,
+      };
+    });
+  };
+
+  const handleDelete = (id: string) => {
+    setCustomerDetails((prevDetails) => {
+      if (!prevDetails) return null;
+      const updatedAddresses = prevDetails.addresses.filter(
+        (address) => address.id !== id
+      );
+      return {
+        ...prevDetails,
+        addresses: updatedAddresses,
+      };
+    });
+  };
 
   if (!customerDetails) {
     return <div className="loading">Loading...</div>;
@@ -47,6 +89,8 @@ export default function ProfilePage() {
         firstName={customerDetails.firstName}
         lastName={customerDetails.lastName}
         dateOfBirth={customerDetails.dateOfBirth}
+        email={customerDetails.email}
+        onSave={handleSave}
       />
       <h1 className="title">Addresses:</h1>
       <div className="addresses">
@@ -63,6 +107,8 @@ export default function ProfilePage() {
               isShippingAddress={isShippingAddress}
               isBillingAddress={isBillingAddress}
               key={id}
+              onSave={handleSaveAddress}
+              onDelete={handleDelete}
             />
           )
         )}
