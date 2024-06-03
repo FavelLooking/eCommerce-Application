@@ -22,9 +22,9 @@
   height: auto;
   cursor: zoom-in;
 
-  @media (max-width: 500px) {
-    width: 100px;
-    height: 150px;
+  @media (max-width: 700px) {
+    max-width: 300px;
+    max-height: 450px;
   }
 }
 
@@ -54,21 +54,21 @@
 }
 
 .swiper {
-  max-width: 900px;
+  max-width: 90vw;
   height: 600px;
 
-  @media (max-width: 500px) {
-    max-width: 670px;
+  @media (max-width: 700px) {
+    width: 100vw;
     height: 500px;
   }
 }
 
 .modal .swiper {
-  max-width: 1050px;
+  width: 1050px;
   height: 800px;
 
   @media (max-width: 500px) {
-    max-width: 670px;
+    width: 670px;
     height: 500px;
   }
 }
