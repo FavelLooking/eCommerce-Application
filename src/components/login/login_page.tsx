@@ -17,7 +17,7 @@ import {
   textUpperPattern,
   storageLoginError,
 } from '../../utils/constants';
-import validateInput from '../../utils/validation';
+import { validateInput } from '../../utils';
 import { useAuth } from '../../hooks/useAuth';
 
 export default function LoginPage() {

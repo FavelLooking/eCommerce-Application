@@ -1,0 +1,134 @@
+.detailde-product-wrapper {
+  height: 100vh;
+}
+
+.detailde-product,
+.detailde-product-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detailed-product__name {
+  color: #f865b0;
+  text-align: center;
+}
+
+.detailed-product__img {
+  display: block;
+  max-width: 600px;
+  max-height: 500px;
+  width: auto;
+  height: auto;
+  cursor: zoom-in;
+
+  @media (max-width: 700px) {
+    max-width: 300px;
+    max-height: 450px;
+  }
+}
+
+.detailed-product__description {
+  max-width: 700px;
+  padding: 5px;
+  color: #48304d;
+}
+
+.detailed-product__price-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  gap: 20px;
+}
+
+.detailed-product__price-discount {
+  color: #48304d;
+  text-decoration: line-through;
+  font-size: 1.5rem;
+}
+
+.detailed-product__price {
+  color: #f865b0;
+  width: fit-content;
+  font-size: 1.7rem;
+}
+
+.swiper {
+  max-width: 90vw;
+  height: 600px;
+
+  @media (max-width: 700px) {
+    width: 100vw;
+    height: 500px;
+  }
+}
+
+.modal .swiper {
+  width: 1050px;
+  height: 800px;
+
+  @media (max-width: 500px) {
+    width: 670px;
+    height: 500px;
+  }
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #f865b0;
+  transition: all 0.5s linear;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  opacity: 1;
+  background-color: #f865b0;
+}
+
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  max-width: 95%;
+  max-height: 95%;
+  margin: auto;
+  display: block;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 100000;
+}
+
+.modal .modal-content {
+  padding-bottom: 40px;
+}

@@ -1,0 +1,174 @@
+.profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1%;
+  align-items: center;
+}
+
+.addresses {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  @media (max-width: 500px) {
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+}
+
+.personal-information,
+.address-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.089);
+  border-radius: 5px;
+  padding: 2rem 0.8rem;
+  @media (max-width: 500px) {
+    padding: 1.5rem 40px;
+    margin: 0;
+  }
+  outline: #f11515;
+}
+
+.personal-information {
+  min-width: 250px;
+  padding: 0.5rem 0.8rem;
+}
+
+.address-container {
+  max-width: 200px;
+  min-width: 170px;
+  padding: auto 40px;
+  position: relative;
+  @media (max-width: 500px) {
+    padding: 1.9rem 2rem 0.5rem;
+    margin: 0;
+  }
+  @media (max-width: 750px) {
+    padding: 1.9rem 0.4rem 0.5rem;
+  }
+}
+
+.personal-information-line,
+.address-information-line {
+  font-size: large;
+  display: block;
+  justify-content: space-between;
+  min-height: 45px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.title {
+  @media (max-width: 500px) {
+    margin: 0.5rem;
+  }
+}
+
+.default-shipping {
+  background-color: #15f1ed3f;
+}
+
+.default-billing {
+  background-color: #fbcaef46;
+}
+
+.address-container::before {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  border: 1px solid #15f1ec;
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+  font-size: small;
+}
+
+.default-billing::before {
+  content: 'default billing';
+  background-color: #15f1ed63;
+}
+
+.default-shipping::before {
+  content: 'default shipping';
+  background-color: #fbcaef;
+}
+.type-billing::after {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  padding: 0.2rem;
+  color: #00000044;
+  content: 'billing';
+}
+
+.type-shipping::after {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  padding: 0.2rem;
+  color: #00000044;
+  content: 'shipping';
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.button-address {
+  min-width: 90px;
+  height: 2rem;
+  border: 1px solid #48304d;
+  border-radius: 30px;
+  font-size: 1rem;
+  background-color: white;
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+  &:hover {
+    cursor: pointer;
+    background-color: #fbcaef;
+  }
+}
+
+.input-field {
+  max-width: 9rem;
+  width: max-content;
+}
+
+.input-address {
+  max-width: 5.8rem;
+}
+
+.registration-error-address {
+  font-size: x-small;
+  max-width: 170px;
+  color: red;
+  &::before {
+    content: '💥';
+  }
+}
+
+.registration-error.error-personal {
+  max-width: 300px;
+}
+
+.radio-container {
+  font-size: x-small;
+  display: block;
+}
+.default-billing.default-shipping {
+  background-color: #49d83c38;
+}
+.default-billing.default-shipping::before {
+  content: 'default billing / shipping';
+}
+
+.button-address:disabled {
+  pointer-events: none;
+}

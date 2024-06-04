@@ -4,6 +4,7 @@ import {
   Navigate,
   Outlet,
   RouterProvider,
+  useLocation,
 } from 'react-router-dom';
 import LoginPage from './components/login/login_page';
 import RegisterPage from './components/registration_form/registration_form_render';
@@ -11,6 +12,10 @@ import Header from './components/header';
 import MainPage from './components/main/main_page';
 import NotFoundPage from './components/not_found/not_found_page';
 import { AuthProvider, useAuth } from './hooks/useAuth';
+import ProfilePage from './components/profile/profile_page';
+import CatalogPage from './components/catalog/catalog_page';
+import DetailedProductPage from './components/detailed_product/detailed_product_page';
+import ChangePasswordPage from './components/profile/change_password_page';
 
 function Root() {
   return (
@@ -25,7 +30,16 @@ function Root() {
 
 function ProtectedRoute({ children }: { children: JSX.Element }): JSX.Element {
   const { user } = useAuth();
-  if (user) {
+  const location = useLocation();
+
+  if (
+    (!user && location.pathname === '/profile') ||
+    (!user && location.pathname === '/profile/change-password')
+  ) {
+    return <Navigate to="/login" />;
+  }
+
+  if (user && location.pathname === '/login') {
     return <Navigate to="/" />;
   }
   return children;
@@ -52,6 +66,38 @@ const router = createBrowserRouter([
       {
         path: 'register',
         element: <RegisterPage />,
+      },
+      {
+        path: 'catalog',
+        element: <CatalogPage />,
+      },
+      {
+        path: 'catalog/:category',
+        element: <CatalogPage />,
+      },
+      {
+        path: 'catalog/:category/:subcategory',
+        element: <CatalogPage />,
+      },
+      {
+        path: 'catalog/:category/:subcategory/:productId',
+        element: <DetailedProductPage />,
+      },
+      {
+        path: 'profile/change-password',
+        element: (
+          <ProtectedRoute>
+            <ChangePasswordPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'profile',
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
