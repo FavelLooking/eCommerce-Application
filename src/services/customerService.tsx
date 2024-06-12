@@ -1,7 +1,7 @@
 import ClientFactory from './clientFactory';
 import AuthService from './authService';
 
-class CustomerService {
+export default class CustomerService {
   static getCustomersDetails = async () => {
     const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
     return apiRoot.me().get().execute();
@@ -35,7 +35,6 @@ class CustomerService {
     }
     return undefined;
   };
-}
 
   static updateUserInfo = async (
     email: string,
@@ -232,4 +231,3 @@ class CustomerService {
     return undefined;
   };
 }
-export default CustomerService;
