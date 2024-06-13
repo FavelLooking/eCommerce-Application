@@ -9,14 +9,13 @@ import {
 } from '../../services/productService';
 import redirect from '../../services/redirectService';
 import CreateCart from '../../utils/cart_utils/create_cart';
+import CartService from '../../services/cartService';
 
-export default function CatalogItem(
-  props: { product: ProductProjection },
-  cartProductId?: string[]
-) {
+export default function CatalogItem(props: { product: ProductProjection }) {
   const { product } = props;
   const navigate = useNavigate();
-  console.log(cartProductId);
+
+  console.log('catalog item cart id', CartService.cartProductid);
 
   const getPrice = (): JSX.Element => {
     const [originalPrice, discountPrice] = getProductPrice(product);

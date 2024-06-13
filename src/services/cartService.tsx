@@ -2,6 +2,8 @@ import AuthService from './authService';
 import ClientFactory from './clientFactory';
 
 export default class CartService {
+  static cartProductid: string[];
+
   static async createCart() {
     try {
       const apiRoot = await ClientFactory.createApiRoot(ClientFactory.flowType);
@@ -74,7 +76,15 @@ export default class CartService {
         .withId({ ID: idCart })
         .get()
         .execute();
-      return cartInfo;
+
+      const cartDataArr = cartInfo?.body.lineItems;
+      const cartDataArrId: string[] = [];
+      if (cartDataArr) {
+        for (let i = 0; i < cartDataArr.length; i += 1) {
+          cartDataArrId.push(cartDataArr[i].productId);
+        }
+      }
+      this.cartProductid = cartDataArrId;
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       AuthService.saveToLocalStorage('cartError', errorMessage);
