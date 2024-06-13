@@ -10,9 +10,13 @@ import {
 import redirect from '../../services/redirectService';
 import CreateCart from '../../utils/cart_utils/create_cart';
 
-export default function CatalogItem(props: { product: ProductProjection }) {
+export default function CatalogItem(
+  props: { product: ProductProjection },
+  cartProductId?: string[]
+) {
   const { product } = props;
   const navigate = useNavigate();
+  console.log(cartProductId);
 
   const getPrice = (): JSX.Element => {
     const [originalPrice, discountPrice] = getProductPrice(product);

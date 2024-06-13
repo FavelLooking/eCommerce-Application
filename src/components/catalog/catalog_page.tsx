@@ -8,6 +8,8 @@ import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { FilterFields, SortingTypes } from '../../types';
 import { lengthFilter, priceFilter, sortButtons } from '../../utils/constants';
+import checkCart from '../../utils/cart_utils/check_cart';
+import AuthService from '../../services/authService';
 
 export default function CatalogPage() {
   const location = useLocation();
@@ -16,6 +18,7 @@ export default function CatalogPage() {
   const [isSort, setSort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isFilter, setFilter] = useState(false);
+  const [cartData, setCartData] = useState<string[] | null>(null);
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
 
@@ -96,6 +99,17 @@ export default function CatalogPage() {
       (value: ProductProjection[]) => setData(value)
     );
   };
+
+  useEffect(() => {
+    const fetchCartData = async () => {
+      const cart = await checkCart(
+        AuthService.getFromLocalStorage('cartId') as string
+      );
+      setCartData(cart);
+    };
+    fetchCartData();
+  }, []);
+  console.log('catalog page id', cartData);
 
   return (
     <div className="catalog_wrapper">

@@ -58,10 +58,27 @@ export default class CartService {
         'cartVersion',
         updateResponse.body.version.toString()
       );
-      console.log(updateResponse);
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       AuthService.saveToLocalStorage('cartError', errorMessage);
     }
+  }
+
+  static async getCart(idCart: string) {
+    try {
+      const apiRoot = await ClientFactory.createApiRoot(ClientFactory.flowType);
+
+      const cartInfo = await apiRoot
+        .me()
+        .carts()
+        .withId({ ID: idCart })
+        .get()
+        .execute();
+      return cartInfo;
+    } catch (error: unknown) {
+      const errorMessage = (error as Error).message;
+      AuthService.saveToLocalStorage('cartError', errorMessage);
+    }
+    return undefined;
   }
 }
