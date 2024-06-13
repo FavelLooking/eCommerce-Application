@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function BasketPage() {
+export default function CartPage() {
   return (
     <div>
-      <h1>Basket</h1>
+      <h1>Cart</h1>
     </div>
   );
 }

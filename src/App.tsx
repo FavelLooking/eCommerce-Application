@@ -16,7 +16,7 @@ import ProfilePage from './components/profile/profile_page';
 import CatalogPage from './components/catalog/catalog_page';
 import DetailedProductPage from './components/detailed_product/detailed_product_page';
 import ChangePasswordPage from './components/profile/change_password_page';
-import BasketPage from './components/basket/basket_page';
+import CartPage from './components/cart/cart_page';
 
 function Root() {
   return (
@@ -73,8 +73,8 @@ const router = createBrowserRouter([
         element: <CatalogPage />,
       },
       {
-        path: 'basket',
-        element: <BasketPage />,
+        path: 'cart',
+        element: <CartPage />,
       },
       {
         path: 'catalog/:category',
