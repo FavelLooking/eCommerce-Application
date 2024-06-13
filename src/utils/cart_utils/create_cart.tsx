@@ -1,8 +1,9 @@
 import AuthService from '../../services/authService';
 import CartService from '../../services/cartService';
 
-export default function CreateCart() {
+export default async function CreateCart(item: string) {
   if (!AuthService.getFromLocalStorage('cartId')) {
-    CartService.createCart();
+    await CartService.createCart();
   }
+  await CartService.addItem(item);
 }

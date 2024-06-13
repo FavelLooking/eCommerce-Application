@@ -8,7 +8,7 @@ import {
   getProductPrice,
 } from '../../services/productService';
 import redirect from '../../services/redirectService';
-import CartService from '../../services/cartService';
+import CreateCart from '../../utils/cart_utils/create_cart';
 
 export default function CatalogItem(props: { product: ProductProjection }) {
   const { product } = props;
@@ -60,7 +60,7 @@ export default function CatalogItem(props: { product: ProductProjection }) {
         type="button"
         className="catalog-add"
         onClick={() => {
-          CartService.addItem(product.categories.at(0)?.id as string);
+          CreateCart(product.id);
         }}
       />
     </div>

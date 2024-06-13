@@ -54,7 +54,10 @@ export default class CartService {
           },
         })
         .execute();
-
+      await AuthService.saveToLocalStorage(
+        'cartVersion',
+        updateResponse.body.version.toString()
+      );
       console.log(updateResponse);
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
