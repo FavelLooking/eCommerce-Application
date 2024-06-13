@@ -1,26 +1,28 @@
-// import { storageLoginError } from '../utils/constants';
-// import AuthService from './authService';
-// import ClientFactory from './clientFactory';
+import AuthService from './authService';
+import ClientFactory from './clientFactory';
 
-// class CartService {
-//   static async createCart() {
-//     const apiRoot = ClientFactory.createApiRoot(ClientFactory.flowType);
-//     const cartResponse = await apiRoot
-//       .me()
-//       .carts()
-//       .post({
-//         body: {
-//           currency: 'EUR',
-//         },
-//       })
-//       .execute();
-//     await AuthService.saveToLocalStorage('cartId', cartResponse.body.id);
-//   }
+export default class CartService {
+  static async createCart() {
+    try {
+      const apiRoot = await ClientFactory.createApiRoot(ClientFactory.flowType);
 
-//   catch(error: unknown) {
-//     const errorMessage = (error as Error).message;
-//     ClientFactory.resetClients();
-//     ClientFactory.flowType = 'anonymous';
-//     AuthService.saveToLocalStorage(storageLoginError, errorMessage);
-//   }
-// }
+      const cartResponse = await apiRoot
+        .me()
+        .carts()
+        .post({
+          body: {
+            currency: 'EUR',
+          },
+        })
+        .execute();
+      await AuthService.saveToLocalStorage('cartId', cartResponse.body.id);
+    } catch (error: unknown) {
+      const errorMessage = (error as Error).message;
+      AuthService.saveToLocalStorage('cartError', errorMessage);
+    }
+  }
+
+  static addItem() {
+    console.log('add item');
+  }
+}

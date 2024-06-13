@@ -8,6 +8,7 @@ import {
   getProductPrice,
 } from '../../services/productService';
 import redirect from '../../services/redirectService';
+import CartService from '../../services/cartService';
 
 export default function CatalogItem(props: { product: ProductProjection }) {
   const { product } = props;
@@ -55,7 +56,13 @@ export default function CatalogItem(props: { product: ProductProjection }) {
           {getPrice()}
         </div>
       </div>
-      <input type="button" className="catalog-add" />
+      <input
+        type="button"
+        className="catalog-add"
+        onClick={() => {
+          CartService.addItem();
+        }}
+      />
     </div>
   );
 }

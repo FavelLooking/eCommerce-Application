@@ -8,6 +8,7 @@ import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { FilterFields, SortingTypes } from '../../types';
 import { lengthFilter, priceFilter, sortButtons } from '../../utils/constants';
+import createCart from '../../utils/cart_utils/create_cart';
 
 export default function CatalogPage() {
   const location = useLocation();
@@ -18,6 +19,8 @@ export default function CatalogPage() {
   const [isFilter, setFilter] = useState(false);
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
+
+  createCart();
 
   const toogleSettings = (toogleSort: boolean, toogleFilter: boolean) => {
     setSort(toogleSort);
