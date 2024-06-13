@@ -16,13 +16,49 @@ export default class CartService {
         })
         .execute();
       await AuthService.saveToLocalStorage('cartId', cartResponse.body.id);
+      await AuthService.saveToLocalStorage(
+        'cartVersion',
+        cartResponse.body.version.toString()
+      );
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       AuthService.saveToLocalStorage('cartError', errorMessage);
     }
   }
 
-  static addItem() {
-    console.log('add item');
+  static async addItem(item: string) {
+    const cartId = AuthService.getFromLocalStorage('cartId') as string;
+    const cartVersion = parseInt(
+      AuthService.getFromLocalStorage('cartVersion') as string,
+      10
+    );
+
+    try {
+      const apiRoot = await ClientFactory.createApiRoot(ClientFactory.flowType);
+
+      const updateResponse = await apiRoot
+        .me()
+        .carts()
+        .withId({ ID: cartId })
+        .post({
+          body: {
+            version: cartVersion,
+            actions: [
+              {
+                action: 'addLineItem',
+                productId: item,
+                variantId: 1,
+                quantity: 1,
+              },
+            ],
+          },
+        })
+        .execute();
+
+      console.log(updateResponse);
+    } catch (error: unknown) {
+      const errorMessage = (error as Error).message;
+      AuthService.saveToLocalStorage('cartError', errorMessage);
+    }
   }
 }

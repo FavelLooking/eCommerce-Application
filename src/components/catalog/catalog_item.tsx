@@ -60,7 +60,7 @@ export default function CatalogItem(props: { product: ProductProjection }) {
         type="button"
         className="catalog-add"
         onClick={() => {
-          CartService.addItem();
+          CartService.addItem(product.categories.at(0)?.id as string);
         }}
       />
     </div>
