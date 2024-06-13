@@ -35,6 +35,15 @@
     border-radius: 30px;
     cursor: pointer;
   }
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+.catalog-item-redirect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .catalog-item-image {
@@ -83,7 +92,7 @@
 }
 
 .catalog-add {
-  width: 50px;
+  width: 100px;
   height: 50px;
   margin-left: 10px;
   background: url('https://drive.google.com/thumbnail?id=1mKj3q2JSaW2XCwOqV6jAoQVOa_Zpdvxo')
@@ -92,6 +101,12 @@
   outline: none;
   &:hover {
     cursor: pointer;
+  }
+  @media (max-width: 1000px) {
+    width: 150px;
+  }
+  @media (max-width: 500px) {
+    width: 50px;
   }
 }
 

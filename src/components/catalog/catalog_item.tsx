@@ -1,14 +1,17 @@
 import React from 'react';
 import { ProductProjection } from '@commercetools/platform-sdk';
+import { useNavigate } from 'react-router-dom';
 import {
   getProductDescription,
   getProductImage,
   getProductName,
   getProductPrice,
 } from '../../services/productService';
+import redirect from '../../services/redirectService';
 
 export default function CatalogItem(props: { product: ProductProjection }) {
   const { product } = props;
+  const navigate = useNavigate();
 
   const getPrice = (): JSX.Element => {
     const [originalPrice, discountPrice] = getProductPrice(product);
@@ -33,17 +36,24 @@ export default function CatalogItem(props: { product: ProductProjection }) {
 
   return (
     <div className="catalog-item">
-      <img
-        src={getProductImage(product)}
-        alt="product"
-        className="catalog-item-image"
-      />
-      <div className="catalog-item-info">
-        <span className="catalog-item-name">{getProductName(product)}</span>
-        <span className="catalog-item-description">
-          {getProductDescription(product)}
-        </span>
-        {getPrice()}
+      <div
+        className="catalog-item-redirect"
+        onClick={() =>
+          redirect(product.categories.at(0)?.id as string, product.id, navigate)
+        }
+      >
+        <img
+          src={getProductImage(product)}
+          alt="product"
+          className="catalog-item-image"
+        />
+        <div className="catalog-item-info">
+          <span className="catalog-item-name">{getProductName(product)}</span>
+          <span className="catalog-item-description">
+            {getProductDescription(product)}
+          </span>
+          {getPrice()}
+        </div>
       </div>
       <input type="button" className="catalog-add" />
     </div>

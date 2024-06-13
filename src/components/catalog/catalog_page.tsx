@@ -4,10 +4,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import { getProducts, searchProducts } from '../../services/productService';
-
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
-import redirect from '../../services/redirectService';
 import { FilterFields, SortingTypes } from '../../types';
 import { lengthFilter, priceFilter, sortButtons } from '../../utils/constants';
 
@@ -167,12 +165,7 @@ export default function CatalogPage() {
       {data?.length ? (
         <div className="catalog_flex">
           {data?.map((item) => (
-            <li
-              key={item.id}
-              onClick={() =>
-                redirect(item.categories.at(0)?.id as string, item.id, navigate)
-              }
-            >
+            <li key={item.id}>
               <CatalogItem product={item} />
             </li>
           ))}

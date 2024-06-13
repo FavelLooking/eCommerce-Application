@@ -35,7 +35,6 @@ class CustomerService {
     }
     return undefined;
   };
-}
 
   static updateUserInfo = async (
     email: string,
