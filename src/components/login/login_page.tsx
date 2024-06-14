@@ -51,18 +51,16 @@ export default function LoginPage() {
 
   const onSubmit: SubmitHandler<LoginFormFields> = async (data) => {
     const { email, password } = data;
-    await AuthService.loginUser(email, password)
-      .then(() => {
-        const errorMessage = AuthService.getFromLocalStorage(storageLoginError);
-        AuthService.removeFromLocalStorage(storageLoginError);
-        if (errorMessage) {
-          showToast(errorMessage);
-        } else {
-          reset();
-          login();
-        }
-      })
-      .then(() => CartService.getActiveCart());
+    await AuthService.loginUser(email, password).then(() => {
+      const errorMessage = AuthService.getFromLocalStorage(storageLoginError);
+      AuthService.removeFromLocalStorage(storageLoginError);
+      if (errorMessage) {
+        showToast(errorMessage);
+      } else {
+        reset();
+        login();
+      }
+    });
   };
 
   return (
