@@ -27,6 +27,7 @@ class AuthService {
           body: {
             email: username,
             password,
+            activeCartSignInMode: 'MergeWithExistingCustomerCart',
           },
         })
         .execute();
@@ -125,9 +126,11 @@ class AuthService {
   static async logoutUser() {
     this.removeFromLocalStorage('customerId');
     this.removeFromLocalStorage('IsUserLogined');
+    this.removeFromLocalStorage('cartId');
+    this.removeFromLocalStorage('cartVersion');
     ClientFactory.resetClients();
     ClientFactory.resetFlow();
-
+    CartService.cartProductid = undefined;
     tokenStore.clear();
   }
 

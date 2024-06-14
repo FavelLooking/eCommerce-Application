@@ -3,7 +3,7 @@ import AuthService from './authService';
 import ClientFactory from './clientFactory';
 
 export default class CartService {
-  static cartProductid: string[];
+  static cartProductid: string[] | undefined;
 
   static async createCart() {
     try {
