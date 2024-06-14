@@ -19,7 +19,6 @@ import {
 } from '../../utils/constants';
 import { validateInput } from '../../utils';
 import { useAuth } from '../../hooks/useAuth';
-import CartService from '../../services/cartService';
 
 export default function LoginPage() {
   const [hidden, setHidden] = useState(false);
