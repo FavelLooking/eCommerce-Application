@@ -8,7 +8,6 @@ import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { FilterFields, SortingTypes } from '../../types';
 import { lengthFilter, priceFilter, sortButtons } from '../../utils/constants';
-// import checkCart from '../../utils/cart_utils/check_cart';
 import AuthService from '../../services/authService';
 import CartService from '../../services/cartService';
 
