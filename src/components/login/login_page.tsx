@@ -19,6 +19,7 @@ import {
 } from '../../utils/constants';
 import { validateInput } from '../../utils';
 import { useAuth } from '../../hooks/useAuth';
+import CartService from '../../services/cartService';
 
 export default function LoginPage() {
   const [hidden, setHidden] = useState(false);
@@ -50,16 +51,18 @@ export default function LoginPage() {
 
   const onSubmit: SubmitHandler<LoginFormFields> = async (data) => {
     const { email, password } = data;
-    await AuthService.loginUser(email, password).then(() => {
-      const errorMessage = AuthService.getFromLocalStorage(storageLoginError);
-      AuthService.removeFromLocalStorage(storageLoginError);
-      if (errorMessage) {
-        showToast(errorMessage);
-      } else {
-        reset();
-        login();
-      }
-    });
+    await AuthService.loginUser(email, password)
+      .then(() => {
+        const errorMessage = AuthService.getFromLocalStorage(storageLoginError);
+        AuthService.removeFromLocalStorage(storageLoginError);
+        if (errorMessage) {
+          showToast(errorMessage);
+        } else {
+          reset();
+          login();
+        }
+      })
+      .then(() => CartService.getActiveCart());
   };
 
   return (

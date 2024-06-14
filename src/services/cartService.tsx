@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import AuthService from './authService';
 import ClientFactory from './clientFactory';
 
@@ -85,6 +86,24 @@ export default class CartService {
         }
       }
       this.cartProductid = cartDataArrId;
+    } catch (error: unknown) {
+      const errorMessage = (error as Error).message;
+      AuthService.saveToLocalStorage('cartError', errorMessage);
+    }
+    return undefined;
+  }
+
+  static async getActiveCart() {
+    try {
+      const apiRoot = await ClientFactory.createApiRoot(
+        ClientFactory.flowType,
+        'password'
+      );
+
+      const cartInfo = await apiRoot.me().activeCart().get().execute();
+
+      const cartId = cartInfo.body.id;
+      AuthService.saveToLocalStorage('cartId', cartId);
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       AuthService.saveToLocalStorage('cartError', errorMessage);

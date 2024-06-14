@@ -2,6 +2,8 @@ import { storageLoginError } from '../utils/constants';
 import ClientFactory from './clientFactory';
 import { tokenStore } from './authManager';
 import { ExtendedCustomerDraft } from '../interfaces/authService';
+// eslint-disable-next-line
+import CartService from './cartService';
 
 class AuthService {
   static async loginUser(username: string, password: string) {
@@ -9,6 +11,7 @@ class AuthService {
       ClientFactory.resetClients();
       tokenStore.clear();
       AuthService.removeFromLocalStorage(storageLoginError);
+      AuthService.removeFromLocalStorage('cartId');
       ClientFactory.flowType = 'password';
 
       const apiRoot = await ClientFactory.createApiRoot(
@@ -31,6 +34,7 @@ class AuthService {
         'customerId',
         loginResponse.body.customer.id
       );
+      await CartService.getActiveCart();
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       ClientFactory.resetClients();
