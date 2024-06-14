@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -14,8 +14,14 @@ import CartService from '../../services/cartService';
 export default function CatalogItem(props: { product: ProductProjection }) {
   const { product } = props;
   const navigate = useNavigate();
+  const [isInCart, setIsInCart] = useState(
+    CartService.cartProductid?.includes(product.id) || false
+  );
 
-  console.log('catalog item cart id', CartService.cartProductid);
+  const handleAddToCart = () => {
+    CreateCart(product.id);
+    setIsInCart(true);
+  };
 
   const getPrice = (): JSX.Element => {
     const [originalPrice, discountPrice] = getProductPrice(product);
@@ -43,7 +49,7 @@ export default function CatalogItem(props: { product: ProductProjection }) {
       <div
         className="catalog-item-redirect"
         onClick={() =>
-          redirect(product.categories.at(0)?.id as string, product.id, navigate)
+          redirect(product.categories[0]?.id as string, product.id, navigate)
         }
       >
         <img
@@ -61,10 +67,9 @@ export default function CatalogItem(props: { product: ProductProjection }) {
       </div>
       <input
         type="button"
-        className="catalog-add"
-        onClick={() => {
-          CreateCart(product.id);
-        }}
+        className={`catalog-add ${isInCart ? 'in-cart' : ''}`}
+        onClick={handleAddToCart}
+        disabled={isInCart}
       />
     </div>
   );

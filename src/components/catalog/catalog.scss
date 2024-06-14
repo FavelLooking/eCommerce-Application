@@ -110,8 +110,11 @@
   }
 }
 
-.catalog-add {
-  opacity: 0.7;
+.in-cart {
+  opacity: 0.2;
+  &:hover {
+    cursor: default;
+  }
 }
 
 .catalog-breadcrumb {
