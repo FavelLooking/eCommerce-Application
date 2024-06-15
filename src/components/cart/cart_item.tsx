@@ -1,6 +1,6 @@
 import { LineItem } from '@commercetools/platform-sdk';
 import React from 'react';
-import { minusText, plusText } from '../../utils/constants';
+import { deleteText, minusText, plusText } from '../../utils/constants';
 import { getPriceValue } from '../../services/productService';
 
 type CartItemProps = {
@@ -55,6 +55,13 @@ export default function CartItem(props: CartItemProps) {
               {getPriceValue(product.price.value)}/ea
             </span>
           </div>
+          <input
+            type="button"
+            className="cart-button flex"
+            value={deleteText}
+            disabled={checkButtonDisable()}
+            onClick={() => changeCountCallback(0, product.id)}
+          />
         </div>
       </div>
       <div className="flex flex-column cart-item-price">
