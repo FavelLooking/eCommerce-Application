@@ -1,3 +1,4 @@
+import { storageCartId } from '../utils/constants';
 // eslint-disable-next-line
 import AuthService from './authService';
 import ClientFactory from './clientFactory';
@@ -111,3 +112,13 @@ export default class CartService {
     return undefined;
   }
 }
+
+export const getCart = () =>
+  AuthService.getFromLocalStorage(storageCartId)
+    ? ClientFactory.createApiRoot(ClientFactory.flowType)
+        .carts()
+        .withId({ ID: AuthService.getFromLocalStorage(storageCartId) ?? '' })
+        .get()
+        .execute()
+        .then((value) => value.body)
+    : undefined;
