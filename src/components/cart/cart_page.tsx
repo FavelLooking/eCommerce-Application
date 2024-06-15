@@ -14,8 +14,8 @@ export default function CartPage() {
     const response = getCart();
     if (response) {
       response.then((cartValue) => {
-        if ((cartValue as unknown as Cart).lineItems?.length) {
-          setCart(cartValue as unknown as Cart);
+        if (cartValue.lineItems?.length) {
+          setCart(cartValue);
         }
       });
     }
@@ -41,8 +41,8 @@ export default function CartPage() {
   return (
     <div>
       <div className="cart-wrapper flex flex-column">
-        {cart?.lineItems?.map((x) => (
-          <CartItem product={x} getPrice={getPrice} key={x.id} />
+        {cart?.lineItems?.map((product) => (
+          <CartItem product={product} getPrice={getPrice} key={product.id} />
         ))}
       </div>
     </div>
