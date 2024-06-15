@@ -122,3 +122,26 @@ export const getCart = () =>
         .execute()
         .then((value) => value.body)
     : undefined;
+
+export const changeProductCount = (
+  count: number,
+  productId: string,
+  cartId: string,
+  cartVersion: number
+) =>
+  ClientFactory.createApiRoot(ClientFactory.flowType)
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        actions: [
+          {
+            action: 'changeLineItemQuantity',
+            lineItemId: productId,
+            quantity: count,
+          },
+        ],
+        version: cartVersion,
+      },
+    })
+    .execute();

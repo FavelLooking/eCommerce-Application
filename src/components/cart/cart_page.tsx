@@ -3,23 +3,29 @@ import { useLocation } from 'react-router-dom';
 import { Cart, CentPrecisionMoney } from '@commercetools/platform-sdk';
 import './cart.scss';
 import { getPriceValue } from '../../services/productService';
-import { getCart } from '../../services/cartService';
+import { changeProductCount, getCart } from '../../services/cartService';
 import CartItem from './cart_item';
+import AuthService from '../../services/authService';
 
 export default function CartPage() {
   const location = useLocation();
   const [cart, setCart] = useState<Cart>();
+  const [reload, setReload] = useState(false);
+  const [changeDisable, setChangeDisable] = useState(false);
 
   useEffect(() => {
+    setReload(false);
+    setChangeDisable(true);
     const response = getCart();
     if (response) {
       response.then((cartValue) => {
         if (cartValue.lineItems?.length) {
           setCart(cartValue);
+          setChangeDisable(false);
         }
       });
     }
-  }, [location]);
+  }, [location, reload]);
 
   const getPrice = (
     original: CentPrecisionMoney | undefined,
@@ -38,11 +44,36 @@ export default function CartPage() {
     );
   };
 
+  const checkButtonDisabled = (): boolean =>
+    !cart || cart.lineItems.length === 0 || changeDisable;
+
+  const changeCount = async (count: number, id: string) => {
+    if (cart) {
+      setChangeDisable(true);
+      await changeProductCount(count, id, cart.id, cart.version).then(
+        (newCartResponse) => {
+          AuthService.saveToLocalStorage(
+            'cartVersion',
+            newCartResponse.body.version.toString()
+          );
+          setReload(true);
+          setChangeDisable(false);
+        }
+      );
+    }
+  };
+
   return (
     <div>
       <div className="cart-wrapper flex flex-column">
-        {cart?.lineItems?.map((product) => (
-          <CartItem product={product} getPrice={getPrice} key={product.id} />
+        {cart?.lineItems?.map((x) => (
+          <CartItem
+            product={x}
+            changeCountCallback={changeCount}
+            checkButtonDisable={checkButtonDisabled}
+            getPrice={getPrice}
+            key={x.id}
+          />
         ))}
       </div>
     </div>
