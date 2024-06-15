@@ -137,3 +137,6 @@ export const lengthFilter = [
   'from 300 to 500 pages',
   'from 500 to 1500 pages',
 ];
+
+export const plusText = '➕';
+export const minusText = '➖';
