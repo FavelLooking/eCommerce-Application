@@ -37,6 +37,8 @@ export const textSpacesPattern = {
 
 export const storageLoginError = 'LoginErrorMessage';
 export const storageIsLogined = 'IsUserLogined';
+export const storageCustomerId = 'customerId';
+export const storageCartId = 'cartId';
 
 export const catalogMenuItems = [
   {
