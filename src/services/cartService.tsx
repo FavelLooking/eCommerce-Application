@@ -172,3 +172,25 @@ export const getPromocodes = () =>
     .discountCodes()
     .get()
     .execute();
+
+export const deleteCart = (cartId: string, cartVersion: number) =>
+  ClientFactory.createApiRoot(ClientFactory.flowType)
+    .carts()
+    .withId({ ID: cartId })
+    .delete({
+      queryArgs: {
+        version: cartVersion,
+      },
+    })
+    .execute();
+
+export const createNewCart = () =>
+  ClientFactory.createApiRoot(ClientFactory.flowType)
+    .me()
+    .carts()
+    .post({
+      body: {
+        currency: 'EUR',
+      },
+    })
+    .execute();

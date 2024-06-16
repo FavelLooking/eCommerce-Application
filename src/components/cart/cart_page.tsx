@@ -11,12 +11,19 @@ import { getPriceValue } from '../../services/productService';
 import {
   applyCarDiscount,
   changeProductCount,
+  createNewCart,
+  deleteCart,
   getCart,
   getPromocodes,
 } from '../../services/cartService';
 import CartItem from './cart_item';
 import AuthService from '../../services/authService';
-import { emptyCartImage, priceCurrency } from '../../utils/constants';
+import {
+  storageCartId,
+  priceCurrency,
+  emptyCartImage,
+} from '../../utils/constants';
+import PopUp from './popup';
 
 export default function CartPage() {
   const location = useLocation();
@@ -28,6 +35,7 @@ export default function CartPage() {
   const { register, handleSubmit, reset } = useForm<{
     promo: string;
   }>();
+  const [displayPopup, setDisplay] = useState(false);
 
   useEffect(() => {
     setReload(false);
@@ -174,10 +182,45 @@ export default function CartPage() {
     </div>
   );
 
+  const clearCart = () => {
+    setDisplay(false);
+    if (cart) {
+      setChangeDisable(true);
+      deleteCart(cart.id, cart.version).then(() => {
+        createNewCart().then((value) => {
+          AuthService.saveToLocalStorage(storageCartId, value.body.id);
+          AuthService.saveToLocalStorage(
+            'cartVersion',
+            value.body.version.toString()
+          );
+          setReload(true);
+          setChangeDisable(false);
+        });
+      });
+    }
+  };
+
+  const closePopup = () => {
+    setDisplay(false);
+  };
+
+  const openPopup = () => {
+    setDisplay(true);
+  };
+
   return errorPage || !cart ? (
     emptyCartMessage()
   ) : (
     <div>
+      {displayPopup && (
+        <div className="popup-wrapper flex">
+          <PopUp
+            message="Do you want to clear your cart?"
+            onYes={() => clearCart}
+            onNo={() => closePopup}
+          />
+        </div>
+      )}
       <div className="cart-wrapper flex flex-column">
         {cart?.lineItems?.map((x) => (
           <CartItem
@@ -190,6 +233,13 @@ export default function CartPage() {
         ))}
         {displayTotalPrice()}
         {displayPromocodes()}
+        <input
+          type="button"
+          value="Clear Cart"
+          className="button cart-clear"
+          disabled={checkButtonDisabled()}
+          onClick={openPopup}
+        />
       </div>
     </div>
   );
