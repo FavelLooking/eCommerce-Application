@@ -3,7 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
-import { getProducts, searchProducts } from '../../services/productService';
+import {
+  getAllProducts,
+  getProducts,
+  searchProducts,
+} from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { FilterFields, SortingTypes } from '../../types';
@@ -19,7 +23,12 @@ export default function CatalogPage() {
   const [searchValue, setSearchValue] = useState('');
   const [isFilter, setFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  getAllProducts().then((dataProducts) => {
+    const totalProductCount = dataProducts.body?.total;
+    if (totalProductCount) setTotalPages(Math.ceil(totalProductCount / 10));
+  });
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
 
@@ -189,6 +198,7 @@ export default function CatalogPage() {
       <div className="pagination">
         <button
           type="button"
+          disabled={currentPage === 1}
           onClick={() => {
             setCurrentPage(currentPage - 1);
             changeData(currentPage - 1);
@@ -196,9 +206,10 @@ export default function CatalogPage() {
         >
           Предыдущая
         </button>
-        <span>1</span>
+        <span>{currentPage}</span>
         <button
           type="button"
+          disabled={currentPage === totalPages}
           onClick={() => {
             setCurrentPage(currentPage + 1);
             changeData(currentPage + 1);

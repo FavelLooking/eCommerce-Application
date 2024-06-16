@@ -126,3 +126,9 @@ export const searchProducts = async (
   }
   return data;
 };
+
+export const getAllProducts = async () =>
+  ClientFactory.createApiRoot(ClientFactory.flowType)
+    .products()
+    .get()
+    .execute();
