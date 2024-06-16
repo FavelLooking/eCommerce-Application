@@ -128,7 +128,8 @@ export const searchProducts = async (
 };
 
 export const getAllProducts = async (path: string) => {
-  const data: ProductProjection[] = [];
+  let countOfProducts = 0;
+
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
     const currentCategory = await getCategoryByPath(currentCategoryTitle);
@@ -149,34 +150,10 @@ export const getAllProducts = async (path: string) => {
       })
       .execute();
 
-    data.push(...(initialResponse.body.results as ProductProjection[]));
-
     const { total } = initialResponse.body;
-    const { limit } = initialResponse.body;
-    const { offset } = initialResponse.body;
 
-    if (total) {
-      const promises = [];
-      for (let i = offset + limit; i < total; i += limit) {
-        promises.push(
-          ClientFactory.createApiRoot(ClientFactory.flowType)
-            .productProjections()
-            .get({
-              queryArgs: {
-                expand: ['results[*].masterVariant'],
-                limit,
-                offset: i,
-              },
-            })
-            .execute()
-        );
-      }
-
-      const results = await Promise.all(promises);
-      results.forEach((result) => {
-        data.push(...(result.body.results as ProductProjection[]));
-      });
-    }
+    if (total) countOfProducts = total;
   }
-  return data;
+  console.log('request total', countOfProducts);
+  return countOfProducts;
 };

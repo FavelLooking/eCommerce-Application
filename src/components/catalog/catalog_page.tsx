@@ -27,8 +27,8 @@ export default function CatalogPage() {
 
   useEffect(() => {
     getAllProducts(location.pathname).then((dataProducts) => {
-      const totalProductCount = dataProducts.length;
-      setTotalPages(Math.ceil(totalProductCount / 10));
+      const totalProductCount = dataProducts;
+      setTotalPages(Math.floor(totalProductCount / 10));
     });
   }, [location]);
 
