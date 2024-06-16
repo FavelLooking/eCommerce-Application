@@ -69,6 +69,7 @@ export default function CatalogPage() {
   };
 
   const sort = async (sortingType: string) => {
+    setCurrentPage(1);
     sessionStorage.setItem('sort', sortingType);
     await changeData();
   };
@@ -112,6 +113,10 @@ export default function CatalogPage() {
       }
     );
   };
+
+  // const refreshPagination = () => {
+
+  // }
 
   useEffect(() => {
     if (AuthService.getFromLocalStorage('cartId')) {
