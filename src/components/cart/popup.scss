@@ -7,14 +7,15 @@
   border: 1px solid #48304d;
   border-radius: 20px;
   padding: 20px;
-  z-index: 30;
   & > * {
     width: 100%;
     text-align: center;
     margin: 5px 0;
     z-index: 20;
   }
-  opacity: 100%;
+  position: fixed;
+  z-index: 10;
+  bottom: 50%;
 }
 
 .popup-flex {
@@ -33,15 +34,4 @@
     cursor: pointer;
     color: #f865b0;
   }
-}
-
-.popup-wrapper {
-  width: 100%;
-  height: calc(100% - 51px);
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
 }

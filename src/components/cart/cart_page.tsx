@@ -202,9 +202,11 @@ export default function CartPage() {
 
   const closePopup = () => {
     setDisplay(false);
+    setChangeDisable(false);
   };
 
   const openPopup = () => {
+    setChangeDisable(true);
     setDisplay(true);
   };
 
@@ -212,15 +214,6 @@ export default function CartPage() {
     emptyCartMessage()
   ) : (
     <div>
-      {displayPopup && (
-        <div className="popup-wrapper flex">
-          <PopUp
-            message="Do you want to clear your cart?"
-            onYes={() => clearCart}
-            onNo={() => closePopup}
-          />
-        </div>
-      )}
       <div className="cart-wrapper flex flex-column">
         {cart?.lineItems?.map((x) => (
           <CartItem
@@ -240,6 +233,13 @@ export default function CartPage() {
           disabled={checkButtonDisabled()}
           onClick={openPopup}
         />
+        {displayPopup && (
+          <PopUp
+            message="Do you want to clear your cart?"
+            onYes={() => clearCart}
+            onNo={() => closePopup}
+          />
+        )}
       </div>
     </div>
   );
