@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ProductProjection } from '@commercetools/platform-sdk';
@@ -20,7 +20,7 @@ export default function CatalogPage() {
   const [isFilter, setFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  // const prevLocationPathname = useRef(location.pathname);
+  const prevLocationPathname = useRef(location.pathname);
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
 
@@ -36,6 +36,10 @@ export default function CatalogPage() {
   };
 
   useEffect(() => {
+    if (location.pathname !== prevLocationPathname.current) {
+      setCurrentPage(1);
+      prevLocationPathname.current = location.pathname;
+    }
     toogleSettings(false, false);
     getProducts(location.pathname).then(
       ({
@@ -125,8 +129,17 @@ export default function CatalogPage() {
     clearUtilsStorage();
     reset();
     searchProducts(location.pathname, searchValue).then(
-      (value: ProductProjection[]) => {
-        setProducts(value);
+      ({
+        data,
+        totalProducts,
+      }: {
+        data: ProductProjection[];
+        totalProducts: number | undefined;
+      }) => {
+        if (data.length && totalProducts) {
+          setProducts(data);
+          setTotalPages(Math.ceil(totalProducts / 10));
+        }
       }
     );
   };
@@ -136,18 +149,6 @@ export default function CatalogPage() {
       CartService.getCart(AuthService.getFromLocalStorage('cartId') as string);
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (location.pathname !== prevLocationPathname.current) {
-  //     setCurrentPage(1);
-  //     prevLocationPathname.current = location.pathname;
-  //   }
-
-  //   getAllProducts(location.pathname, generateFilterString()).then((dataProducts) => {
-  //     const totalProductCount = dataProducts;
-  //     setTotalPages(Math.ceil(totalProductCount / 10));
-  //   });
-  // }, [location]);
 
   return (
     <div className="catalog_wrapper">
@@ -234,7 +235,7 @@ export default function CatalogPage() {
             changeData(currentPage - 1);
           }}
         >
-          Предыдущая
+          Prev page
         </button>
         <span>{currentPage}</span>
         <button
@@ -245,7 +246,7 @@ export default function CatalogPage() {
             changeData(currentPage + 1);
           }}
         >
-          Следующая
+          Next page
         </button>
       </div>
     </div>

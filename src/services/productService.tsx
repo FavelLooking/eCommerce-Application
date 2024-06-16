@@ -104,6 +104,8 @@ export const searchProducts = async (
   limit: number = 10
 ) => {
   const data: ProductProjection[] = [];
+  let totalProducts: number | undefined = 0;
+
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
     const currentCategory = await getCategoryByPath(currentCategoryTitle);
@@ -126,7 +128,8 @@ export const searchProducts = async (
       .execute()
       .then((value) => {
         data.push(...(value.body.results as ProductProjection[]));
+        totalProducts = value.body.total;
       });
   }
-  return data;
+  return { data, totalProducts };
 };
