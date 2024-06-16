@@ -145,3 +145,30 @@ export const changeProductCount = (
       },
     })
     .execute();
+
+export const applyCarDiscount = (
+  promocode: string,
+  cartId: string,
+  cartVersion: number
+) =>
+  ClientFactory.createApiRoot(ClientFactory.flowType)
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        actions: [
+          {
+            action: 'addDiscountCode',
+            code: promocode,
+          },
+        ],
+        version: cartVersion,
+      },
+    })
+    .execute();
+
+export const getPromocodes = () =>
+  ClientFactory.createApiRoot(ClientFactory.flowType)
+    .discountCodes()
+    .get()
+    .execute();

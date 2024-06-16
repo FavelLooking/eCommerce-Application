@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Cart, CentPrecisionMoney } from '@commercetools/platform-sdk';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import {
+  Cart,
+  CentPrecisionMoney,
+  DiscountCode,
+} from '@commercetools/platform-sdk';
 import './cart.scss';
 import { getPriceValue } from '../../services/productService';
-import { changeProductCount, getCart } from '../../services/cartService';
+import {
+  applyCarDiscount,
+  changeProductCount,
+  getCart,
+  getPromocodes,
+} from '../../services/cartService';
 import CartItem from './cart_item';
 import AuthService from '../../services/authService';
 import { emptyCartImage, priceCurrency } from '../../utils/constants';
@@ -14,6 +24,10 @@ export default function CartPage() {
   const [reload, setReload] = useState(false);
   const [changeDisable, setChangeDisable] = useState(false);
   const [errorPage, setError] = useState(false);
+  const [promocode, setPromocode] = useState<DiscountCode[]>();
+  const { register, handleSubmit, reset } = useForm<{
+    promo: string;
+  }>();
 
   useEffect(() => {
     setReload(false);
@@ -25,6 +39,9 @@ export default function CartPage() {
           setCart(cartValue);
           setError(false);
           setChangeDisable(false);
+          getPromocodes().then((promocodeValue) => {
+            setPromocode(promocodeValue.body.results);
+          });
         } else {
           setError(true);
         }
@@ -93,6 +110,70 @@ export default function CartPage() {
     </div>
   );
 
+  const applyDiscount: SubmitHandler<{ promo: string }> = async (data) => {
+    setChangeDisable(true);
+    if (cart) {
+      promocode
+        ?.filter((x: DiscountCode) => x.code === data.promo)
+        .forEach((y: DiscountCode) => {
+          applyCarDiscount(y.code, cart.id, cart.version).then((value) => {
+            AuthService.saveToLocalStorage(
+              'cartVersion',
+              value.body.version.toString()
+            );
+            setChangeDisable(false);
+            reset();
+            setReload(true);
+          });
+        });
+    }
+    setChangeDisable(false);
+    reset();
+  };
+
+  const displayAllDiscounts = () => {
+    if (cart && promocode) {
+      const promoResult: DiscountCode[] = [];
+      cart.discountCodes.forEach((x) => {
+        promoResult.push(
+          promocode.filter((y: DiscountCode) => y.id === x.discountCode.id)[0]
+        );
+      });
+      if (promoResult.length) {
+        return (
+          <div className="cart-applied-promo flex flex-column">
+            <span>Applied promocodes:</span>
+            {promoResult?.map((x: DiscountCode) => (
+              <span key={x.code} className="cart-promo-key">
+                {x.code}
+              </span>
+            ))}
+          </div>
+        );
+      }
+    }
+    return (
+      <div className="cart-applied-promo flex flex-column">
+        <span>No active promocodes</span>
+      </div>
+    );
+  };
+
+  const displayPromocodes = () => (
+    <div className="flex flex-column">
+      <form className="flex cart-promo" onSubmit={handleSubmit(applyDiscount)}>
+        <input {...register('promo')} className="cart-promocode-input" />
+        <input
+          type="submit"
+          value="Apply"
+          disabled={checkButtonDisabled()}
+          className="cart-promocode-apply"
+        />
+      </form>
+      {displayAllDiscounts()}
+    </div>
+  );
+
   return errorPage || !cart ? (
     emptyCartMessage()
   ) : (
@@ -108,6 +189,7 @@ export default function CartPage() {
           />
         ))}
         {displayTotalPrice()}
+        {displayPromocodes()}
       </div>
     </div>
   );
