@@ -181,6 +181,11 @@ export default function CatalogPage() {
       ) : (
         <div className="catalog-error">There are no matching products</div>
       )}
+      <div className="pagination">
+        <button type="button">Предыдущая</button>
+        <span>1</span>
+        <button type="button">Следующая</button>
+      </div>
     </div>
   );
 }
