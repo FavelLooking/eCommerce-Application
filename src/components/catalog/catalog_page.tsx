@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ProductProjection } from '@commercetools/platform-sdk';
@@ -24,13 +24,7 @@ export default function CatalogPage() {
   const [isFilter, setFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
-  useEffect(() => {
-    getAllProducts(location.pathname).then((dataProducts) => {
-      const totalProductCount = dataProducts;
-      setTotalPages(Math.floor(totalProductCount / 10));
-    });
-  }, [location]);
+  const prevLocationPathname = useRef(location.pathname);
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
 
@@ -120,6 +114,18 @@ export default function CatalogPage() {
       CartService.getCart(AuthService.getFromLocalStorage('cartId') as string);
     }
   }, []);
+
+  useEffect(() => {
+    if (location.pathname !== prevLocationPathname.current) {
+      setCurrentPage(1);
+      prevLocationPathname.current = location.pathname;
+    }
+
+    getAllProducts(location.pathname).then((dataProducts) => {
+      const totalProductCount = dataProducts;
+      setTotalPages(Math.ceil(totalProductCount / 10));
+    });
+  }, [location]);
 
   return (
     <div className="catalog_wrapper">
