@@ -1,13 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
-import {
-  getAllProducts,
-  getProducts,
-  searchProducts,
-} from '../../services/productService';
+import { getProducts, searchProducts } from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { FilterFields, SortingTypes } from '../../types';
@@ -18,13 +14,13 @@ import CartService from '../../services/cartService';
 export default function CatalogPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [data, setData] = useState<ProductProjection[]>();
+  const [products, setProducts] = useState<ProductProjection[]>();
   const [isSort, setSort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isFilter, setFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const prevLocationPathname = useRef(location.pathname);
+  // const prevLocationPathname = useRef(location.pathname);
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
 
@@ -41,11 +37,21 @@ export default function CatalogPage() {
 
   useEffect(() => {
     toogleSettings(false, false);
-    getProducts(location.pathname).then((value: ProductProjection[]) => {
-      clearUtilsStorage();
-      if (value.length) setData(value);
-      else navigate('not-found');
-    });
+    getProducts(location.pathname).then(
+      ({
+        data,
+        totalProducts,
+      }: {
+        data: ProductProjection[];
+        totalProducts: number | undefined;
+      }) => {
+        clearUtilsStorage();
+        if (data.length && totalProducts) {
+          setTotalPages(Math.ceil(totalProducts / 10));
+          setProducts(data);
+        } else navigate('not-found');
+      }
+    );
   }, [location, navigate]);
 
   const generateFilterString = (): string[] => [
@@ -56,16 +62,27 @@ export default function CatalogPage() {
   const generateSortingString = (): string =>
     sessionStorage.getItem('sort') ?? SortingTypes.NAMEASC;
 
-  const changeData = async (page = 1) => {
+  const changeData = async (page: number = 1) => {
     toogleSettings(false, false);
     getProducts(
       location.pathname,
       generateSortingString(),
       generateFilterString(),
       page
-    ).then((value: ProductProjection[]) => {
-      setData(value);
-    });
+    ).then(
+      ({
+        data,
+        totalProducts,
+      }: {
+        data: ProductProjection[];
+        totalProducts: number | undefined;
+      }) => {
+        if (data.length && totalProducts) {
+          setTotalPages(Math.ceil(totalProducts / 10));
+          setProducts(data);
+        }
+      }
+    );
   };
 
   const sort = async (sortingType: string) => {
@@ -75,6 +92,7 @@ export default function CatalogPage() {
   };
 
   const filter: SubmitHandler<FilterFields> = async (filterData) => {
+    setCurrentPage(1);
     const price = filterData.price.split(' ');
     if (price.length === 5) {
       sessionStorage.setItem(
@@ -108,15 +126,10 @@ export default function CatalogPage() {
     reset();
     searchProducts(location.pathname, searchValue).then(
       (value: ProductProjection[]) => {
-        setData(value);
-        setTotalPages(Math.ceil(value.length / 10));
+        setProducts(value);
       }
     );
   };
-
-  // const refreshPagination = () => {
-
-  // }
 
   useEffect(() => {
     if (AuthService.getFromLocalStorage('cartId')) {
@@ -124,17 +137,17 @@ export default function CatalogPage() {
     }
   }, []);
 
-  useEffect(() => {
-    if (location.pathname !== prevLocationPathname.current) {
-      setCurrentPage(1);
-      prevLocationPathname.current = location.pathname;
-    }
+  // useEffect(() => {
+  //   if (location.pathname !== prevLocationPathname.current) {
+  //     setCurrentPage(1);
+  //     prevLocationPathname.current = location.pathname;
+  //   }
 
-    getAllProducts(location.pathname).then((dataProducts) => {
-      const totalProductCount = dataProducts;
-      setTotalPages(Math.ceil(totalProductCount / 10));
-    });
-  }, [location]);
+  //   getAllProducts(location.pathname, generateFilterString()).then((dataProducts) => {
+  //     const totalProductCount = dataProducts;
+  //     setTotalPages(Math.ceil(totalProductCount / 10));
+  //   });
+  // }, [location]);
 
   return (
     <div className="catalog_wrapper">
@@ -201,9 +214,9 @@ export default function CatalogPage() {
           />
         ))}
       </div>
-      {data?.length ? (
+      {products?.length ? (
         <div className="catalog_flex">
-          {data?.map((item) => (
+          {products?.map((item) => (
             <li key={item.id}>
               <CatalogItem product={item} />
             </li>

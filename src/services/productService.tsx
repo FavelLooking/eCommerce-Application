@@ -34,6 +34,8 @@ export const getProducts = async (
   limit: number = 10
 ) => {
   const data: ProductProjection[] = [];
+  let totalProducts: number | undefined = 0;
+
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
     const currentCategory = await getCategoryByPath(currentCategoryTitle);
@@ -51,14 +53,16 @@ export const getProducts = async (
           offset: (page - 1) * limit,
           filter: filterString,
           sort: sortingType ?? SortingTypes.NAMEASC,
+          withTotal: true,
         },
       })
       .execute()
       .then((value) => {
         data.push(...(value.body.results as ProductProjection[]));
+        totalProducts = value.body.total;
       });
   }
-  return data;
+  return { data, totalProducts };
 };
 
 const getPriceValue = (price: Price | DiscountedPrice): string => {
@@ -125,35 +129,4 @@ export const searchProducts = async (
       });
   }
   return data;
-};
-
-export const getAllProducts = async (path: string) => {
-  let countOfProducts = 0;
-
-  if (isValidPath(path)) {
-    const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
-    const currentCategory = await getCategoryByPath(currentCategoryTitle);
-    const filterString = generateFilterString({
-      category:
-        currentCategoryTitle !== 'catalog' ? currentCategory : undefined,
-    });
-    const initialResponse = await ClientFactory.createApiRoot(
-      ClientFactory.flowType
-    )
-      .productProjections()
-      .search()
-      .get({
-        queryArgs: {
-          expand: ['results[*].masterVariant'],
-          filter: filterString,
-        },
-      })
-      .execute();
-
-    const { total } = initialResponse.body;
-
-    if (total) countOfProducts = total;
-  }
-
-  return countOfProducts;
 };
