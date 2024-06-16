@@ -123,49 +123,44 @@ export const getCart = () =>
         .then((value) => value.body)
     : undefined;
 
-export const changeProductCount = (
-  count: number,
-  productId: string,
-  cartId: string,
-  cartVersion: number
-) =>
-  ClientFactory.createApiRoot(ClientFactory.flowType)
-    .carts()
-    .withId({ ID: cartId })
-    .post({
-      body: {
-        actions: [
-          {
-            action: 'changeLineItemQuantity',
-            lineItemId: productId,
-            quantity: count,
-          },
-        ],
-        version: cartVersion,
-      },
-    })
-    .execute();
+export const changeProductCount = (count: number, productId: string) =>
+  getCart()?.then((cart) =>
+    ClientFactory.createApiRoot(ClientFactory.flowType)
+      .carts()
+      .withId({ ID: cart.id })
+      .post({
+        body: {
+          actions: [
+            {
+              action: 'changeLineItemQuantity',
+              lineItemId: productId,
+              quantity: count,
+            },
+          ],
+          version: cart.version,
+        },
+      })
+      .execute()
+  );
 
-export const applyCarDiscount = (
-  promocode: string,
-  cartId: string,
-  cartVersion: number
-) =>
-  ClientFactory.createApiRoot(ClientFactory.flowType)
-    .carts()
-    .withId({ ID: cartId })
-    .post({
-      body: {
-        actions: [
-          {
-            action: 'addDiscountCode',
-            code: promocode,
-          },
-        ],
-        version: cartVersion,
-      },
-    })
-    .execute();
+export const applyCarDiscount = (promocode: string) =>
+  getCart()?.then((cart) =>
+    ClientFactory.createApiRoot(ClientFactory.flowType)
+      .carts()
+      .withId({ ID: cart.id })
+      .post({
+        body: {
+          actions: [
+            {
+              action: 'addDiscountCode',
+              code: promocode,
+            },
+          ],
+          version: cart.version,
+        },
+      })
+      .execute()
+  );
 
 export const getPromocodes = () =>
   ClientFactory.createApiRoot(ClientFactory.flowType)
@@ -173,16 +168,18 @@ export const getPromocodes = () =>
     .get()
     .execute();
 
-export const deleteCart = (cartId: string, cartVersion: number) =>
-  ClientFactory.createApiRoot(ClientFactory.flowType)
-    .carts()
-    .withId({ ID: cartId })
-    .delete({
-      queryArgs: {
-        version: cartVersion,
-      },
-    })
-    .execute();
+export const deleteCart = () =>
+  getCart()?.then((cart) =>
+    ClientFactory.createApiRoot(ClientFactory.flowType)
+      .carts()
+      .withId({ ID: cart.id })
+      .delete({
+        queryArgs: {
+          version: cart.version,
+        },
+      })
+      .execute()
+  );
 
 export const createNewCart = () =>
   ClientFactory.createApiRoot(ClientFactory.flowType)

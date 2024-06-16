@@ -38,7 +38,6 @@ export default function CartPage() {
   const [displayPopup, setDisplay] = useState(false);
 
   useEffect(() => {
-    setReload(false);
     setChangeDisable(true);
     const response = getCart();
     if (response) {
@@ -82,16 +81,14 @@ export default function CartPage() {
   const changeCount = async (count: number, id: string) => {
     if (cart) {
       setChangeDisable(true);
-      await changeProductCount(count, id, cart.id, cart.version).then(
-        (newCartResponse) => {
-          AuthService.saveToLocalStorage(
-            'cartVersion',
-            newCartResponse.body.version.toString()
-          );
-          setReload(true);
-          setChangeDisable(false);
-        }
-      );
+      await changeProductCount(count, id)?.then((newCartResponse) => {
+        AuthService.saveToLocalStorage(
+          'cartVersion',
+          newCartResponse.body.version.toString()
+        );
+        setReload(!reload);
+        setChangeDisable(false);
+      });
     }
   };
 
@@ -124,14 +121,14 @@ export default function CartPage() {
       promocode
         ?.filter((x: DiscountCode) => x.code === data.promo.toUpperCase())
         .forEach((y: DiscountCode) => {
-          applyCarDiscount(y.code, cart.id, cart.version).then((value) => {
+          applyCarDiscount(y.code)?.then((value) => {
             AuthService.saveToLocalStorage(
               'cartVersion',
               value.body.version.toString()
             );
             setChangeDisable(false);
             reset();
-            setReload(true);
+            setReload(!reload);
           });
         });
     }
@@ -186,14 +183,14 @@ export default function CartPage() {
     setDisplay(false);
     if (cart) {
       setChangeDisable(true);
-      deleteCart(cart.id, cart.version).then(() => {
+      deleteCart()?.then(() => {
         createNewCart().then((value) => {
           AuthService.saveToLocalStorage(storageCartId, value.body.id);
           AuthService.saveToLocalStorage(
             'cartVersion',
             value.body.version.toString()
           );
-          setReload(true);
+          setReload(!reload);
           setChangeDisable(false);
         });
       });
