@@ -23,12 +23,14 @@ export default function CatalogPage() {
   const [searchValue, setSearchValue] = useState('');
   const [isFilter, setFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
-  getAllProducts().then((dataProducts) => {
-    const totalProductCount = dataProducts.body?.total;
-    if (totalProductCount) setTotalPages(Math.ceil(totalProductCount / 10));
-  });
+  useEffect(() => {
+    getAllProducts(location.pathname).then((dataProducts) => {
+      const totalProductCount = dataProducts.length;
+      setTotalPages(Math.ceil(totalProductCount / 10));
+    });
+  }, [location]);
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
 

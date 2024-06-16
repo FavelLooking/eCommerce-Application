@@ -127,8 +127,56 @@ export const searchProducts = async (
   return data;
 };
 
-export const getAllProducts = async () =>
-  ClientFactory.createApiRoot(ClientFactory.flowType)
-    .products()
-    .get()
-    .execute();
+export const getAllProducts = async (path: string) => {
+  const data: ProductProjection[] = [];
+  if (isValidPath(path)) {
+    const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
+    const currentCategory = await getCategoryByPath(currentCategoryTitle);
+    const filterString = generateFilterString({
+      category:
+        currentCategoryTitle !== 'catalog' ? currentCategory : undefined,
+    });
+    const initialResponse = await ClientFactory.createApiRoot(
+      ClientFactory.flowType
+    )
+      .productProjections()
+      .search()
+      .get({
+        queryArgs: {
+          expand: ['results[*].masterVariant'],
+          filter: filterString,
+        },
+      })
+      .execute();
+
+    data.push(...(initialResponse.body.results as ProductProjection[]));
+
+    const { total } = initialResponse.body;
+    const { limit } = initialResponse.body;
+    const { offset } = initialResponse.body;
+
+    if (total) {
+      const promises = [];
+      for (let i = offset + limit; i < total; i += limit) {
+        promises.push(
+          ClientFactory.createApiRoot(ClientFactory.flowType)
+            .productProjections()
+            .get({
+              queryArgs: {
+                expand: ['results[*].masterVariant'],
+                limit,
+                offset: i,
+              },
+            })
+            .execute()
+        );
+      }
+
+      const results = await Promise.all(promises);
+      results.forEach((result) => {
+        data.push(...(result.body.results as ProductProjection[]));
+      });
+    }
+  }
+  return data;
+};
