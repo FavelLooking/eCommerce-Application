@@ -11,12 +11,19 @@ import { getPriceValue } from '../../services/productService';
 import {
   applyCarDiscount,
   changeProductCount,
+  createNewCart,
+  deleteCart,
   getCart,
   getPromocodes,
 } from '../../services/cartService';
 import CartItem from './cart_item';
 import AuthService from '../../services/authService';
-import { emptyCartImage, priceCurrency } from '../../utils/constants';
+import {
+  storageCartId,
+  priceCurrency,
+  emptyCartImage,
+} from '../../utils/constants';
+import PopUp from './popup';
 
 export default function CartPage() {
   const location = useLocation();
@@ -28,9 +35,9 @@ export default function CartPage() {
   const { register, handleSubmit, reset } = useForm<{
     promo: string;
   }>();
+  const [displayPopup, setDisplay] = useState(false);
 
   useEffect(() => {
-    setReload(false);
     setChangeDisable(true);
     const response = getCart();
     if (response) {
@@ -74,16 +81,14 @@ export default function CartPage() {
   const changeCount = async (count: number, id: string) => {
     if (cart) {
       setChangeDisable(true);
-      await changeProductCount(count, id, cart.id, cart.version).then(
-        (newCartResponse) => {
-          AuthService.saveToLocalStorage(
-            'cartVersion',
-            newCartResponse.body.version.toString()
-          );
-          setReload(true);
-          setChangeDisable(false);
-        }
-      );
+      await changeProductCount(count, id)?.then((newCartResponse) => {
+        AuthService.saveToLocalStorage(
+          'cartVersion',
+          newCartResponse.body.version.toString()
+        );
+        setReload(!reload);
+        setChangeDisable(false);
+      });
     }
   };
 
@@ -114,16 +119,16 @@ export default function CartPage() {
     setChangeDisable(true);
     if (cart) {
       promocode
-        ?.filter((x: DiscountCode) => x.code === data.promo)
+        ?.filter((x: DiscountCode) => x.code === data.promo.toUpperCase())
         .forEach((y: DiscountCode) => {
-          applyCarDiscount(y.code, cart.id, cart.version).then((value) => {
+          applyCarDiscount(y.code)?.then((value) => {
             AuthService.saveToLocalStorage(
               'cartVersion',
               value.body.version.toString()
             );
             setChangeDisable(false);
             reset();
-            setReload(true);
+            setReload(!reload);
           });
         });
     }
@@ -174,6 +179,34 @@ export default function CartPage() {
     </div>
   );
 
+  const clearCart = () => {
+    setDisplay(false);
+    if (cart) {
+      setChangeDisable(true);
+      deleteCart()?.then(() => {
+        createNewCart().then((value) => {
+          AuthService.saveToLocalStorage(storageCartId, value.body.id);
+          AuthService.saveToLocalStorage(
+            'cartVersion',
+            value.body.version.toString()
+          );
+          setReload(!reload);
+          setChangeDisable(false);
+        });
+      });
+    }
+  };
+
+  const closePopup = () => {
+    setDisplay(false);
+    setChangeDisable(false);
+  };
+
+  const openPopup = () => {
+    setChangeDisable(true);
+    setDisplay(true);
+  };
+
   return errorPage || !cart ? (
     emptyCartMessage()
   ) : (
@@ -190,6 +223,20 @@ export default function CartPage() {
         ))}
         {displayTotalPrice()}
         {displayPromocodes()}
+        <input
+          type="button"
+          value="Clear Cart"
+          className="button cart-clear"
+          disabled={checkButtonDisabled()}
+          onClick={openPopup}
+        />
+        {displayPopup && (
+          <PopUp
+            message="Do you want to clear your cart?"
+            onYes={() => clearCart}
+            onNo={() => closePopup}
+          />
+        )}
       </div>
     </div>
   );

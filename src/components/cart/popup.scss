@@ -1,0 +1,37 @@
+.popup-window {
+  background-color: white;
+  width: 210px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #48304d;
+  border-radius: 20px;
+  padding: 20px;
+  & > * {
+    width: 100%;
+    text-align: center;
+    margin: 5px 0;
+    z-index: 20;
+  }
+  position: fixed;
+  z-index: 10;
+  bottom: 50%;
+}
+
+.popup-flex {
+  justify-content: space-between;
+  & > * {
+    margin: 0 10px;
+    z-index: 40;
+  }
+}
+
+.popup-button {
+  width: 50px;
+  border: none;
+  background-color: transparent;
+  &:hover {
+    cursor: pointer;
+    color: #f865b0;
+  }
+}
