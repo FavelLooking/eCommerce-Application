@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Cart, CentPrecisionMoney } from '@commercetools/platform-sdk';
 import './cart.scss';
 import { getPriceValue } from '../../services/productService';
 import { changeProductCount, getCart } from '../../services/cartService';
 import CartItem from './cart_item';
 import AuthService from '../../services/authService';
-import { priceCurrency } from '../../utils/constants';
+import { emptyCartImage, priceCurrency } from '../../utils/constants';
 
 export default function CartPage() {
   const location = useLocation();
   const [cart, setCart] = useState<Cart>();
   const [reload, setReload] = useState(false);
   const [changeDisable, setChangeDisable] = useState(false);
+  const [errorPage, setError] = useState(false);
 
   useEffect(() => {
     setReload(false);
@@ -22,9 +23,14 @@ export default function CartPage() {
       response.then((cartValue) => {
         if (cartValue.lineItems?.length) {
           setCart(cartValue);
+          setError(false);
           setChangeDisable(false);
+        } else {
+          setError(true);
         }
       });
+    } else {
+      setError(true);
     }
   }, [location, reload]);
 
@@ -78,7 +84,18 @@ export default function CartPage() {
     return <div className="flex cart-total">Total: {resultPrice}</div>;
   };
 
-  return (
+  const emptyCartMessage = (): JSX.Element => (
+    <div className="cart-wrapper flex flex-column">
+      <img src={emptyCartImage} alt="empty cart" className="cart-empty" />
+      <Link to="/catalog" className="cart-link">
+        Go to Catalog
+      </Link>
+    </div>
+  );
+
+  return errorPage || !cart ? (
+    emptyCartMessage()
+  ) : (
     <div>
       <div className="cart-wrapper flex flex-column">
         {cart?.lineItems?.map((x) => (

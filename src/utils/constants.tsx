@@ -141,3 +141,6 @@ export const lengthFilter = [
 export const deleteText = '❌';
 export const plusText = '➕';
 export const minusText = '➖';
+
+export const emptyCartImage =
+  'https://drive.google.com/thumbnail?id=1WsXZZi5SC0G_DT4lXwQHtr_lfsiU-RnN';
