@@ -122,7 +122,7 @@ export default function CartPage() {
     setChangeDisable(true);
     if (cart) {
       promocode
-        ?.filter((x: DiscountCode) => x.code === data.promo)
+        ?.filter((x: DiscountCode) => x.code === data.promo.toUpperCase())
         .forEach((y: DiscountCode) => {
           applyCarDiscount(y.code, cart.id, cart.version).then((value) => {
             AuthService.saveToLocalStorage(
