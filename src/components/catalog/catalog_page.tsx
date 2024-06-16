@@ -228,6 +228,7 @@ export default function CatalogPage() {
       )}
       <div className="pagination">
         <button
+          className={`pagination__button ${currentPage === 1 ? 'pagination__button_disabled' : ''}`}
           type="button"
           disabled={currentPage === 1}
           onClick={() => {
@@ -237,8 +238,9 @@ export default function CatalogPage() {
         >
           Prev page
         </button>
-        <span>{currentPage}</span>
+        <span className="pagination__page">{currentPage}</span>
         <button
+          className={`pagination__button ${currentPage === totalPages ? 'pagination__button_disabled' : ''}`}
           type="button"
           disabled={currentPage === totalPages}
           onClick={() => {
