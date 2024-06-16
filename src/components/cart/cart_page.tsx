@@ -6,6 +6,7 @@ import { getPriceValue } from '../../services/productService';
 import { changeProductCount, getCart } from '../../services/cartService';
 import CartItem from './cart_item';
 import AuthService from '../../services/authService';
+import { priceCurrency } from '../../utils/constants';
 
 export default function CartPage() {
   const location = useLocation();
@@ -63,6 +64,20 @@ export default function CartPage() {
     }
   };
 
+  const displayTotalPrice = () => {
+    let oldPrice;
+    if (cart?.discountOnTotalPrice) {
+      const discountValue =
+        cart.totalPrice.centAmount +
+        cart.discountOnTotalPrice.discountedAmount.centAmount;
+      const priceDigits =
+        cart.discountOnTotalPrice.discountedAmount.fractionDigits;
+      oldPrice = `${discountValue / 10 ** priceDigits} ${priceCurrency}`;
+    }
+    const resultPrice = getPrice(cart?.totalPrice ?? undefined, oldPrice);
+    return <div className="flex cart-total">Total: {resultPrice}</div>;
+  };
+
   return (
     <div>
       <div className="cart-wrapper flex flex-column">
@@ -75,6 +90,7 @@ export default function CartPage() {
             key={x.id}
           />
         ))}
+        {displayTotalPrice()}
       </div>
     </div>
   );
