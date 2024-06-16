@@ -18,6 +18,8 @@ export default function CatalogPage() {
   const [isSort, setSort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isFilter, setFilter] = useState(false);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [totalPages, setTotalPages] = useState(1);
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
 
@@ -49,13 +51,17 @@ export default function CatalogPage() {
   const generateSortingString = (): string =>
     sessionStorage.getItem('sort') ?? SortingTypes.NAMEASC;
 
-  const changeData = async () => {
+  const changeData = async (page = 2) => {
     toogleSettings(false, false);
     getProducts(
       location.pathname,
       generateSortingString(),
-      generateFilterString()
-    ).then((value: ProductProjection[]) => setData(value));
+      generateFilterString(),
+      page
+    ).then((value: ProductProjection[]) => {
+      setData(value);
+      console.log(value);
+    });
   };
 
   const sort = async (sortingType: string) => {
