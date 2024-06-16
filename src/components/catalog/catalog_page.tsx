@@ -18,7 +18,7 @@ export default function CatalogPage() {
   const [isSort, setSort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isFilter, setFilter] = useState(false);
-  // const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   // const [totalPages, setTotalPages] = useState(1);
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
@@ -51,7 +51,7 @@ export default function CatalogPage() {
   const generateSortingString = (): string =>
     sessionStorage.getItem('sort') ?? SortingTypes.NAMEASC;
 
-  const changeData = async (page = 2) => {
+  const changeData = async (page = 1) => {
     toogleSettings(false, false);
     getProducts(
       location.pathname,
@@ -60,7 +60,6 @@ export default function CatalogPage() {
       page
     ).then((value: ProductProjection[]) => {
       setData(value);
-      console.log(value);
     });
   };
 
@@ -188,9 +187,25 @@ export default function CatalogPage() {
         <div className="catalog-error">There are no matching products</div>
       )}
       <div className="pagination">
-        <button type="button">Предыдущая</button>
+        <button
+          type="button"
+          onClick={() => {
+            setCurrentPage(currentPage - 1);
+            changeData(currentPage - 1);
+          }}
+        >
+          Предыдущая
+        </button>
         <span>1</span>
-        <button type="button">Следующая</button>
+        <button
+          type="button"
+          onClick={() => {
+            setCurrentPage(currentPage + 1);
+            changeData(currentPage + 1);
+          }}
+        >
+          Следующая
+        </button>
       </div>
     </div>
   );
