@@ -154,6 +154,6 @@ export const getAllProducts = async (path: string) => {
 
     if (total) countOfProducts = total;
   }
-  console.log('request total', countOfProducts);
+
   return countOfProducts;
 };

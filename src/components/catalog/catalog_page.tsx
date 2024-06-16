@@ -102,10 +102,14 @@ export default function CatalogPage() {
   };
 
   const search = async () => {
+    setCurrentPage(1);
     clearUtilsStorage();
     reset();
     searchProducts(location.pathname, searchValue).then(
-      (value: ProductProjection[]) => setData(value)
+      (value: ProductProjection[]) => {
+        setData(value);
+        setTotalPages(Math.ceil(value.length / 10));
+      }
     );
   };
 
