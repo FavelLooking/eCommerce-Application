@@ -132,3 +132,24 @@
 .modal .modal-content {
   padding-bottom: 40px;
 }
+
+.detailed-product__price-container {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  width: 20vw;
+}
+
+.detailed-product__button {
+  display: block;
+  height: 40px;
+  width: 150px;
+  border: 1px solid #48304d;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  background-color: white;
+  &:hover {
+    cursor: pointer;
+    background-color: #fbcaef;
+  }
+}

@@ -32,10 +32,6 @@ function DetailedProductPage() {
         for (let i = 0; i < cartDataArr.length; i += 1) {
           cartDataArrId.push(cartDataArr[i].productId);
         }
-        console.log(
-          'is it in cart',
-          cartDataArrId.includes(productId as string)
-        );
         if (cartDataArrId.includes(productId as string)) {
           setIsInCart(true);
         } else {
@@ -133,7 +129,11 @@ function DetailedProductPage() {
   const buttons = () => {
     if (!isInCart) {
       return (
-        <button type="button" onClick={handleAddToCart}>
+        <button
+          type="button"
+          className="detailed-product__button"
+          onClick={handleAddToCart}
+        >
           Add to cart
         </button>
       );
@@ -167,8 +167,10 @@ function DetailedProductPage() {
           <p className="detailed-product__description">
             {productInfo.productDescription}
           </p>
-          {productPrice()}
-          {buttons()}
+          <div className="detailed-product__price-container">
+            {productPrice()}
+            {buttons()}
+          </div>
         </div>
       )}
       {isModalOpen && (
