@@ -148,3 +148,20 @@ export const mainPageBannerImage =
   'https://drive.google.com/thumbnail?id=1DNgavx4i_HtVplTutrSlhanD0jBfVHgC';
 export const mainPagePromoImage =
   'https://drive.google.com/thumbnail?id=1SDPiU64u4At9qIQqFHuf5N5EJagHAuDA';
+
+export const teamDescription = `
+    Welcome to our Online Comic Book Shop! Our platform brings you the finest
+    American comics and Japanese, Korean, and Chinese manga right to your
+    screen. We've crafted this digital experience to make discovering your
+    favorite titles convenient and enjoyable from home. \n
+
+    Our intuitive interface ensures a smooth journey from browsing our
+    collection to completing your purchase. We emphasize user engagement and
+    build trust at every step.
+    Browse our extensive selection of comics and manga, featuring detailed
+    descriptions and vibrant images. Add your top picks to your cart with ease
+    and enjoy a streamlined checkout process. For your convenience, we provide
+    quick registration and login, powerful search features, and user-friendly
+    categorization.
+    Dive into the world of comics and manga from the comfort of your home with
+    our online shop.`;
