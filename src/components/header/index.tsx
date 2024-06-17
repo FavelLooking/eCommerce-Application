@@ -5,11 +5,23 @@ import { useAuth } from '../../hooks/useAuth';
 import AuthService from '../../services/authService';
 import HeaderLink from './header_link';
 import Dropdown from './dropdown';
-import { catalogMenuItems } from '../../utils/constants';
+import {
+  catalogMenuItems,
+  headerAboutImage,
+  headerCartImage,
+  headerCatalogImage,
+  headerHomeImage,
+  headerLoginImage,
+  headerLogoImage,
+  headerLogoutImage,
+  headerProfileImage,
+  headerRegisterImage,
+} from '../../utils/constants';
 
-export default function Header() {
+export default function Header(props: { cartCounter: number }) {
   const { user, logout } = useAuth();
   const [dropdown, setDropdown] = useState(false);
+  const { cartCounter } = props;
 
   const logoutUser = () => {
     AuthService.logoutUser();
@@ -19,30 +31,48 @@ export default function Header() {
   return (
     <div className="header">
       <Link to="/">
-        <img
-          src="https://drive.google.com/thumbnail?id=1anQTSugURy_yNgW3hAIzsbKneY-mCC3I"
-          className="header-logo"
-          alt="Logo"
-        />
+        <img src={headerLogoImage} className="header-logo" alt="Logo" />
       </Link>
       <ul className="header-links">
-        <HeaderLink isDisplayed text="Home" />
+        <HeaderLink isDisplayed linkImage={headerHomeImage} />
         <li
           role="presentation"
           onMouseEnter={() => setDropdown(true)}
           onMouseLeave={() => setDropdown(false)}
           onClick={() => setDropdown(!dropdown)}
         >
-          <HeaderLink isDisplayed path="catalog" text="Catalog" />
+          <HeaderLink
+            isDisplayed
+            path="catalog"
+            linkImage={headerCatalogImage}
+          />
           {dropdown && <Dropdown data={catalogMenuItems} id="catalog" />}
         </li>
-        <HeaderLink isDisplayed={!user} path="login" text="Login" />
-        <HeaderLink isDisplayed={!user} path="register" text="Register" />
-        <HeaderLink isDisplayed={user} path="profile" text="Profile" />
-        <HeaderLink isDisplayed path="about" text="About Us" />
+        <HeaderLink
+          isDisplayed={!user}
+          path="login"
+          linkImage={headerLoginImage}
+        />
+        <HeaderLink
+          isDisplayed={!user}
+          path="register"
+          linkImage={headerRegisterImage}
+        />
         <HeaderLink
           isDisplayed={user}
-          text="Logout"
+          path="profile"
+          linkImage={headerProfileImage}
+        />
+        <HeaderLink
+          isDisplayed
+          path="cart"
+          linkImage={headerCartImage}
+          linkIcon={cartCounter}
+        />
+        <HeaderLink isDisplayed path="about" linkImage={headerAboutImage} />
+        <HeaderLink
+          isDisplayed={user}
+          linkImage={headerLogoutImage}
           className="logout-link"
           onclick={logoutUser}
         />
