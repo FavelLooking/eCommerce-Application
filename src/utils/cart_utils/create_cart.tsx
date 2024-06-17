@@ -11,6 +11,8 @@ export default async function CreateCart(item: string) {
       style: {
         background: 'linear-gradient(to right, #00b09b, #96c93d)',
       },
+      gravity: 'bottom',
+      position: 'right',
     }).showToast();
   };
   if (!AuthService.getFromLocalStorage('cartId')) {
