@@ -1,8 +1,8 @@
 import {
-  Price,
-  DiscountedPrice,
   ProductProjection,
   Category,
+  CentPrecisionMoney,
+  TypedMoney,
 } from '@commercetools/platform-sdk';
 import ClientFactory from './clientFactory';
 import { isValidPath } from '../utils';
@@ -28,10 +28,14 @@ const generateFilterString = (props: {
 
 export const getProducts = async (
   path: string,
+  limit: number,
   sortingType: string | undefined = undefined,
-  filteringType: string[] | undefined = undefined
+  filteringType: string[] | undefined = undefined,
+  page: number = 1
 ) => {
   const data: ProductProjection[] = [];
+  let totalProducts: number = 0;
+
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
     const currentCategory = await getCategoryByPath(currentCategoryTitle);
@@ -45,7 +49,8 @@ export const getProducts = async (
       .search()
       .get({
         queryArgs: {
-          limit: 500,
+          limit,
+          offset: (page - 1) * limit,
           filter: filterString,
           sort: sortingType ?? SortingTypes.NAMEASC,
         },
@@ -53,16 +58,20 @@ export const getProducts = async (
       .execute()
       .then((value) => {
         data.push(...(value.body.results as ProductProjection[]));
+        totalProducts = value.body.total ?? 0;
       });
   }
-  return data;
+  return { data, totalProducts };
 };
 
-const getPriceValue = (price: Price | DiscountedPrice): string => {
-  const priceCents = price.value.centAmount;
-  const priceDigits = price.value.fractionDigits;
+export const getPriceValue = (
+  price: TypedMoney | CentPrecisionMoney,
+  quantity: number = 1
+): string => {
+  const priceCents = price.centAmount;
+  const priceDigits = price.fractionDigits;
 
-  return `${priceCents / 10 ** priceDigits} ${priceCurrency}`;
+  return `${(quantity * priceCents) / 10 ** priceDigits} ${priceCurrency}`;
 };
 
 export const getProductPrice = (
@@ -73,9 +82,9 @@ export const getProductPrice = (
     return [undefined, undefined];
   }
 
-  const originalPrice = getPriceValue(price);
+  const originalPrice = getPriceValue(price.value);
   const discountPrice = price.discounted
-    ? getPriceValue(price.discounted)
+    ? getPriceValue(price.discounted.value)
     : undefined;
 
   return [originalPrice, discountPrice];
@@ -90,8 +99,15 @@ export const getProductName = (product: ProductProjection): string =>
 export const getProductDescription = (product: ProductProjection): string =>
   product.metaDescription?.en ?? '';
 
-export const searchProducts = async (path: string, searchValue: string) => {
+export const searchProducts = async (
+  path: string,
+  limit: number,
+  searchValue: string,
+  page: number = 1
+) => {
   const data: ProductProjection[] = [];
+  let totalProducts: number = 0;
+
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
     const currentCategory = await getCategoryByPath(currentCategoryTitle);
@@ -104,7 +120,8 @@ export const searchProducts = async (path: string, searchValue: string) => {
       .search()
       .get({
         queryArgs: {
-          limit: 500,
+          limit,
+          offset: (page - 1) * limit,
           filter: filterString,
           'text.en': searchValue,
           fuzzy: true,
@@ -113,7 +130,8 @@ export const searchProducts = async (path: string, searchValue: string) => {
       .execute()
       .then((value) => {
         data.push(...(value.body.results as ProductProjection[]));
+        totalProducts = value.body.total ?? 0;
       });
   }
-  return data;
+  return { data, totalProducts };
 };

@@ -37,6 +37,8 @@ export const textSpacesPattern = {
 
 export const storageLoginError = 'LoginErrorMessage';
 export const storageIsLogined = 'IsUserLogined';
+export const storageCustomerId = 'customerId';
+export const storageCartId = 'cartId';
 
 export const catalogMenuItems = [
   {
@@ -135,3 +137,25 @@ export const lengthFilter = [
   'from 300 to 500 pages',
   'from 500 to 1500 pages',
 ];
+
+export const pageLimit = 10;
+
+export const deleteText = '❌';
+export const plusText = '➕';
+export const minusText = '➖';
+
+export const notFoundPageImage = 'https://i.ibb.co/bmn9DLc/not-found-page.png';
+export const emptyCartImage = 'https://i.ibb.co/JptLRFn/cart-empty.png';
+export const headerLogoImage = 'https://i.ibb.co/KcnrCbB/header-logo.png';
+export const headerLoginImage = 'https://i.ibb.co/X7GWYSN/header-login.png';
+export const headerLogoutImage = 'https://i.ibb.co/KXDph9q/header-logout.png';
+export const headerCartImage = 'https://i.ibb.co/PmTYjkB/header-cart.png';
+export const headerHomeImage = 'https://i.ibb.co/6mwWhsr/header-home.png';
+export const headerAboutImage = 'https://i.ibb.co/NCRVttw/header-about.png';
+export const headerProfileImage = 'https://i.ibb.co/2tmC8Yb/header-profile.png';
+export const headerCatalogImage = 'https://i.ibb.co/TMfzMW7/header-catalog.png';
+export const headerRegisterImage =
+  'https://i.ibb.co/cyDDH4z/header-register.png';
+export const mainPageBannerImage = 'https://i.ibb.co/V3MH2Dk/main-baner.png';
+export const mainPagePromoImage =
+  'https://i.ibb.co/tJWM3Wx/main-promocodes.png';

@@ -1,0 +1,153 @@
+.cart-wrapper {
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  & > * {
+    width: calc(100% - 30px);
+    max-width: 800px;
+    @media (min-width: 500px) {
+      max-width: 800px;
+    }
+    @media (min-width: 1000px) {
+      width: 800px;
+    }
+  }
+}
+
+.cart-item {
+  margin-top: 10px;
+  outline: 1px solid transparent;
+  padding: 10px;
+  &:hover {
+    outline: 1px solid #48304d;
+    cursor: default;
+  }
+}
+
+.cart-item-info {
+  width: calc(100% - 115px);
+  justify-content: space-between;
+  margin: 0 5px;
+  flex-wrap: wrap;
+}
+
+.cart-empty {
+  width: calc(100% - 10px);
+  max-width: 500px;
+}
+
+.cart-item-image {
+  width: 60px;
+  height: 90px;
+}
+
+.cart-button {
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  background-color: transparent;
+  justify-content: center;
+  align-content: center;
+  &:hover {
+    background-color: #15f1ec;
+    cursor: pointer;
+  }
+  &:disabled:hover {
+    background-color: transparent;
+    cursor: default;
+  }
+}
+
+.count-contol {
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #48304d;
+  border-radius: 10px;
+  & > * {
+    width: 30px;
+    text-align: center;
+  }
+}
+
+.cart-item-price {
+  min-width: 70px;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: end;
+}
+
+.cart-item-price-ea {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.cart-total {
+  margin: 10px;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+}
+
+.cart-link,
+.cart-clear {
+  width: fit-content;
+}
+
+.cart-promo,
+.cart-applied-promo {
+  margin: 10px 0;
+  justify-content: flex-end;
+}
+
+.cart-price {
+  color: #f865b0;
+  margin-left: 10px;
+  text-align: end;
+}
+
+.cart-discounted {
+  color: #48304d;
+  text-decoration: line-through;
+}
+
+.cart-applied-promo {
+  width: fit-content;
+  align-self: flex-end;
+}
+
+.cart-promocode-input {
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #48304d;
+  width: 100px;
+  color: #f865b0;
+  background-color: transparent;
+  &:hover {
+    cursor: text;
+  }
+}
+
+.cart-promocode-apply {
+  border: 1px solid transparent;
+  background-color: transparent;
+  margin-left: 5px;
+  &:hover {
+    border-color: #48304d;
+    cursor: pointer;
+  }
+}
+
+.cart-link {
+  border-radius: 30px;
+  color: #fbcaef;
+  padding: 10px 20px;
+  background: #f865b0;
+  margin-top: 20px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

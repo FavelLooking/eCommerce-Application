@@ -1,23 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import './catalog.scss';
 import { getProducts, searchProducts } from '../../services/productService';
-
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
-import redirect from '../../services/redirectService';
 import { FilterFields, SortingTypes } from '../../types';
-import { lengthFilter, priceFilter, sortButtons } from '../../utils/constants';
+import {
+  lengthFilter,
+  pageLimit,
+  priceFilter,
+  sortButtons,
+} from '../../utils/constants';
+import AuthService from '../../services/authService';
+import CartService from '../../services/cartService';
 
 export default function CatalogPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [data, setData] = useState<ProductProjection[]>();
+  const [products, setProducts] = useState<ProductProjection[]>();
   const [isSort, setSort] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isFilter, setFilter] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const prevLocationPathname = useRef(location.pathname);
 
   const { register, handleSubmit, reset } = useForm<FilterFields>();
 
@@ -33,12 +41,26 @@ export default function CatalogPage() {
   };
 
   useEffect(() => {
+    if (location.pathname !== prevLocationPathname.current) {
+      setCurrentPage(1);
+      prevLocationPathname.current = location.pathname;
+    }
     toogleSettings(false, false);
-    getProducts(location.pathname).then((value: ProductProjection[]) => {
-      clearUtilsStorage();
-      if (value.length) setData(value);
-      else navigate('not-found');
-    });
+    getProducts(location.pathname, pageLimit).then(
+      ({
+        data,
+        totalProducts,
+      }: {
+        data: ProductProjection[];
+        totalProducts: number | undefined;
+      }) => {
+        clearUtilsStorage();
+        if (data.length && totalProducts) {
+          setTotalPages(Math.ceil(totalProducts / pageLimit));
+          setProducts(data);
+        } else navigate('not-found');
+      }
+    );
   }, [location, navigate]);
 
   const generateFilterString = (): string[] => [
@@ -49,21 +71,36 @@ export default function CatalogPage() {
   const generateSortingString = (): string =>
     sessionStorage.getItem('sort') ?? SortingTypes.NAMEASC;
 
-  const changeData = async () => {
+  const changeData = async (page: number = 1) => {
     toogleSettings(false, false);
     getProducts(
       location.pathname,
+      pageLimit,
       generateSortingString(),
-      generateFilterString()
-    ).then((value: ProductProjection[]) => setData(value));
+      generateFilterString(),
+      page
+    ).then(
+      ({
+        data,
+        totalProducts,
+      }: {
+        data: ProductProjection[];
+        totalProducts: number;
+      }) => {
+        setTotalPages(Math.ceil(totalProducts / pageLimit));
+        setProducts(data);
+      }
+    );
   };
 
   const sort = async (sortingType: string) => {
+    setCurrentPage(1);
     sessionStorage.setItem('sort', sortingType);
     await changeData();
   };
 
   const filter: SubmitHandler<FilterFields> = async (filterData) => {
+    setCurrentPage(1);
     const price = filterData.price.split(' ');
     if (price.length === 5) {
       sessionStorage.setItem(
@@ -92,12 +129,30 @@ export default function CatalogPage() {
   };
 
   const search = async () => {
+    setCurrentPage(1);
     clearUtilsStorage();
     reset();
-    searchProducts(location.pathname, searchValue).then(
-      (value: ProductProjection[]) => setData(value)
+    searchProducts(location.pathname, pageLimit, searchValue).then(
+      ({
+        data,
+        totalProducts,
+      }: {
+        data: ProductProjection[];
+        totalProducts: number;
+      }) => {
+        if (data.length && totalProducts) {
+          setProducts(data);
+          setTotalPages(Math.ceil(totalProducts / pageLimit));
+        }
+      }
     );
   };
+
+  useEffect(() => {
+    if (AuthService.getFromLocalStorage('cartId')) {
+      CartService.getCart(AuthService.getFromLocalStorage('cartId') as string);
+    }
+  }, []);
 
   return (
     <div className="catalog_wrapper">
@@ -164,21 +219,45 @@ export default function CatalogPage() {
           />
         ))}
       </div>
-      {data?.length ? (
+      {products?.length ? (
         <div className="catalog_flex">
-          {data?.map((item) => (
-            <li
-              key={item.id}
-              onClick={() =>
-                redirect(item.categories.at(0)?.id as string, item.id, navigate)
-              }
-            >
+          {products?.map((item) => (
+            <li key={item.id}>
               <CatalogItem product={item} />
             </li>
           ))}
         </div>
       ) : (
         <div className="catalog-error">There are no matching products</div>
+      )}
+      {totalPages > 0 && (
+        <div className="pagination">
+          <button
+            className={`pagination__button ${
+              currentPage === 1 ? 'pagination__button_disabled' : ''
+            }`}
+            type="button"
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+              changeData(currentPage - 1);
+            }}
+          >
+            Prev page
+          </button>
+          <span className="pagination__page">{currentPage}</span>
+          <button
+            className={`pagination__button ${
+              currentPage === totalPages ? 'pagination__button_disabled' : ''
+            }`}
+            type="button"
+            onClick={() => {
+              setCurrentPage(currentPage + 1);
+              changeData(currentPage + 1);
+            }}
+          >
+            Next page
+          </button>
+        </div>
       )}
     </div>
   );

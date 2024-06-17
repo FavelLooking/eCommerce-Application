@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   createBrowserRouter,
   Navigate,
@@ -16,13 +16,22 @@ import ProfilePage from './components/profile/profile_page';
 import CatalogPage from './components/catalog/catalog_page';
 import DetailedProductPage from './components/detailed_product/detailed_product_page';
 import ChangePasswordPage from './components/profile/change_password_page';
+import CartPage from './components/cart/cart_page';
+import AboutUsPage from './components/about_us/about_us_page';
+import { getCart } from './services/cartService';
 
 function Root() {
+  const [cartCounter, setCounter] = useState(0);
+
+  getCart()?.then((cartResponse) =>
+    setCounter(cartResponse.lineItems.length ?? 0)
+  );
+
   return (
     <AuthProvider>
       <div className="app-container">
-        <Header />
-        <Outlet />
+        <Header cartCounter={cartCounter} />
+        <Outlet context={setCounter} />
       </div>
     </AuthProvider>
   );
@@ -72,6 +81,10 @@ const router = createBrowserRouter([
         element: <CatalogPage />,
       },
       {
+        path: 'cart',
+        element: <CartPage />,
+      },
+      {
         path: 'catalog/:category',
         element: <CatalogPage />,
       },
@@ -98,6 +111,10 @@ const router = createBrowserRouter([
             <ProfilePage />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: 'about',
+        element: <AboutUsPage />,
       },
     ],
   },
