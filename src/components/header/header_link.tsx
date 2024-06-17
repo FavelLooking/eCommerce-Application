@@ -4,13 +4,14 @@ import { NavLink } from 'react-router-dom';
 type HeaderLinkProps = {
   isDisplayed: boolean;
   path: string;
-  text: string;
   className: string;
   onclick: () => void;
+  linkIcon?: number;
+  linkImage?: string;
 };
 
 export default function HeaderLink(props: Partial<HeaderLinkProps>) {
-  const { isDisplayed, path, text, className, onclick } = props;
+  const { isDisplayed, path, className, onclick, linkIcon, linkImage } = props;
 
   return (
     isDisplayed && (
@@ -18,9 +19,18 @@ export default function HeaderLink(props: Partial<HeaderLinkProps>) {
         to={path || '/'}
         className={`header-link ${className}`}
         onClick={onclick}
-        key={`header-link-${text}`}
+        key={`header-link-${path}`}
       >
-        {text}
+        {linkImage && (
+          <div className="flex">
+            <img
+              src={linkImage}
+              alt={`header-${path}`}
+              className="header-icon-image"
+            />
+            <span>{linkIcon ?? ''}</span>
+          </div>
+        )}
       </NavLink>
     )
   );

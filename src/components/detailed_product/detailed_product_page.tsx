@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Cart } from '@commercetools/platform-sdk';
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -9,12 +10,15 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import getInfoAboutProduct from '../../services/getDetailedProductInfo';
 import ProductInfo from '../../types/detailed_product_types/fetch_detailed_product_types';
 import { isValidPath } from '../../utils';
+import { getCart } from '../../services/cartService';
+import CreateCart from '../../utils/cart_utils/create_cart';
 
 function DetailedProductPage() {
   const { productId } = useParams();
   const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
+  const [isInCart, setIsInCart] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -22,6 +26,18 @@ function DetailedProductPage() {
     if (!isValidPath(location.pathname)) {
       navigate('not-found');
     } else {
+      getCart()?.then((cart: Cart) => {
+        const cartDataArr = cart.lineItems;
+        const cartDataArrId: string[] = [];
+        for (let i = 0; i < cartDataArr.length; i += 1) {
+          cartDataArrId.push(cartDataArr[i].productId);
+        }
+        if (cartDataArrId.includes(productId as string)) {
+          setIsInCart(true);
+        } else {
+          setIsInCart(false);
+        }
+      });
       getInfoAboutProduct(productId as string)
         .then((data: ProductInfo) => {
           setProductInfo(data);
@@ -78,6 +94,11 @@ function DetailedProductPage() {
     setIsModalOpen(false);
   };
 
+  const handleAddToCart = () => {
+    CreateCart(productId as string);
+    setIsInCart(true);
+  };
+
   const productPrice = () => {
     if (!productInfo?.productPrice) {
       return (
@@ -103,6 +124,21 @@ function DetailedProductPage() {
         </div>
       </div>
     );
+  };
+
+  const buttons = () => {
+    if (!isInCart) {
+      return (
+        <button
+          type="button"
+          className="detailed-product__button"
+          onClick={handleAddToCart}
+        >
+          Add to cart
+        </button>
+      );
+    }
+    return '';
   };
 
   return (
@@ -131,7 +167,10 @@ function DetailedProductPage() {
           <p className="detailed-product__description">
             {productInfo.productDescription}
           </p>
-          {productPrice()}
+          <div className="detailed-product__price-container">
+            {productPrice()}
+            {buttons()}
+          </div>
         </div>
       )}
       {isModalOpen && (

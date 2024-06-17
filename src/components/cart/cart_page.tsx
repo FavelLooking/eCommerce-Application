@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useOutletContext } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import {
   Cart,
@@ -36,6 +36,8 @@ export default function CartPage() {
     promo: string;
   }>();
   const [displayPopup, setDisplay] = useState(false);
+  const setCounter: React.Dispatch<React.SetStateAction<number>> =
+    useOutletContext();
 
   useEffect(() => {
     setChangeDisable(true);
@@ -43,6 +45,7 @@ export default function CartPage() {
     if (response) {
       response.then((cartValue) => {
         if (cartValue.lineItems?.length) {
+          setCounter(cartValue.lineItems.length);
           setCart(cartValue);
           setError(false);
           setChangeDisable(false);
@@ -50,13 +53,15 @@ export default function CartPage() {
             setPromocode(promocodeValue.body.results);
           });
         } else {
+          setCounter(0);
           setError(true);
         }
       });
     } else {
+      setCounter(0);
       setError(true);
     }
-  }, [location, reload]);
+  }, [location, reload, setCounter]);
 
   const getPrice = (
     original: CentPrecisionMoney | undefined,
