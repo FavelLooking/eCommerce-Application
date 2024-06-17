@@ -32,24 +32,24 @@ export const teamDescription = (
 export const contributions = [
   [
     'Set up Netlify for website deployment',
-    'Developed login, catalog, main and error pages',
-    'Set up router (React Router)',
+    'Developed login, cart, catalog, main, header and 404 pages',
     'Added tests with Jest for the project',
-    'Set up products filtering, sorting and searching',
-    'Set up categories navigation',
-    'Implemented promo code feature',
+    `Set up routing (React Router)`,
   ],
   [
     'Added development scripts and set up repository',
     'Implemented interactive product cards',
-    'Developed registration, catalog and cart',
-    'Implemented modal window with images of products',
+    'Developed registration page and detailed product page',
+    'Implemented pagination on catalog page',
+    `Set up routing (React Router)`,
   ],
   [
     'Created Development Environment Configuration',
     `Set up CommerceTools Project`,
-    `Handle Authentication Token`,
-    'Developed about us and user profile pages',
+    `Handled Authentication Token`,
+    'Developed about us, header and user profile pages',
+    `Integration of the Commerce tools SDK`,
+    `Set up routing (React Router)`,
   ],
 ];
 
@@ -73,7 +73,7 @@ export const description = [
 ];
 
 export function generateKey(content: string) {
-  return content.substring(0, 9);
+  return content.substring(0, 14);
 }
 
 export const logo =
