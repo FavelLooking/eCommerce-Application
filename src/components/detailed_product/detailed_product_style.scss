@@ -137,7 +137,10 @@
   display: flex;
   padding: 20px;
   align-items: center;
-  width: 20vw;
+  width: 40vw;
+  @media (max-width: 500px) {
+    width: 70vw;
+  }
 }
 
 .detailed-product__button {
@@ -151,5 +154,8 @@
   &:hover {
     cursor: pointer;
     background-color: #fbcaef;
+  }
+  @media (max-width: 850px) {
+    font-size: 1rem;
   }
 }
