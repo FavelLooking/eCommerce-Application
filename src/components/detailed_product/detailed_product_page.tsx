@@ -11,6 +11,7 @@ import getInfoAboutProduct from '../../services/getDetailedProductInfo';
 import ProductInfo from '../../types/detailed_product_types/fetch_detailed_product_types';
 import { isValidPath } from '../../utils';
 import { getCart } from '../../services/cartService';
+import CreateCart from '../../utils/cart_utils/create_cart';
 
 function DetailedProductPage() {
   const { productId } = useParams();
@@ -97,6 +98,11 @@ function DetailedProductPage() {
     setIsModalOpen(false);
   };
 
+  const handleAddToCart = () => {
+    CreateCart(productId as string);
+    setIsInCart(true);
+  };
+
   const productPrice = () => {
     if (!productInfo?.productPrice) {
       return (
@@ -126,7 +132,11 @@ function DetailedProductPage() {
 
   const buttons = () => {
     if (!isInCart) {
-      return <button type="button">Add to cart</button>;
+      return (
+        <button type="button" onClick={handleAddToCart}>
+          Add to cart
+        </button>
+      );
     }
     return '';
   };
