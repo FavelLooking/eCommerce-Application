@@ -6,7 +6,12 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './detailed_product_style.scss';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from 'react-router-dom';
 import getInfoAboutProduct from '../../services/getDetailedProductInfo';
 import ProductInfo from '../../types/detailed_product_types/fetch_detailed_product_types';
 import { isValidPath } from '../../utils';
@@ -22,6 +27,9 @@ function DetailedProductPage() {
   const [isInCart, setIsInCart] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const setCounter: React.Dispatch<React.SetStateAction<number>> =
+    useOutletContext();
 
   useEffect(() => {
     if (!isValidPath(location.pathname)) {
@@ -96,12 +104,20 @@ function DetailedProductPage() {
   };
 
   const handleAddToCart = () => {
-    CreateCart(productId as string);
+    CreateCart(productId as string).then(() => {
+      getCart()?.then((cartValue: Cart) =>
+        setCounter(cartValue.lineItems.length ?? 0)
+      );
+    });
     setIsInCart(true);
   };
 
   const handleRemoveFromeCart = () => {
-    removeItemFromCart(productId as string);
+    removeItemFromCart(productId as string).then(() => {
+      getCart()?.then((cartValue: Cart) =>
+        setCounter(cartValue.lineItems.length ?? 0)
+      );
+    });
     setIsInCart(false);
   };
 
