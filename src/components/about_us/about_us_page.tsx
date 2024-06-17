@@ -1,9 +1,13 @@
 import React from 'react';
+import './about.scss';
+import { teamDescription } from '../../utils/about_constants';
+import TeamMember from './team_member';
 
 export default function AboutUsPage() {
   return (
-    <div>
-      <h1>About us</h1>
+    <div className="about">
+      <div className="team-description">{teamDescription}</div>
+      <TeamMember />
     </div>
   );
 }
