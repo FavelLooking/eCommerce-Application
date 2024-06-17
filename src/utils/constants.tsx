@@ -37,6 +37,8 @@ export const textSpacesPattern = {
 
 export const storageLoginError = 'LoginErrorMessage';
 export const storageIsLogined = 'IsUserLogined';
+export const storageCustomerId = 'customerId';
+export const storageCartId = 'cartId';
 
 export const catalogMenuItems = [
   {
@@ -136,4 +138,17 @@ export const lengthFilter = [
   'from 500 to 1500 pages',
 ];
 
+
 export const pageLimit = 10;
+
+export const deleteText = '❌';
+export const plusText = '➕';
+export const minusText = '➖';
+
+export const emptyCartImage =
+  'https://drive.google.com/thumbnail?id=1WsXZZi5SC0G_DT4lXwQHtr_lfsiU-RnN';
+export const mainPageBannerImage =
+  'https://drive.google.com/thumbnail?id=1DNgavx4i_HtVplTutrSlhanD0jBfVHgC';
+export const mainPagePromoImage =
+  'https://drive.google.com/thumbnail?id=1SDPiU64u4At9qIQqFHuf5N5EJagHAuDA';
+

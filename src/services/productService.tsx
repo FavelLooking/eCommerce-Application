@@ -1,8 +1,8 @@
 import {
-  Price,
-  DiscountedPrice,
   ProductProjection,
   Category,
+  CentPrecisionMoney,
+  TypedMoney,
 } from '@commercetools/platform-sdk';
 import ClientFactory from './clientFactory';
 import { isValidPath } from '../utils';
@@ -64,11 +64,14 @@ export const getProducts = async (
   return { data, totalProducts };
 };
 
-const getPriceValue = (price: Price | DiscountedPrice): string => {
-  const priceCents = price.value.centAmount;
-  const priceDigits = price.value.fractionDigits;
+export const getPriceValue = (
+  price: TypedMoney | CentPrecisionMoney,
+  quantity: number = 1
+): string => {
+  const priceCents = price.centAmount;
+  const priceDigits = price.fractionDigits;
 
-  return `${priceCents / 10 ** priceDigits} ${priceCurrency}`;
+  return `${(quantity * priceCents) / 10 ** priceDigits} ${priceCurrency}`;
 };
 
 export const getProductPrice = (
@@ -79,9 +82,9 @@ export const getProductPrice = (
     return [undefined, undefined];
   }
 
-  const originalPrice = getPriceValue(price);
+  const originalPrice = getPriceValue(price.value);
   const discountPrice = price.discounted
-    ? getPriceValue(price.discounted)
+    ? getPriceValue(price.discounted.value)
     : undefined;
 
   return [originalPrice, discountPrice];
