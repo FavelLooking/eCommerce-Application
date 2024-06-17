@@ -75,3 +75,11 @@ export const description = [
 export function generateKey(content: string) {
   return content.substring(0, 9);
 }
+
+export const logo =
+  'https://s.dou.ua/CACHE/images/img/events/rs-school/c469cd93b844c1ef4136a82c31fdf9ba.png';
+
+export const schoolDescription =
+  'RS School offers a unique learning experience as a free, community-based online education initiative. The RS School has been run by the Rolling Scopes community since 2013.';
+
+export const schoolLink = 'https://rs.school/';

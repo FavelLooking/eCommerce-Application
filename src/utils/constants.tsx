@@ -157,4 +157,5 @@ export const headerCatalogImage = 'https://i.ibb.co/TMfzMW7/header-catalog.png';
 export const headerRegisterImage =
   'https://i.ibb.co/cyDDH4z/header-register.png';
 export const mainPageBannerImage = 'https://i.ibb.co/V3MH2Dk/main-baner.png';
-export const mainPagePromoImage ='https://i.ibb.co/tJWM3Wx/main-promocodes.png';
+export const mainPagePromoImage =
+  'https://i.ibb.co/tJWM3Wx/main-promocodes.png';
