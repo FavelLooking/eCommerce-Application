@@ -98,7 +98,7 @@ export default class CartService {
         }));
 
       if (actions.length > 0) {
-        await apiRoot
+        const updateResponse = await apiRoot
           .me()
           .carts()
           .withId({ ID: cartId })
@@ -109,13 +109,12 @@ export default class CartService {
             },
           })
           .execute();
-      }
 
-      // После выполнения удаления, обновляем версию корзины в localStorage
-      await AuthService.saveToLocalStorage(
-        'cartVersion',
-        cartResponse.body.version.toString()
-      );
+        await AuthService.saveToLocalStorage(
+          'cartVersion',
+          updateResponse.body.version.toString()
+        );
+      }
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       AuthService.saveToLocalStorage('cartError', errorMessage);
