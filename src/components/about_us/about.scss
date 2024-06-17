@@ -113,3 +113,18 @@
 .name-link:hover {
   color: rgba(51, 51, 64, 0.768);
 }
+
+.school-logo {
+  width: 4rem;
+  height: 4rem;
+}
+.school-description {
+  width: 40%;
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+.school-wrapper {
+  display: flex;
+  justify-content: center;
+}
