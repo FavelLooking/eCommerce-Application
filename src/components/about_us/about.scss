@@ -1,12 +1,71 @@
 .about {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   padding: 1rem;
+  align-items: center;
+  @media (max-width: 650px) {
+    font-size: smaller;
+  }
 }
 
 .team-description {
   max-width: 55rem;
   border: 1px rgba(0, 0, 0, 0.178) solid;
-  padding: 2rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+
+.member-photo {
+  max-width: 15rem;
+  max-height: 15rem;
+  border-radius: 50%;
+  object-fit: cover;
+  @media (max-width: 850px) {
+    max-width: 12rem;
+    max-height: 12rem;
+  }
+  @media (max-width: 650px) {
+    max-width: 9rem;
+    max-height: 9rem;
+  }
+  @media (max-width: 500px) {
+    max-width: 6.7rem;
+    max-height: 6.7rem;
+  }
+}
+
+.images-component,
+.description-component,
+.names-component {
+  display: flex;
+
+  justify-content: space-around;
+}
+
+.names-text {
+  display: flex;
+  justify-content: center;
+  min-width: 7rem;
+  font-size: large;
+  font-weight: 700;
+}
+
+.description-text {
+  max-width: 28%;
+  font-size: medium;
+  @media (max-width: 850px) {
+    font-size: small;
+  }
+  @media (max-width: 500px) {
+    font-size: x-small;
+  }
+}
+
+.contribution-wrapper {
+  display: flex;
+}
+
+.contribution-text {
+  max-width: 88%;
 }

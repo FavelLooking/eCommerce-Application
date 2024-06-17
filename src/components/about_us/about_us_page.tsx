@@ -1,6 +1,6 @@
 import React from 'react';
 import './about.scss';
-import teamDescription from '../../utils/about_constants';
+import { teamDescription } from '../../utils/about_constants';
 import TeamMember from './team_member';
 
 export default function AboutUsPage() {

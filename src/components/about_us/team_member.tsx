@@ -1,14 +1,18 @@
 import React from 'react';
+import {
+  DescriptionComponent,
+  NamesComponent,
+  ImgComponent,
+  ContributionComponent,
+} from '../../utils/about_constants';
 
 export default function TeamMember() {
   return (
     <div className="member-wrapper">
-      <div className="photo-block">
-        <img src="" alt="" />
-      </div>
-      <div className="name-block" />
-      <div className="description-block" />
-      <div className="contribution-block" />
+      <ImgComponent />
+      <NamesComponent />
+      <DescriptionComponent />
+      <ContributionComponent />
     </div>
   );
 }
