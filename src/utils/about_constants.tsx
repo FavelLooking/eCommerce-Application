@@ -95,26 +95,25 @@ export function DescriptionComponent() {
 }
 const contributions = [
   [
-    'Added development scripts and set up repository',
     'Set up Netlify for website deployment',
-    'Developed registration, products, main, about us and error pages',
-    'Implemented interactive product cards',
-    'Set up router (Navigo library)',
+    'Developed login, catalog, main and error pages',
+    'Set up router (React Router)',
+    'Added tests with Jest for the project',
+    'Set up products filtering, sorting and searching',
+    'Set up categories navigation',
+    'Implemented promo code feature',
   ],
   [
-    'Added comprehensive README to the project',
-    'Set up CommerceTools Project',
-    'Added tests with Jest for the project',
-    'Set up inputs validation',
-    'Developed login, catalog and cart',
-    'Set up products filtering, sorting and searching',
+    'Added development scripts and set up repository',
+    'Implemented interactive product cards',
+    'Developed registration, catalog and cart',
+    'Implemented modal window with images of products',
   ],
   [
     'Created Development Environment Configuration',
-    'Set up categories navigation',
-    'Developed registration, login, cart, user profile pages and header',
-    'Set up router (Navigo library)',
-    'Implemented modal window with images of products',
+    `Set up CommerceTools Project`,
+    `Handle Authentication Token`,
+    'Developed about us and user profile pages',
   ],
 ];
 

@@ -1,19 +1,41 @@
 .about {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0.5rem;
   align-items: center;
   @media (max-width: 650px) {
     font-size: smaller;
   }
 }
 
-.team-description {
+.team-description,
+.member-wrapper {
   max-width: 55rem;
   border: 1px rgba(0, 0, 0, 0.178) solid;
-  padding: 0.5rem 1.5rem;
+  padding: 1rem 0.5rem;
   border-radius: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.team-description::before,
+.member-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(https://wallpapers.com/images/featured/comic-book-background-a09lfl6egxpsqgwc.jpg);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.05;
+  z-index: -1;
+}
+
+.team-description > p {
+  margin: 0.5rem;
 }
 
 .member-photo {
@@ -25,11 +47,11 @@
     max-width: 12rem;
     max-height: 12rem;
   }
-  @media (max-width: 650px) {
+  @media (max-width: 680px) {
     max-width: 9rem;
     max-height: 9rem;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 533px) {
     max-width: 6.7rem;
     max-height: 6.7rem;
   }
@@ -37,10 +59,14 @@
 
 .images-component,
 .description-component,
-.names-component {
+.names-component,
+.contribution-wrapper {
   display: flex;
 
   justify-content: space-around;
+  border: 1px solid rgba(0, 0, 0, 0.033);
+  border-radius: 1rem;
+  padding: 0.3rem;
 }
 
 .names-text {
@@ -52,20 +78,28 @@
 }
 
 .description-text {
-  max-width: 28%;
+  max-width: 30%;
   font-size: medium;
   @media (max-width: 850px) {
     font-size: small;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 533px) {
     font-size: x-small;
   }
 }
 
-.contribution-wrapper {
-  display: flex;
+.contribution-text {
+  max-width: 95%;
+  @media (max-width: 850px) {
+    font-size: small;
+    margin: 0.5rem 0;
+  }
 }
 
-.contribution-text {
-  max-width: 88%;
+.contribution-text::before {
+  content: '- ';
+}
+
+.contribution-container {
+  width: 30%;
 }
