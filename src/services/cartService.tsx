@@ -157,7 +157,10 @@ export default class CartService {
       const cartInfo = await apiRoot.me().activeCart().get().execute();
 
       const cartId = cartInfo.body.id;
+      const cartVersion = cartInfo.body.version.toString();
+
       AuthService.saveToLocalStorage('cartId', cartId);
+      AuthService.saveToLocalStorage('cartVersion', cartVersion);
     } catch (error: unknown) {
       const errorMessage = (error as Error).message;
       AuthService.saveToLocalStorage('cartError', errorMessage);
