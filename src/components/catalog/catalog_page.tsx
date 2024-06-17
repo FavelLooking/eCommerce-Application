@@ -7,7 +7,12 @@ import { getProducts, searchProducts } from '../../services/productService';
 import Breadcrumb from './breadcrumb';
 import CatalogItem from './catalog_item';
 import { FilterFields, SortingTypes } from '../../types';
-import { lengthFilter, priceFilter, sortButtons } from '../../utils/constants';
+import {
+  lengthFilter,
+  pageLimit,
+  priceFilter,
+  sortButtons,
+} from '../../utils/constants';
 import AuthService from '../../services/authService';
 import CartService from '../../services/cartService';
 
@@ -41,7 +46,7 @@ export default function CatalogPage() {
       prevLocationPathname.current = location.pathname;
     }
     toogleSettings(false, false);
-    getProducts(location.pathname).then(
+    getProducts(location.pathname, pageLimit).then(
       ({
         data,
         totalProducts,
@@ -70,6 +75,7 @@ export default function CatalogPage() {
     toogleSettings(false, false);
     getProducts(
       location.pathname,
+      pageLimit,
       generateSortingString(),
       generateFilterString(),
       page
@@ -82,7 +88,7 @@ export default function CatalogPage() {
         totalProducts: number | undefined;
       }) => {
         if (data.length && totalProducts) {
-          setTotalPages(Math.ceil(totalProducts / 10));
+          setTotalPages(Math.ceil(totalProducts / pageLimit));
           setProducts(data);
         }
       }
@@ -128,7 +134,7 @@ export default function CatalogPage() {
     setCurrentPage(1);
     clearUtilsStorage();
     reset();
-    searchProducts(location.pathname, searchValue).then(
+    searchProducts(location.pathname, pageLimit, searchValue).then(
       ({
         data,
         totalProducts,
@@ -138,7 +144,7 @@ export default function CatalogPage() {
       }) => {
         if (data.length && totalProducts) {
           setProducts(data);
-          setTotalPages(Math.ceil(totalProducts / 10));
+          setTotalPages(Math.ceil(totalProducts / pageLimit));
         }
       }
     );
@@ -230,7 +236,6 @@ export default function CatalogPage() {
         <button
           className={`pagination__button ${currentPage === 1 ? 'pagination__button_disabled' : ''}`}
           type="button"
-          disabled={currentPage === 1}
           onClick={() => {
             setCurrentPage(currentPage - 1);
             changeData(currentPage - 1);
@@ -242,7 +247,6 @@ export default function CatalogPage() {
         <button
           className={`pagination__button ${currentPage === totalPages ? 'pagination__button_disabled' : ''}`}
           type="button"
-          disabled={currentPage === totalPages}
           onClick={() => {
             setCurrentPage(currentPage + 1);
             changeData(currentPage + 1);

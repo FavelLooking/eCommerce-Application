@@ -28,10 +28,10 @@ const generateFilterString = (props: {
 
 export const getProducts = async (
   path: string,
+  limit: number,
   sortingType: string | undefined = undefined,
   filteringType: string[] | undefined = undefined,
-  page: number = 1,
-  limit: number = 10
+  page: number = 1
 ) => {
   const data: ProductProjection[] = [];
   let totalProducts: number | undefined = 0;
@@ -53,7 +53,6 @@ export const getProducts = async (
           offset: (page - 1) * limit,
           filter: filterString,
           sort: sortingType ?? SortingTypes.NAMEASC,
-          withTotal: true,
         },
       })
       .execute()
@@ -99,9 +98,9 @@ export const getProductDescription = (product: ProductProjection): string =>
 
 export const searchProducts = async (
   path: string,
+  limit: number,
   searchValue: string,
-  page: number = 1,
-  limit: number = 10
+  page: number = 1
 ) => {
   const data: ProductProjection[] = [];
   let totalProducts: number | undefined = 0;

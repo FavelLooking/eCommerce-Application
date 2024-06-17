@@ -237,10 +237,7 @@
 }
 
 .pagination__button_disabled {
-  &:hover {
-    cursor: default;
-    background-color: white;
-  }
+  visibility: hidden;
 }
 
 .pagination__page {
