@@ -25,15 +25,12 @@ function DetailedProductPage() {
     if (!isValidPath(location.pathname)) {
       navigate('not-found');
     } else {
-      console.log('selected productId', productId);
       getCart()?.then((cart: Cart) => {
-        console.log('array lineItems', cart.lineItems);
         const cartDataArr = cart.lineItems;
         const cartDataArrId: string[] = [];
         for (let i = 0; i < cartDataArr.length; i += 1) {
           cartDataArrId.push(cartDataArr[i].productId);
         }
-        console.log('result arr', cartDataArrId);
         setCartArrId(cartDataArrId);
       });
       getInfoAboutProduct(productId as string)
@@ -124,6 +121,13 @@ function DetailedProductPage() {
     );
   };
 
+  const buttons = () => {
+    if (!cartArrId.includes(productId as string)) {
+      return <button type="button">Add to cart</button>;
+    }
+    return '';
+  };
+
   return (
     <div className="detailde-product-wrapper">
       {productInfo && (
@@ -151,6 +155,7 @@ function DetailedProductPage() {
             {productInfo.productDescription}
           </p>
           {productPrice()}
+          {buttons()}
         </div>
       )}
       {isModalOpen && (
