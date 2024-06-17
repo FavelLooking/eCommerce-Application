@@ -28,10 +28,14 @@ const generateFilterString = (props: {
 
 export const getProducts = async (
   path: string,
+  limit: number,
   sortingType: string | undefined = undefined,
-  filteringType: string[] | undefined = undefined
+  filteringType: string[] | undefined = undefined,
+  page: number = 1
 ) => {
   const data: ProductProjection[] = [];
+  let totalProducts: number = 0;
+
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
     const currentCategory = await getCategoryByPath(currentCategoryTitle);
@@ -45,7 +49,8 @@ export const getProducts = async (
       .search()
       .get({
         queryArgs: {
-          limit: 500,
+          limit,
+          offset: (page - 1) * limit,
           filter: filterString,
           sort: sortingType ?? SortingTypes.NAMEASC,
         },
@@ -53,9 +58,10 @@ export const getProducts = async (
       .execute()
       .then((value) => {
         data.push(...(value.body.results as ProductProjection[]));
+        totalProducts = value.body.total ?? 0;
       });
   }
-  return data;
+  return { data, totalProducts };
 };
 
 export const getPriceValue = (
@@ -93,8 +99,15 @@ export const getProductName = (product: ProductProjection): string =>
 export const getProductDescription = (product: ProductProjection): string =>
   product.metaDescription?.en ?? '';
 
-export const searchProducts = async (path: string, searchValue: string) => {
+export const searchProducts = async (
+  path: string,
+  limit: number,
+  searchValue: string,
+  page: number = 1
+) => {
   const data: ProductProjection[] = [];
+  let totalProducts: number = 0;
+
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
     const currentCategory = await getCategoryByPath(currentCategoryTitle);
@@ -107,7 +120,8 @@ export const searchProducts = async (path: string, searchValue: string) => {
       .search()
       .get({
         queryArgs: {
-          limit: 500,
+          limit,
+          offset: (page - 1) * limit,
           filter: filterString,
           'text.en': searchValue,
           fuzzy: true,
@@ -116,7 +130,8 @@ export const searchProducts = async (path: string, searchValue: string) => {
       .execute()
       .then((value) => {
         data.push(...(value.body.results as ProductProjection[]));
+        totalProducts = value.body.total ?? 0;
       });
   }
-  return data;
+  return { data, totalProducts };
 };

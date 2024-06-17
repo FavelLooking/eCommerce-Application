@@ -209,3 +209,40 @@
   color: #48304d;
   align-self: center;
 }
+
+.pagination {
+  padding: 20px;
+  width: 30vw;
+  display: flex;
+  justify-content: space-around;
+  @media (max-width: 1000px) {
+    width: 70vw;
+  }
+}
+
+.pagination__button {
+  height: 40px;
+  border: 1px solid #48304d;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  background-color: white;
+  &:hover {
+    cursor: pointer;
+    background-color: #fbcaef;
+  }
+
+  @media (max-width: 1000px) {
+    font-size: 1rem;
+  }
+}
+
+.pagination__button_disabled {
+  visibility: hidden;
+}
+
+.pagination__page {
+  display: block;
+  padding: 5px;
+  color: #48304d;
+  font-size: 1.5rem;
+}

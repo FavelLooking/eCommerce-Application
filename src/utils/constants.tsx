@@ -138,6 +138,9 @@ export const lengthFilter = [
   'from 500 to 1500 pages',
 ];
 
+
+export const pageLimit = 10;
+
 export const deleteText = '❌';
 export const plusText = '➕';
 export const minusText = '➖';
@@ -148,3 +151,4 @@ export const mainPageBannerImage =
   'https://drive.google.com/thumbnail?id=1DNgavx4i_HtVplTutrSlhanD0jBfVHgC';
 export const mainPagePromoImage =
   'https://drive.google.com/thumbnail?id=1SDPiU64u4At9qIQqFHuf5N5EJagHAuDA';
+
