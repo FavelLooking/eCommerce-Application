@@ -138,6 +138,9 @@ export const lengthFilter = [
   'from 500 to 1500 pages',
 ];
 
+
+export const pageLimit = 10;
+
 export const deleteText = '❌';
 export const plusText = '➕';
 export const minusText = '➖';
