@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ProductProjection } from '@commercetools/platform-sdk';
-import { useNavigate } from 'react-router-dom';
+import { Cart, ProductProjection } from '@commercetools/platform-sdk';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import {
   getProductDescription,
   getProductImage,
@@ -9,7 +9,7 @@ import {
 } from '../../services/productService';
 import redirect from '../../services/redirectService';
 import CreateCart from '../../utils/cart_utils/create_cart';
-import CartService from '../../services/cartService';
+import CartService, { getCart } from '../../services/cartService';
 
 export default function CatalogItem(props: { product: ProductProjection }) {
   const { product } = props;
@@ -17,9 +17,15 @@ export default function CatalogItem(props: { product: ProductProjection }) {
   const [isInCart, setIsInCart] = useState(
     CartService.cartProductid?.includes(product.id) || false
   );
+  const setCounter: React.Dispatch<React.SetStateAction<number>> =
+    useOutletContext();
 
   const handleAddToCart = () => {
-    CreateCart(product.id);
+    CreateCart(product.id).then(() => {
+      getCart()?.then((cartValue: Cart) =>
+        setCounter(cartValue.lineItems.length ?? 0)
+      );
+    });
     setIsInCart(true);
   };
 
