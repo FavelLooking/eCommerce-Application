@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Cart } from '@commercetools/platform-sdk';
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -9,12 +10,14 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import getInfoAboutProduct from '../../services/getDetailedProductInfo';
 import ProductInfo from '../../types/detailed_product_types/fetch_detailed_product_types';
 import { isValidPath } from '../../utils';
+import { getCart } from '../../services/cartService';
 
 function DetailedProductPage() {
   const { productId } = useParams();
   const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
+  const [cartArrId, setCartArrId] = useState<string[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -22,6 +25,17 @@ function DetailedProductPage() {
     if (!isValidPath(location.pathname)) {
       navigate('not-found');
     } else {
+      console.log('selected productId', productId);
+      getCart()?.then((cart: Cart) => {
+        console.log('array lineItems', cart.lineItems);
+        const cartDataArr = cart.lineItems;
+        const cartDataArrId: string[] = [];
+        for (let i = 0; i < cartDataArr.length; i += 1) {
+          cartDataArrId.push(cartDataArr[i].productId);
+        }
+        console.log('result arr', cartDataArrId);
+        setCartArrId(cartDataArrId);
+      });
       getInfoAboutProduct(productId as string)
         .then((data: ProductInfo) => {
           setProductInfo(data);
@@ -31,6 +45,11 @@ function DetailedProductPage() {
         });
     }
   }, [location.pathname, navigate, productId]);
+
+  console.log(
+    'есть ли товар в корзине',
+    cartArrId.includes(productId as string)
+  );
 
   useEffect(() => {
     if (productInfo) {
