@@ -17,7 +17,7 @@ function DetailedProductPage() {
   const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
-  const [cartArrId, setCartArrId] = useState<string[]>([]);
+  const [isInCart, setIsInCart] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,7 +31,15 @@ function DetailedProductPage() {
         for (let i = 0; i < cartDataArr.length; i += 1) {
           cartDataArrId.push(cartDataArr[i].productId);
         }
-        setCartArrId(cartDataArrId);
+        console.log(
+          'is it in cart',
+          cartDataArrId.includes(productId as string)
+        );
+        if (cartDataArrId.includes(productId as string)) {
+          setIsInCart(true);
+        } else {
+          setIsInCart(false);
+        }
       });
       getInfoAboutProduct(productId as string)
         .then((data: ProductInfo) => {
@@ -42,11 +50,6 @@ function DetailedProductPage() {
         });
     }
   }, [location.pathname, navigate, productId]);
-
-  console.log(
-    'есть ли товар в корзине',
-    cartArrId.includes(productId as string)
-  );
 
   useEffect(() => {
     if (productInfo) {
@@ -122,7 +125,7 @@ function DetailedProductPage() {
   };
 
   const buttons = () => {
-    if (!cartArrId.includes(productId as string)) {
+    if (!isInCart) {
       return <button type="button">Add to cart</button>;
     }
     return '';
