@@ -12,6 +12,7 @@ import ProductInfo from '../../types/detailed_product_types/fetch_detailed_produ
 import { isValidPath } from '../../utils';
 import { getCart } from '../../services/cartService';
 import CreateCart from '../../utils/cart_utils/create_cart';
+import removeItemFromCart from '../../utils/cart_utils/remove_item';
 
 function DetailedProductPage() {
   const { productId } = useParams();
@@ -99,6 +100,11 @@ function DetailedProductPage() {
     setIsInCart(true);
   };
 
+  const handleRemoveFromeCart = () => {
+    removeItemFromCart(productId as string);
+    setIsInCart(false);
+  };
+
   const productPrice = () => {
     if (!productInfo?.productPrice) {
       return (
@@ -138,7 +144,16 @@ function DetailedProductPage() {
         </button>
       );
     }
-    return '';
+
+    return (
+      <button
+        type="button"
+        className="detailed-product__button"
+        onClick={handleRemoveFromeCart}
+      >
+        Remove from cart
+      </button>
+    );
   };
 
   return (
