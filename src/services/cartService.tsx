@@ -68,6 +68,59 @@ export default class CartService {
     }
   }
 
+  static async removeAllItems(productId: string) {
+    const cartId = AuthService.getFromLocalStorage('cartId') as string;
+    const originalCartVersion = parseInt(
+      AuthService.getFromLocalStorage('cartVersion') as string,
+      10
+    );
+
+    try {
+      const apiRoot = await ClientFactory.createApiRoot(ClientFactory.flowType);
+
+      const cartResponse = await apiRoot
+        .me()
+        .carts()
+        .withId({ ID: cartId })
+        .get()
+        .execute();
+
+      const { lineItems } = cartResponse.body;
+
+      const itemsToRemove = lineItems.filter(
+        (item) => item.productId === productId
+      );
+
+      const actions: { action: 'removeLineItem'; lineItemId: string }[] =
+        itemsToRemove.map((item) => ({
+          action: 'removeLineItem',
+          lineItemId: item.id,
+        }));
+
+      if (actions.length > 0) {
+        const updateResponse = await apiRoot
+          .me()
+          .carts()
+          .withId({ ID: cartId })
+          .post({
+            body: {
+              version: originalCartVersion,
+              actions,
+            },
+          })
+          .execute();
+
+        await AuthService.saveToLocalStorage(
+          'cartVersion',
+          updateResponse.body.version.toString()
+        );
+      }
+    } catch (error: unknown) {
+      const errorMessage = (error as Error).message;
+      AuthService.saveToLocalStorage('cartError', errorMessage);
+    }
+  }
+
   static async getCart(idCart: string) {
     try {
       const apiRoot = await ClientFactory.createApiRoot(ClientFactory.flowType);
