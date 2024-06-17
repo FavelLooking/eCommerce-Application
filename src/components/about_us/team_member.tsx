@@ -4,7 +4,7 @@ import {
   NamesComponent,
   ImgComponent,
   ContributionComponent,
-} from '../../utils/about_constants';
+} from './about_us_components';
 
 export default function TeamMember() {
   return (

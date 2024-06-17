@@ -29,71 +29,7 @@ export const teamDescription = (
   </>
 );
 
-export function ImgComponent() {
-  const images = [
-    'https://sun147-1.userapi.com/impg/Q4EOBh5Hd5iJQ84Ed25B108CxKzMnvqP7qsitA/QEIl_RgoUyM.jpg?size=1280x853&quality=96&sign=d01775c1162391a19c536678eb642eaa&type=album',
-    'https://sun9-22.userapi.com/impg/TuNhMdZFbuUvS2K-YOOjzYx49yUU5SVe4bIqRw/7RxtV6ggoNY.jpg?size=640x640&quality=96&sign=f7e6a94409e23c5c31cc6b1ff290fdf9&type=album',
-    'https://sun9-35.userapi.com/impg/yqTUDBPXb3nCvp5jNwG_H_m8ddc6GzsSKAdlkA/gcL0HTDIn9Q.jpg?size=728x728&quality=95&sign=f29a19bb98f036ee9d9c150592e42911&type=album',
-  ];
-
-  function generateKey(content: string) {
-    return content.substring(0, 5);
-  }
-
-  return (
-    <div className="images-component">
-      {images.map((img: string) => (
-        <img
-          key={generateKey(img)}
-          className="member-photo"
-          src={img}
-          alt="member"
-        />
-      ))}
-    </div>
-  );
-}
-
-export function NamesComponent() {
-  const names = ['Katsiaryna', 'Denis', 'Pavel'];
-
-  function generateKey(content: string) {
-    return content.substring(0, 5);
-  }
-
-  return (
-    <div className="names-component">
-      {names.map((name) => (
-        <p key={generateKey(name)} className="names-text">
-          {name}
-        </p>
-      ))}
-    </div>
-  );
-}
-
-export function DescriptionComponent() {
-  const description = [
-    'Hi. I graduated from Belarusian State University of Informatics and Radioelectronics. Now working as an Embedded Engineer. After relocation to Georgia, I decided to find a new job to have more opportunities.',
-    `Hi! My name is Denis, I'm 31 years old, and I was born in Novosibirsk. I've always been passionate about technology and software development. This project is the result of my interest and experience in IT. I hope you enjoy what we've created and find something useful and interesting here.`,
-    `Hi, I'm Pavel. I studied electric supply engineering at Murmansk State Technical University. After starting my own comic book shop, also I organized comic book festivals. Recently, I've been exploring C# and later frontend technologies like JavaScript and TypeScript. I'm planning to delve into React, React Native, and Three.js.`,
-  ];
-
-  function generateKey(content: string) {
-    return content.substring(0, 5);
-  }
-
-  return (
-    <div className="description-component">
-      {description.map((paragraph) => (
-        <p key={generateKey(paragraph)} className="description-text">
-          {paragraph}
-        </p>
-      ))}
-    </div>
-  );
-}
-const contributions = [
+export const contributions = [
   [
     'Set up Netlify for website deployment',
     'Developed login, catalog, main and error pages',
@@ -117,25 +53,25 @@ const contributions = [
   ],
 ];
 
-export function ContributionComponent() {
-  function generateKey(content: string) {
-    return content.substring(0, 9);
-  }
+export const images = [
+  'https://sun147-1.userapi.com/impg/Q4EOBh5Hd5iJQ84Ed25B108CxKzMnvqP7qsitA/QEIl_RgoUyM.jpg?size=1280x853&quality=96&sign=d01775c1162391a19c536678eb642eaa&type=album',
+  'https://sun9-22.userapi.com/impg/TuNhMdZFbuUvS2K-YOOjzYx49yUU5SVe4bIqRw/7RxtV6ggoNY.jpg?size=640x640&quality=96&sign=f7e6a94409e23c5c31cc6b1ff290fdf9&type=album',
+  'https://sun9-35.userapi.com/impg/yqTUDBPXb3nCvp5jNwG_H_m8ddc6GzsSKAdlkA/gcL0HTDIn9Q.jpg?size=728x728&quality=95&sign=f29a19bb98f036ee9d9c150592e42911&type=album',
+];
 
-  return (
-    <div className="contribution-wrapper">
-      {contributions.map((contributionList, index) => (
-        <div
-          key={`list-${generateKey(contributionList[index])}`}
-          className="contribution-container"
-        >
-          {contributionList.map((contribution) => (
-            <p key={generateKey(contribution)} className="contribution-text">
-              {contribution}
-            </p>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
+export const names = ['Katsiaryna', 'Denis', 'Pavel'];
+export const links = [
+  'https://github.com/binkki',
+  'https://github.com/IamBigBobby',
+  'https://github.com/FavelLooking',
+];
+
+export const description = [
+  'Hi. I graduated from Belarusian State University of Informatics and Radioelectronics. Now working as an Embedded Engineer. After relocation to Georgia, I decided to find a new job to have more opportunities.',
+  `Hi! My name is Denis, I'm 31 years old, and I was born in Novosibirsk. I've always been passionate about technology and software development. This project is the result of my interest and experience in IT. I hope you enjoy what we've created and find something useful and interesting here.`,
+  `Hi, I'm Pavel. I studied electric supply engineering at Murmansk State Technical University. After starting my own comic book shop, also I organized comic book festivals. Recently, I've been exploring C# and later frontend technologies like JavaScript and TypeScript. I'm planning to delve into React, React Native, and Three.js.`,
+];
+
+export function generateKey(content: string) {
+  return content.substring(0, 9);
 }

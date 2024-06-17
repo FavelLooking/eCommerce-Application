@@ -103,3 +103,13 @@
 .contribution-container {
   width: 30%;
 }
+
+.name-link {
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
+
+.name-link:hover {
+  color: rgba(51, 51, 64, 0.768);
+}
