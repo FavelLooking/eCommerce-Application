@@ -34,7 +34,7 @@ export const getProducts = async (
   page: number = 1
 ) => {
   const data: ProductProjection[] = [];
-  let totalProducts: number | undefined = 0;
+  let totalProducts: number = 0;
 
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
@@ -58,7 +58,7 @@ export const getProducts = async (
       .execute()
       .then((value) => {
         data.push(...(value.body.results as ProductProjection[]));
-        totalProducts = value.body.total;
+        totalProducts = value.body.total ?? 0;
       });
   }
   return { data, totalProducts };
@@ -103,7 +103,7 @@ export const searchProducts = async (
   page: number = 1
 ) => {
   const data: ProductProjection[] = [];
-  let totalProducts: number | undefined = 0;
+  let totalProducts: number = 0;
 
   if (isValidPath(path)) {
     const currentCategoryTitle = path.split('/').at(-1) ?? 'catalog';
@@ -127,7 +127,7 @@ export const searchProducts = async (
       .execute()
       .then((value) => {
         data.push(...(value.body.results as ProductProjection[]));
-        totalProducts = value.body.total;
+        totalProducts = value.body.total ?? 0;
       });
   }
   return { data, totalProducts };

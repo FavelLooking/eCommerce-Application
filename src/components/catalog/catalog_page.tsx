@@ -56,7 +56,7 @@ export default function CatalogPage() {
       }) => {
         clearUtilsStorage();
         if (data.length && totalProducts) {
-          setTotalPages(Math.ceil(totalProducts / 10));
+          setTotalPages(Math.ceil(totalProducts / pageLimit));
           setProducts(data);
         } else navigate('not-found');
       }
@@ -85,12 +85,10 @@ export default function CatalogPage() {
         totalProducts,
       }: {
         data: ProductProjection[];
-        totalProducts: number | undefined;
+        totalProducts: number;
       }) => {
-        if (data.length && totalProducts) {
-          setTotalPages(Math.ceil(totalProducts / pageLimit));
-          setProducts(data);
-        }
+        setTotalPages(Math.ceil(totalProducts / pageLimit));
+        setProducts(data);
       }
     );
   };
@@ -140,7 +138,7 @@ export default function CatalogPage() {
         totalProducts,
       }: {
         data: ProductProjection[];
-        totalProducts: number | undefined;
+        totalProducts: number;
       }) => {
         if (data.length && totalProducts) {
           setProducts(data);
@@ -232,29 +230,35 @@ export default function CatalogPage() {
       ) : (
         <div className="catalog-error">There are no matching products</div>
       )}
-      <div className="pagination">
-        <button
-          className={`pagination__button ${currentPage === 1 ? 'pagination__button_disabled' : ''}`}
-          type="button"
-          onClick={() => {
-            setCurrentPage(currentPage - 1);
-            changeData(currentPage - 1);
-          }}
-        >
-          Prev page
-        </button>
-        <span className="pagination__page">{currentPage}</span>
-        <button
-          className={`pagination__button ${currentPage === totalPages ? 'pagination__button_disabled' : ''}`}
-          type="button"
-          onClick={() => {
-            setCurrentPage(currentPage + 1);
-            changeData(currentPage + 1);
-          }}
-        >
-          Next page
-        </button>
-      </div>
+      {totalPages > 0 && (
+        <div className="pagination">
+          <button
+            className={`pagination__button ${
+              currentPage === 1 ? 'pagination__button_disabled' : ''
+            }`}
+            type="button"
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+              changeData(currentPage - 1);
+            }}
+          >
+            Prev page
+          </button>
+          <span className="pagination__page">{currentPage}</span>
+          <button
+            className={`pagination__button ${
+              currentPage === totalPages ? 'pagination__button_disabled' : ''
+            }`}
+            type="button"
+            onClick={() => {
+              setCurrentPage(currentPage + 1);
+              changeData(currentPage + 1);
+            }}
+          >
+            Next page
+          </button>
+        </div>
+      )}
     </div>
   );
 }
